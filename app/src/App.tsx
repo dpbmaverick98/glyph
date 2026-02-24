@@ -2,7 +2,6 @@ import { useState, useEffect, useMemo } from 'react';
 import { marked } from 'marked';
 import { 
   Menu, 
-  Search, 
   ChevronRight, 
   ExternalLink, 
   Github, 
@@ -11,6 +10,7 @@ import {
   FileText,
   Bot,
 } from 'lucide-react';
+import { SearchModal, SearchTrigger } from './components/Search';
 import './App.css';
 
 // Types
@@ -379,15 +379,13 @@ function Sidebar({
 // Header component
 function Header({ 
   onMenuToggle, 
-  onSearch,
+  onOpenSearch,
   config 
 }: { 
   onMenuToggle: () => void;
-  onSearch: (query: string) => void;
+  onOpenSearch: () => void;
   config: DocsConfig;
 }) {
-  const [searchQuery, setSearchQuery] = useState('');
-  
   return (
     <header className="sticky top-0 z-30 bg-[#0a0a0a]/95 backdrop-blur border-b border-border">
       <div className="flex items-center justify-between h-14 px-4 lg:px-6">
@@ -405,19 +403,7 @@ function Header({
         
         {/* Center: Search */}
         <div className="flex-1 max-w-md mx-4 hidden md:block">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            <input
-              type="text"
-              placeholder="Search documentation..."
-              value={searchQuery}
-              onChange={(e) => {
-                setSearchQuery(e.target.value);
-                onSearch(e.target.value);
-              }}
-              className="w-full pl-10 pr-4 py-2 bg-secondary rounded-md text-sm text-foreground placeholder:text-muted-foreground border border-border focus:border-obul-gold/50 focus:outline-none transition-colors"
-            />
-          </div>
+          <SearchTrigger onClick={onOpenSearch} />
         </div>
         
         {/* Right: Nav links */}
@@ -480,11 +466,11 @@ function TableOfContents({ content }: { content: string }) {
 // Main App component
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const [currentSlug, setCurrentSlug] = useState(() => {
     const hash = window.location.hash.slice(1);
     return hash || getFirstDocSlug(docsConfig as DocsConfig);
   });
-  const [searchQuery, setSearchQuery] = useState('');
   
   const docs = useMemo(() => loadDocs(), []);
   const config = docsConfig as DocsConfig;
@@ -513,6 +499,19 @@ function App() {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, [currentSlug]);
   
+  // Keyboard shortcut for search (Cmd+K / Ctrl+K)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setSearchOpen(true);
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+  
   // Add copy button listeners
   useEffect(() => {
     const buttons = document.querySelectorAll('.copy-btn');
@@ -528,30 +527,12 @@ function App() {
     });
   }, [currentDoc?.content]);
   
-  // Filter docs based on search
-  const filteredSidebar = useMemo(() => {
-    if (!searchQuery) return config.sidebar;
-    
-    const query = searchQuery.toLowerCase();
-    return config.sidebar.map(group => ({
-      ...group,
-      items: group.items.filter(item => {
-        const doc = docs[item.file];
-        return (
-          item.label.toLowerCase().includes(query) ||
-          doc?.title.toLowerCase().includes(query) ||
-          doc?.description.toLowerCase().includes(query)
-        );
-      }),
-    })).filter(group => group.items.length > 0);
-  }, [searchQuery, config.sidebar, docs]);
-  
   return (
     <div className="min-h-screen bg-[#0a0a0a] grid-pattern">
       <div className="flex">
         {/* Sidebar */}
         <Sidebar
-          config={{ ...config, sidebar: filteredSidebar }}
+          config={config}
           currentSlug={currentSlug}
           onNavigate={handleNavigate}
           isOpen={sidebarOpen}
@@ -562,7 +543,7 @@ function App() {
         <div className="flex-1 min-w-0">
           <Header
             onMenuToggle={() => setSidebarOpen(true)}
-            onSearch={setSearchQuery}
+            onOpenSearch={() => setSearchOpen(true)}
             config={config}
           />
           
@@ -637,6 +618,13 @@ function App() {
           </main>
         </div>
       </div>
+      
+      {/* Search Modal */}
+      <SearchModal
+        isOpen={searchOpen}
+        onClose={() => setSearchOpen(false)}
+        onNavigate={handleNavigate}
+      />
     </div>
   );
 }
