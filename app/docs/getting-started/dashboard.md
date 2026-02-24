@@ -10,7 +10,7 @@ The Obul Dashboard at [my.obul.ai](https://my.obul.ai) is your control center fo
 
 The Overview page gives you a high-level view of your Obul usage:
 
-![Dashboard Overview](/Users/dpbmaverick98/obul_docs/app/public/images/dashboard-overview.png)
+![Dashboard Overview](/images/dashboard-overview.png)
 
 ### Key Metrics
 
