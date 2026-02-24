@@ -1,34 +1,32 @@
 ---
 title: Dashboard Guide
-description: Key management, transaction logs, billing, team access
+description: Manage API keys, monitor transactions, and configure billing
 sidebar_position: 2
 ---
 
-The Obul Dashboard at [my.obul.ai](https://my.obul.ai) is your control center for managing API keys, monitoring transactions, and configuring billing.
+# Dashboard Guide
 
-## Overview Page
+The Obul Dashboard at [my.obul.ai](https://my.obul.ai) is your control center.
 
-The Overview page gives you a high-level view of your Obul usage:
+## Overview
 
-![Dashboard Overview](/Users/dpbmaverick98/obul_docs/app/public/images/dashboard-overview.png)
-
-### Key Metrics
+The Overview page shows:
 
 | Metric | Description |
 |--------|-------------|
-| **Unpaid Balance** | Current outstanding balance owed |
+| **Unpaid Balance** | Current outstanding balance |
 | **Transactions** | Total API calls in selected period |
 | **Usage Trend** | Visual chart of spend over time |
 | **Recent Activity** | Latest API calls with status |
 
 ## API Keys
 
-Navigate to **API Keys** in the sidebar to manage your keys.
+Navigate to **API Keys** to manage access.
 
 ### Creating a Key
 
 1. Click **Create New Key**
-2. Enter a descriptive name
+2. Enter a name
 3. Select permissions:
    - `read` — Read-only access
    - `write` — Full access
@@ -36,96 +34,76 @@ Navigate to **API Keys** in the sidebar to manage your keys.
 4. (Optional) Set IP restrictions
 5. Click **Create**
 
-**Important:** Copy your key immediately. For security, we only show it once.
+**Important:** Copy your key immediately. We only show it once.
 
 ### Key Types
 
 | Prefix | Environment | Use For |
 |--------|-------------|---------|
-| `obul_live_` | Production | Real payments, production traffic |
-| `obul_test_` | Testing | Development, staging, CI/CD |
+| `obul_live_` | Production | Real payments |
+| `obul_test_` | Testing | Development, staging |
 
 ### Rotating Keys
 
-To rotate a compromised or old key:
-
 1. Create a new key
-2. Update your application to use the new key
+2. Update your application
 3. Delete the old key
-4. Monitor for any errors
+4. Monitor for errors
 
 ### Revoking Keys
 
 1. Find the key in your list
-2. Click the **...** menu
-3. Select **Revoke**
-4. Confirm the action
+2. Click **...** → **Revoke**
+3. Confirm
 
-**Note:** Revoked keys stop working immediately.
+Revoked keys stop working immediately.
 
 ## Transaction Logs
 
-The **Transactions** section shows a detailed log of all API calls.
-
-### Log Entry Format
+The **Transactions** section shows all API calls.
 
 | Field | Description |
 |-------|-------------|
 | **Time (UTC)** | When the request was made |
-| **Service** | The API endpoint called |
-| **Service URL** | Full URL of the request |
+| **Service** | API endpoint called |
+| **Service URL** | Full request URL |
 | **Status** | `success`, `pending`, or `failed` |
-| **Amount** | Payment amount for the call |
+| **Amount** | Payment amount |
 
 ### Filtering
 
-Use the filters to find specific transactions:
-
 - **Date range** — Pick a time window
-- **Status** — Show only success/failed/pending
+- **Status** — Success/failed/pending
 - **Service** — Filter by endpoint
 - **Amount** — Filter by payment size
 
 ### Exporting
 
-Export your transaction data for accounting:
-
-1. Apply desired filters
+1. Apply filters
 2. Click **Export**
-3. Choose format: CSV or JSON
-4. Download the file
+3. Choose CSV or JSON
+4. Download
 
 ## Billing
 
-Navigate to **Billing** to manage payments and view invoices.
+Navigate to **Billing** for payments and invoices.
 
-### Connecting a Wallet
+### Adding Funds
 
-1. Click **Connect Wallet**
-2. Choose your wallet provider
-3. Sign the connection message
-4. Your wallet is now linked
+1. Go to **Billing** → **Add Funds**
+2. Select amount
+3. Complete payment
 
 ### Auto-Pay Settings
-
-Configure automatic payments:
 
 ```
 Auto-Pay Options:
 ├── Disabled — Manual payments only
-├── Threshold — Pay when balance exceeds $X
-└── Scheduled — Pay every X days
+├── Threshold — Auto-pay when balance below $X
+└── Scheduled — Auto-pay every X days
 ```
 
-### Viewing Invoices
-
-1. Go to **Billing** → **Invoices**
-2. Click on any invoice to view details
-3. Download PDF for your records
-
 ### Payment Methods
-
-Obul supports:
 
 | Method | Networks |
 |--------|----------|
@@ -135,15 +113,15 @@ Obul supports:
 
 ## Team Access
 
-### Adding Team Members
+### Adding Members
 
 1. Go to **Settings** → **Team**
 2. Click **Invite Member**
-3. Enter their email
-4. Select a role:
-   - **Viewer** — View-only access
-   - **Developer** — Can create keys, view transactions
-   - **Admin** — Full access including billing
+3. Enter email
+4. Select role:
+   - **Viewer** — View-only
+   - **Developer** — Create keys, view transactions
+   - **Admin** — Full access
 5. Send invitation
 
 ### Role Permissions
@@ -159,7 +137,6 @@ Obul supports:
 ### Activity Audit Log
 
 View all team actions:
-
 - Key created/deleted
 - Settings changed
 - Team members added/removed
@@ -167,27 +144,27 @@ View all team actions:
 
 ## Settings
 
-### Account Settings
+### Account
 
-- **Profile** — Update name, email, avatar
-- **Security** — Change password, enable 2FA
+- **Profile** — Name, email, avatar
+- **Security** — Password, 2FA
 - **Notifications** — Email preferences
 
-### API Settings
+### API
 
 - **Default timeout** — Request timeout (default: 30s)
-- **Retry policy** — Automatic retries on failure
-- **Webhook URL** — Receive event notifications
+- **Retry policy** — Automatic retries
+- **Webhook URL** — Event notifications
 
 ## Webhooks
 
-Configure webhooks to receive real-time events:
+Configure webhooks for real-time events.
 
 ### Supported Events
 
 | Event | Description |
 |-------|-------------|
-| `payment.success` | Payment processed successfully |
+| `payment.success` | Payment processed |
 | `payment.failed` | Payment failed |
 | `key.created` | New API key created |
 | `key.revoked` | API key revoked |
@@ -209,5 +186,5 @@ Configure webhooks to receive real-time events:
 
 ## Next Steps
 
-- [API Reference](../reference/api) — Full technical documentation
-- [FAQ](../faq) — Common questions answered
+- [API Reference](../reference/api) — Full technical docs
+- [FAQ](../faq) — Common questions

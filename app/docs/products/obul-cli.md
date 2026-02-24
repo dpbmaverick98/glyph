@@ -1,6 +1,6 @@
 ---
 title: Obul CLI
-description: Terminal tool for power users (Q3 2025)
+description: Terminal tool for power users — coming Q3 2025
 sidebar_position: 1
 status: coming-soon
 ---
@@ -10,11 +10,11 @@ status: coming-soon
 :::status Coming Soon — Q3 2025
 :::
 
-The Obul CLI is a terminal tool for power users who prefer command-line workflows.
+The command line is still the fastest way to get things done. Obul CLI brings the dashboard to your terminal.
 
-## What is Obul CLI?
+## What It Is
 
-A unified command-line interface for managing Obul resources, monitoring transactions, and integrating payments directly from your terminal.
+A unified CLI for managing Obul resources, monitoring transactions, and integrating payments without leaving your shell.
 
 ```bash
 # Install globally
@@ -24,7 +24,7 @@ npm install -g @obul/cli
 npx @obul/cli <command>
 ```
 
-## Planned Features
+## What's Coming
 
 ### Resource Management
 
@@ -37,54 +37,34 @@ obul keys revoke obul_live_xxx
 # Services
 obul services list
 obul services create --name "my-api" --url "https://api.example.com"
-obul services update my-api --timeout 60
 ```
 
 ### Transaction Monitoring
 
 ```bash
-# Real-time transaction stream
+# Real-time stream
 obul transactions tail
 
-# Query transactions
+# Query and export
 obul transactions list --since "1h" --status success
-obul transactions get txn_xxx
-
-# Export data
 obul transactions export --format csv --since "7d"
 ```
 
 ### Payment Operations
 
 ```bash
-# Check balance
+# Check balance and history
 obul balance
-
-# Deposit funds
-obul deposit --amount 0.5 --token ETH
-
-# View payment history
 obul payments list
-```
 
-### Configuration
-
-```bash
-# Login
-obul login
-
-# Switch contexts
+# Context switching
 obul context use production
 obul context use staging
-
-# View config
-obul config get
 ```
 
-## Use Cases
+## Use Cases We're Building For
 
-### CI/CD Integration
-
+**CI/CD Integration:**
 ```yaml
 # .github/workflows/deploy.yml
 - name: Deploy with Obul
@@ -93,18 +73,16 @@ obul config get
     obul services update my-api --version ${{ github.sha }}
 ```
 
-### Local Development
-
+**Local Development:**
 ```bash
 # Start local proxy
 obul proxy --port 8080 --target http://localhost:3000
 
-# Watch transactions
+# Watch transactions in real-time
 obul transactions tail --format json | jq '.amount'
 ```
 
-### Automation Scripts
-
+**Automation:**
 ```bash
 #!/bin/bash
 # backup-transactions.sh
@@ -116,7 +94,7 @@ obul transactions export \
   --output "transactions-$DATE.csv"
 ```
 
-## Installation Options
+## Installation (When Available)
 
 | Platform | Method |
 |----------|--------|
@@ -125,9 +103,9 @@ obul transactions export \
 | Windows | `winget install Obul.CLI` |
 | npm | `npm install -g @obul/cli` |
 
-## Sign Up for Early Access
+## Get Early Access
 
-Be the first to try Obul CLI:
+Be the first to try it:
 
 [Join the Waitlist](https://obul.ai/cli-waitlist)
 
@@ -135,5 +113,5 @@ Be the first to try Obul CLI:
 
 Have feature requests? Let us know:
 
-- Email: cli-feedback@obul.ai
-- Discord: #cli-discussion channel
+- Email: [cli-feedback@obul.ai](mailto:cli-feedback@obul.ai)
+- Discord: #cli-discussion

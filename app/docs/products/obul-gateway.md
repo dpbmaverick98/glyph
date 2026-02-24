@@ -1,6 +1,6 @@
 ---
 title: Obul x402 Gateway
-description: Self-hosted enterprise option (Q4 2025)
+description: Self-hosted enterprise solution — coming Q4 2025
 sidebar_position: 3
 status: coming-soon
 ---
@@ -10,11 +10,11 @@ status: coming-soon
 :::status Coming Soon — Q4 2025
 :::
 
-The Obul x402 Gateway is a self-hosted enterprise solution for organizations that need complete control over their payment infrastructure.
+For organizations that need complete control. Run Obul in your own infrastructure.
 
-## What is Obul Gateway?
+## What It Is
 
-A deployable version of Obul's proxy layer that runs in your own infrastructure:
+A self-hosted version of Obul's proxy layer. Deploy on your servers, behind your firewall, under your control.
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -34,25 +34,22 @@ A deployable version of Obul's proxy layer that runs in your own infrastructure:
 └─────────────────────────────────────────────────────────┘
 ```
 
-## Planned Features
+## What's Coming
 
 ### Deployment Options
 
-| Platform | Deployment |
-|----------|------------|
-| **Docker** | Single container |
-| **Kubernetes** | Helm chart included |
-| **AWS** | CloudFormation template |
-| **GCP** | Terraform module |
-| **Azure** | ARM template |
-| **Bare Metal** | Binary distribution |
+| Platform | Method |
+|----------|--------|
+| Docker | Single container |
+| Kubernetes | Helm chart |
+| AWS | CloudFormation |
+| GCP | Terraform |
+| Azure | ARM template |
+| Bare Metal | Binary distribution |
 
 ### Enterprise Features
 
-#### Custom Facilitators
-
-Run your own x402 facilitator:
-
+**Custom Facilitators:**
 ```yaml
 # gateway-config.yml
 facilitator:
@@ -64,38 +61,30 @@ facilitator:
     enabled: false  # No platform fees
 ```
 
-#### Private Networks
-
-Support for private/consortium chains:
-
+**Private Networks:**
 - Hyperledger Besu
 - Quorum
 - Custom EVM chains
 
-#### Advanced Security
-
+**Advanced Security:**
 ```yaml
 security:
   hsm:
     enabled: true
     provider: "aws-kms"  # or "azure-key-vault", "hashicorp-vault"
-  
   audit:
     enabled: true
     retention: "7y"
-  
   compliance:
     gdpr: true
     soc2: true
 ```
 
-#### High Availability
-
+**High Availability:**
 ```yaml
 ha:
   replicas: 3
   load_balancer: "nginx"
-  
   failover:
     enabled: true
     health_check_interval: "10s"
@@ -103,43 +92,16 @@ ha:
 
 ## Use Cases
 
-### Financial Institutions
+**Financial Institutions:**
+Banks and fintechs with strict compliance needs. Full audit trails, regulatory compliance, on-premise deployment.
 
-Banks and fintechs with strict compliance:
+**Large Enterprises:**
+Organizations with existing infrastructure. Integrate with current systems, custom security policies.
 
-- Full audit trails
-- Regulatory compliance
-- On-premise deployment
+**Blockchain Projects:**
+Teams building facilitator services. White-label solution, custom token support.
 
-### Large Enterprises
-
-Organizations with existing infrastructure:
-
-- Integrate with existing systems
-- Custom security policies
-- Dedicated support
-
-### Blockchain Projects
-
-Teams building facilitator services:
-
-- White-label solution
-- Custom token support
-- Ecosystem integration
-
-## Architecture
-
-### Components
-
-| Component | Description |
-|-----------|-------------|
-| **API Handler** | Request routing and validation |
-| **x402 Engine** | Payment processing logic |
-| **Settlement** | On-chain transaction management |
-| **Monitoring** | Metrics and alerting |
-| **Admin API** | Management interface |
-
-### Resource Requirements
+## Resource Requirements
 
 | Environment | CPU | Memory | Storage |
 |-------------|-----|--------|---------|
@@ -149,27 +111,27 @@ Teams building facilitator services:
 
 ## Pricing
 
-Obul Gateway is priced as an annual license:
+Annual license:
 
-| Tier | Annual Cost | Includes |
-|------|-------------|----------|
+| Tier | Annual | Includes |
+|------|--------|----------|
 | Starter | $50,000 | Single deployment, basic support |
 | Growth | $150,000 | Multi-region, priority support |
 | Enterprise | Custom | Unlimited, dedicated team |
 
-## Sign Up for Early Access
-
-Discuss your enterprise needs:
-
-[Contact Sales](mailto:enterprise@obul.ai)
-
 ## FAQ
 
 **Q: Can I migrate from Obul Cloud to Gateway?**  
-A: Yes, we provide migration tools and support.
+A: Yes. We provide migration tools and support.
 
-**Q: Is the Gateway code open source?**  
-A: The core is open source; enterprise features are licensed.
+**Q: Is Gateway open source?**  
+A: Core is open source; enterprise features are licensed.
 
 **Q: What SLAs are available?**  
 A: 99.99% uptime SLA with enterprise support.
+
+## Contact Sales
+
+Discuss your enterprise needs:
+
+[enterprise@obul.ai](mailto:enterprise@obul.ai)

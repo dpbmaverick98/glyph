@@ -1,9 +1,10 @@
 ---
 title: Quickstart
-description: API key setup, first curl request, Python/Node examples
+description: Your first payable API call in under 5 minutes
 sidebar_position: 1
 ---
 
+# Quickstart
 
 Get your first payable API call running in under 5 minutes.
 
@@ -15,24 +16,23 @@ Get your first payable API call running in under 5 minutes.
 
 ## Step 1: Create an Account
 
-1. Go to [my.obul.ai](https://my.obul.ai)
-2. Sign up with your email or github
+Go to [my.obul.ai](https://my.obul.ai) and sign up with email or GitHub.
 
-## Step 2: Add payment method
+## Step 2: Add a Payment Method
 
-1. In the dashboard, navigate to **Billings**
+1. In the dashboard, go to **Billing**
 2. Click **Add Payment Method**
-3. Connect you Stripe Link Card.
+3. Connect your payment method
 
 ## Step 3: Generate an API Key
 
-1. In the dashboard, navigate to **API Keys**
+1. Navigate to **API Keys**
 2. Click **Create New Key**
-3. Give it a name (e.g., "Quickstart")
+3. Name it (e.g., "Quickstart")
 4. Copy the key — **you won't see it again**
 
 ```bash
-# Your API key looks like this
+# Your key looks like this
 obul_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
@@ -87,9 +87,9 @@ fetch(url, { headers })
   .then(data => console.log(data));
 ```
 
-## Step 4: Test a Payable Endpoint
+## Step 5: Test a Payable Endpoint
 
-Now let's make a real payable request. We'll use a test endpoint:
+Make a real payable request:
 
 ```bash
 curl -X POST \
@@ -112,39 +112,21 @@ curl -X POST \
 }
 ```
 
-This is expected! The endpoint is working — it just needs payment. Let's set that up.
+This is expected! The endpoint works — it just needs payment.
 
-## Step 5: Connect Your Wallet
+## Step 6: Complete Payment
 
-1. In the dashboard, go to **Billing**
-2. Click **Connect Wallet**
-3. Choose your wallet (MetaMask, Coinbase Wallet, etc.)
-4. Fund your account with test ETH on Base Sepolia
-
-### Get Test ETH
-
-```bash
-# Use the Base Sepolia faucet
-curl -X POST https://faucet.base.org \
-  -d '{"address": "0xYourAddress"}'
-```
-
-Or visit [faucet.base.org](https://faucet.base.org)
-
-## Step 6: Retry the Request
-
-With your wallet funded, retry the request:
+Follow the payment instructions in the 402 response. Once your account has balance, retry the request:
 
 ```bash
 curl -X POST \
   -H "X-Obul-Key: obul_live_xxx" \
   -H "Content-Type: application/json" \
-  -H "X-Payment-Address: 0xYourAddress" \
   -d '{"prompt": "Hello, world!"}' \
   https://proxy.obul.ai/v1/demo/echo
 ```
 
-**Success response:**
+**Success:**
 ```json
 {
   "result": "Hello, world!",
@@ -158,31 +140,16 @@ curl -X POST \
 
 ## What's Next?
 
-You've made your first payable API call! Now you can:
-
-- [Explore the Dashboard](./dashboard) — View transactions and manage keys
-- [Read the API Reference](../reference/api) — Full endpoint documentation
-- [Integrate with your API](../reference/api#sdk-examples) — Language-specific guides
+- [Dashboard Guide](./dashboard) — Manage keys and view transactions
+- [API Reference](../reference/api) — Full endpoint documentation
+- [FAQ](../faq) — Common questions
 
 ## Troubleshooting
 
-### "Invalid API key"
+| Error | Cause | Fix |
+|-------|-------|-----|
+| "Invalid API key" | Wrong/revoked key | Check dashboard, regenerate |
+| "Insufficient balance" | Account underfunded | Add funds in billing |
+| "Network error" | Wrong endpoint | Verify `https://proxy.obul.ai` |
 
-- Verify your key is copied correctly
-- Check that you're using `obul_live_` for production or `obul_test_` for testing
-
-### "Insufficient balance"
-
-- Ensure your wallet has test ETH on Base Sepolia
-- Check the dashboard for your current balance
-
-### "Network error"
-
-- Verify you're hitting `https://proxy.obul.ai`
-- Check our [status page](https://status.obul.ai)
-
-## Need Help?
-
-- [FAQ](../faq) — Common questions
-- Email: support@obul.ai
-- Discord: [discord.gg/obul](https://discord.gg/obul)
+Need help? [support@obul.ai](mailto:support@obul.ai) or [Discord](https://discord.gg/obul)

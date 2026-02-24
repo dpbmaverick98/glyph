@@ -1,6 +1,6 @@
 ---
 title: Obul UI Login
-description: No-code visual builder (Q3 2025)
+description: No-code visual builder for payable APIs — coming Q3 2025
 sidebar_position: 2
 status: coming-soon
 ---
@@ -10,15 +10,11 @@ status: coming-soon
 :::status Coming Soon — Q3 2025
 :::
 
-Obul UI is a no-code visual builder for creating payable API flows without writing code.
+Not everyone wants to write code to build payable APIs. Obul UI is for them.
 
-## What is Obul UI?
+## What It Is
 
-A drag-and-drop interface for:
-- Building payable API endpoints
-- Configuring payment flows
-- Designing user experiences
-- Managing access controls
+A visual builder for creating payable API flows without writing code. Drag, drop, configure, deploy.
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -39,23 +35,23 @@ A drag-and-drop interface for:
 └─────────────────────────────────────────────────────────┘
 ```
 
-## Planned Features
+## What's Coming
 
 ### Visual Flow Builder
 
-Drag and drop components to create API flows:
+Drag components to build API flows:
 
-| Component | Description |
-|-----------|-------------|
+| Component | Purpose |
+|-----------|---------|
 | **Request** | Define input parameters |
-| **Payment** | Configure pricing and tokens |
-| **Logic** | Add conditional processing |
-| **Transform** | Modify request/response data |
-| **Response** | Define output format |
+| **Payment** | Configure pricing |
+| **Logic** | Add conditionals |
+| **Transform** | Modify data |
+| **Response** | Define output |
 
-### Pre-built Templates
+### Templates
 
-Start quickly with templates:
+Start quickly with pre-built flows:
 
 - **AI Chat API** — Per-message pricing
 - **Image Generation** — Per-image pricing
@@ -63,21 +59,17 @@ Start quickly with templates:
 - **Webhook Handler** — Event-based pricing
 - **Custom Logic** — Build your own
 
-### Payment Configuration
-
-Configure pricing visually:
+### Pricing Models
 
 ```
-Pricing Model:
-├── Fixed Price — $0.01 per call
+Pricing:
+├── Fixed — $0.01 per call
 ├── Variable — Based on input size
 ├── Tiered — Volume discounts
 └── Custom — JavaScript formula
 ```
 
 ### Access Controls
-
-Manage who can access your APIs:
 
 - **Public** — Anyone with payment
 - **Whitelist** — Specific addresses
@@ -86,47 +78,31 @@ Manage who can access your APIs:
 
 ## Use Cases
 
-### For Non-Developers
+**For Non-Developers:**
+Create payable APIs without coding. Connect data source → configure pricing → deploy.
 
-Create payable APIs without coding:
+**For Rapid Prototyping:**
+Build and test ideas in minutes, not days. Share with testers, iterate fast.
 
-1. Connect your data source
-2. Configure pricing
-3. Deploy with one click
+**For Internal Tools:**
+Charge teams for API usage. Track departmental spend.
 
-### For Rapid Prototyping
+## Integration
 
-Test ideas quickly:
+Obul UI works with your existing dashboard:
+- Same API keys
+- Same transaction logs
+- Same billing
 
-1. Build a flow in minutes
-2. Share with testers
-3. Iterate based on feedback
+## Get Early Access
 
-### For Internal Tools
-
-Charge teams for API usage:
-
-1. Connect internal services
-2. Set internal pricing
-3. Track departmental usage
-
-## Integration with Dashboard
-
-Obul UI seamlessly integrates with your existing dashboard:
-
-- Use the same API keys
-- View transactions in one place
-- Manage billing centrally
-
-## Sign Up for Early Access
-
-Get notified when Obul UI launches:
+Get notified when we launch:
 
 [Join the Waitlist](https://obul.ai/ui-waitlist)
 
 ## Feedback
 
-Have use cases to share? We'd love to hear:
+Share your use cases:
 
-- Email: ui-feedback@obul.ai
-- Discord: #ui-discussion channel
+- Email: [ui-feedback@obul.ai](mailto:ui-feedback@obul.ai)
+- Discord: #ui-discussion

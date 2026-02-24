@@ -1,42 +1,47 @@
 ---
 title: What is Obul?
-description: Proxy layer definition, chronos analogy, and architecture overview
+description: The proxy layer that makes any API payable in seconds — one API key, infinite agents
 sidebar_position: 1
 ---
 
-Obul is a **proxy layer** that makes any API payable in seconds. Think of us as [Chronos](https://en.wikipedia.org/wiki/Chronos) for AI agents — we handle the invisible infrastructure so your agents can focus on what they do best.
+# What is Obul?
 
-## The Problem We Solve
+Obul is a **proxy layer** that makes any API payable in seconds.
 
-Building payment infrastructure for AI agents typically takes **3+ weeks** of:
-- Wallet setup and key management
-- Smart contract integration
-- Transaction monitoring
-- Error handling and retries
-- Production security hardening
+Think of us as [Chronos](https://en.wikipedia.org/wiki/Chronos) for AI agents — the invisible infrastructure that handles payments so your agents can focus on what they do best. We sit between your API and the world, intercepting requests and handling payments transparently.
 
-**80% of developers abandon crypto payment projects** before reaching production due to this complexity.
-
-## Our Solution
-
-Obul provides **one API key. Infinite agents.**
+## One API Key. Infinite Agents.
 
 ```bash
-# Before Obul: 3 weeks of setup
-# After Obul: One header
+# Your entire integration
 curl -H "X-Obul-Key: your_key" https://proxy.obul.ai/...
 ```
 
-### Key Features
+That's it. No complex setup. No infrastructure to manage. Just one header.
 
-| Feature | Description |
-|---------|-------------|
-| **Instant Setup** | Get started in 5 minutes, not 3 weeks |
+## Why We Exist
+
+Building payment infrastructure for APIs typically takes weeks of:
+- Payment gateway integration
+- Billing system setup
+- Invoice management
+- Error handling and retries
+- Production security hardening
+
+**Most developers abandon payment projects** before reaching production due to this complexity.
+
+We built Obul because we got tired of watching good ideas die in infrastructure hell.
+
+## What You Get
+
+| Feature | What It Means |
+|---------|---------------|
+| **Instant Setup** | 5 minutes, not weeks |
 | **x402 Native** | Built on the HTTP 402 Payment Required standard |
-| **Zero Custody** | We never hold your funds — direct wallet-to-wallet |
-| **Production Ready** | Enterprise-grade security and reliability |
+| **Usage-Based** | Pay only for what you use |
+| **Production Ready** | Enterprise-grade security from day one |
 
-## Architecture
+## How It Works
 
 ```
 ┌─────────────┐     ┌─────────────┐     ┌─────────────┐
@@ -51,17 +56,34 @@ curl -H "X-Obul-Key: your_key" https://proxy.obul.ai/...
                     └─────────────┘
 ```
 
-Obul sits between your client and the target API, intercepting requests and handling the x402 payment flow transparently.
+1. Client sends request to Obul proxy
+2. Obul checks for valid payment
+3. If paid (or free), request passes through to your API
+4. If payment required, client gets a 402 response with payment instructions
+5. Client pays, retries, and the request goes through
 
-## Use Cases
+Your API doesn't need to know anything about the payment flow. It just sees requests.
 
-- **AI Agent Marketplaces** — Charge per API call from agents
+## Built for AI Agents
+
+The future is agents paying agents. An LLM calls an API. A trading bot subscribes to a data feed. A coding agent spins up compute.
+
+These agents need to pay without human intervention. Obul lets them do that.
+
+**Use cases we're seeing:**
+
+- **AI Agent Marketplaces** — Charge per API call from autonomous agents
 - **Data APIs** — Monetize your data with per-request pricing
 - **Compute Services** — Bill for GPU/CPU usage in real-time
 - **SaaS Products** — Usage-based billing without complex invoicing
 
-## Next Steps
+## The Stack
 
-- Learn about [The Wallet Problem](./the-wallet-problem)
-- Understand the [x402 Protocol](./x402-primer)
-- [Get started in 5 minutes](../getting-started/quickstart)
+- **x402 Protocol** — HTTP 402 Payment Required standard
+- **Base Network** — Fast, cheap settlement
+- **Open Standard** — No vendor lock-in, migrate anytime
+
+## Ready?
+
+- [Learn about x402](./x402-primer) — The protocol powering everything
+- [Get started in 5 minutes](../getting-started/quickstart) — Your first payable API call

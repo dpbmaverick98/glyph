@@ -16,11 +16,6 @@
           "file": "core/what-is-obul.md"
         },
         {
-          "label": "The Wallet Problem",
-          "slug": "core/the-wallet-problem",
-          "file": "core/the-wallet-problem.md"
-        },
-        {
           "label": "What is x402?",
           "slug": "core/x402-primer",
           "file": "core/x402-primer.md"

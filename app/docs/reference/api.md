@@ -1,23 +1,21 @@
 ---
 title: API Reference
-description: URL structure, auth headers, error codes, rate limits, SDK examples
+description: Complete reference for the Obul Proxy API
 sidebar_position: 1
 ---
 
 # API Reference
 
-Complete reference for the Obul Proxy API.
-
 ## Base URL
 
 ```
-Production:  https://proxy.obul.ai
+Production:   https://proxy.obul.ai
 Health Check: https://proxy.obul.ai/healthz
 ```
 
 ## Authentication
 
-All requests must include your API key in the `X-Obul-Key` header.
+All requests need your API key in the `X-Obul-Key` header:
 
 ```http
 X-Obul-Key: obul_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -42,7 +40,7 @@ https://proxy.obul.ai/{version}/{service}/{endpoint}
 | `service` | Target service | `demo`, `custom` |
 | `endpoint` | Specific endpoint | `echo`, `chat` |
 
-### Example URLs
+### Examples
 
 ```
 https://proxy.obul.ai/v1/demo/echo
@@ -51,14 +49,14 @@ https://proxy.obul.ai/v1/custom/my-api/predict
 
 ## Headers
 
-### Required Headers
+### Required
 
 | Header | Value | Description |
 |--------|-------|-------------|
 | `X-Obul-Key` | `obul_live_xxx` | Your API key |
 | `Content-Type` | `application/json` | Request format |
 
-### Optional Headers
+### Optional
 
 | Header | Value | Description |
 |--------|-------|-------------|
@@ -112,24 +110,24 @@ POST /v1/demo/echo
 
 ### Custom Proxy
 
-Proxy requests to your own API.
+Proxy to your own API.
 
 ```http
 POST /v1/custom/{your-endpoint}
 ```
 
-**Configuration required** in dashboard.
+Configure in dashboard first.
 
 ## Error Codes
 
-### HTTP Status Codes
+### HTTP Status
 
 | Code | Meaning | Description |
 |------|---------|-------------|
-| `200` | OK | Request successful |
-| `400` | Bad Request | Invalid request format |
-| `401` | Unauthorized | Invalid or missing API key |
-| `402` | Payment Required | Payment needed (x402 response) |
+| `200` | OK | Success |
+| `400` | Bad Request | Invalid format |
+| `401` | Unauthorized | Invalid/missing API key |
+| `402` | Payment Required | Payment needed (x402) |
 | `403` | Forbidden | Key lacks permission |
 | `404` | Not Found | Endpoint doesn't exist |
 | `429` | Too Many Requests | Rate limit exceeded |
@@ -137,7 +135,7 @@ POST /v1/custom/{your-endpoint}
 | `502` | Bad Gateway | Target API error |
 | `503` | Service Unavailable | Obul temporarily down |
 
-### Error Response Format
+### Error Format
 
 ```json
 {
@@ -156,11 +154,11 @@ POST /v1/custom/{your-endpoint}
 
 | Error Code | Cause | Solution |
 |------------|-------|----------|
-| `invalid_api_key` | Wrong or revoked key | Check key in dashboard |
-| `insufficient_balance` | Wallet underfunded | Add funds to wallet |
-| `rate_limit_exceeded` | Too many requests | Wait or upgrade plan |
+| `invalid_api_key` | Wrong/revoked key | Check dashboard |
+| `insufficient_balance` | Wallet underfunded | Add funds |
+| `rate_limit_exceeded` | Too many requests | Wait or upgrade |
 | `payment_failed` | Transaction error | Check wallet, retry |
-| `endpoint_not_found` | Wrong URL | Verify endpoint path |
+| `endpoint_not_found` | Wrong URL | Verify path |
 
 ## Rate Limits
 
@@ -180,7 +178,7 @@ X-RateLimit-Remaining: 9995
 X-RateLimit-Reset: 1708790400
 ```
 
-### Handling 429 Errors
+### Handling 429
 
 ```python
 import time
@@ -202,7 +200,7 @@ def make_request_with_retry(url, headers, max_retries=3):
 
 ## x402 Payment Flow
 
-When a payment is required, the API returns a 402 response:
+When payment is required, you get a 402:
 
 ```http
 HTTP/1.1 402 Payment Required
@@ -224,13 +222,13 @@ Content-Type: application/json
 ### Completing Payment
 
 1. Parse the 402 response
-2. Sign the payment with your wallet
+2. Sign payment with your wallet
 3. Retry with `X-Payment` header:
 
 ```http
 POST /v1/demo/echo
 X-Obul-Key: obul_live_xxx
-X-Payment: <signed-payment-payload>
+X-Payment: <signed-payload>
 
 {"prompt": "Hello!"}
 ```
@@ -258,10 +256,9 @@ class ObulClient:
         response = requests.request(method, url, headers=headers, **kwargs)
         
         if response.status_code == 402:
-            # Handle payment required
             payment_info = response.json()
             print(f"Payment required: {payment_info}")
-            # Sign and retry with payment...
+            # Sign and retry...
         
         return response
 
@@ -288,15 +285,12 @@ class ObulClient {
       ...options.headers
     };
 
-    const response = await fetch(url, {
-      ...options,
-      headers
-    });
+    const response = await fetch(url, { ...options, headers });
 
     if (response.status === 402) {
       const paymentInfo = await response.json();
       console.log('Payment required:', paymentInfo);
-      // Handle payment and retry
+      // Handle payment...
     }
 
     return response;
@@ -338,7 +332,6 @@ func NewClient(apiKey string) *ObulClient {
 
 func (c *ObulClient) Request(method, endpoint string, body interface{}) (*http.Response, error) {
     url := c.BaseURL + endpoint
-    
     jsonBody, _ := json.Marshal(body)
     req, _ := http.NewRequest(method, url, bytes.NewBuffer(jsonBody))
     
@@ -348,22 +341,13 @@ func (c *ObulClient) Request(method, endpoint string, body interface{}) (*http.R
     client := &http.Client{}
     return client.Do(req)
 }
-
-// Usage
-func main() {
-    client := NewClient("obul_live_xxx")
-    resp, _ := client.Request("POST", "/v1/demo/echo", map[string]string{
-        "prompt": "Hello!",
-    })
-    defer resp.Body.Close()
-}
 ```
 
 ## Webhooks
 
-Configure webhooks in your dashboard to receive event notifications.
+Configure webhooks in your dashboard for real-time events.
 
-### Event Types
+### Events
 
 | Event | Description |
 |-------|-------------|
@@ -372,9 +356,7 @@ Configure webhooks in your dashboard to receive event notifications.
 | `api_key.created` | New key created |
 | `api_key.revoked` | Key revoked |
 
-### Webhook Verification
-
-Verify webhook signatures to ensure authenticity:
+### Verification
 
 ```python
 import hmac
@@ -389,15 +371,8 @@ def verify_webhook(payload, signature, secret):
     return hmac.compare_digest(f"sha256={expected}", signature)
 ```
 
-## Changelog
-
-| Version | Date | Changes |
-|---------|------|---------|
-| 1.0.0 | 2025-02-01 | Initial release |
-| 1.1.0 | 2025-02-15 | Added webhook support |
-
 ## Support
 
-- Email: support@obul.ai
+- Email: [support@obul.ai](mailto:support@obul.ai)
 - Discord: [discord.gg/obul](https://discord.gg/obul)
 - Status: [status.obul.ai](https://status.obul.ai)

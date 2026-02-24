@@ -1,42 +1,16 @@
 ---
 title: FAQ
-description: Custody, pricing, security, migration, troubleshooting
+description: Common questions about pricing, security, and troubleshooting
 sidebar_position: 1
 ---
 
 # Frequently Asked Questions
 
-## Custody & Wallets
-
-### Do you hold my funds?
-
-**No.** Obul is non-custodial. Payments go directly from your wallet to the service provider. We never hold your private keys or funds.
-
-### What wallets are supported?
-
-| Wallet | Status |
-|--------|--------|
-| MetaMask | ✅ Supported |
-| Coinbase Wallet | ✅ Supported |
-| Rainbow | ✅ Supported |
-| WalletConnect | ✅ Supported |
-| Ledger | ✅ Supported |
-| Trezor | ✅ Supported |
-
-### Can I use a smart contract wallet?
-
-Yes! We support:
-- Safe (formerly Gnosis Safe)
-- Argent
-- Other ERC-4337 compatible wallets
-
-Contact support for setup assistance.
-
 ## Pricing
 
 ### How much does Obul cost?
 
-Obul charges **1% of payment volume** — no monthly fees, no setup costs.
+**1% of payment volume.** No monthly fees, no setup costs.
 
 | Volume | Monthly Cost |
 |--------|--------------|
@@ -44,11 +18,11 @@ Obul charges **1% of payment volume** — no monthly fees, no setup costs.
 | $10,000 | $100 |
 | $100,000 | $1,000 |
 
-### Are there any hidden fees?
+### Any hidden fees?
 
 No. You pay:
 - 1% to Obul
-- Network gas fees (paid by the sender)
+- Network gas fees
 
 That's it.
 
@@ -63,47 +37,40 @@ That's it.
 
 ### Can I use custom tokens?
 
-Yes, contact support to add custom ERC-20 tokens for your account.
+Yes. Contact support to add custom ERC-20 tokens.
 
 ## Security
 
 ### Is Obul secure?
 
-Yes. Security measures include:
+Yes. Measures include:
 
-- **Non-custodial design** — We never hold funds
-- **Encrypted API keys** — Keys are hashed at rest
+- **Non-custodial** — We never hold your funds
+- **Encrypted keys** — Hashed at rest
 - **Rate limiting** — Prevent abuse
 - **IP restrictions** — Optional allowlisting
 - **Audit logging** — All actions logged
 
 ### Has Obul been audited?
 
-Our smart contracts have been audited by:
+Yes. Audited by:
 - Trail of Bits (2024)
 - OpenZeppelin (2024)
 
-Audit reports available on request.
-
-### What happens if Obul is compromised?
-
-Since we're non-custodial, a compromise of Obul's infrastructure **cannot** result in loss of user funds. Payments are wallet-to-wallet.
+Reports available on request.
 
 ### Can I require 2FA?
 
-Yes, enable 2FA in your dashboard settings:
-1. Go to **Settings** → **Security**
-2. Enable **Two-Factor Authentication**
-3. Scan QR code with authenticator app
+Yes. Enable in **Settings** → **Security** → **Two-Factor Authentication**.
 
 ## Migration
 
 ### Can I migrate from another provider?
 
-Yes! We support migration from:
+Yes. We support migration from:
 
-| From | Migration Path |
-|------|----------------|
+| From | Path |
+|------|------|
 | Raw x402 | Update endpoint URL |
 | Coinbase CDP | Export keys, import to Obul |
 | Custom solution | Gradual cutover |
@@ -112,81 +79,75 @@ Yes! We support migration from:
 
 1. Create Obul account
 2. Generate API keys
-3. Update your application headers
+3. Update application headers
 4. Test in staging
 5. Gradual production rollout
 
-**Estimated time:** 1-2 days
+**Time:** 1-2 days
 
 ### Can I export my data?
 
-Yes, export your transaction history:
-1. Go to **Transactions**
-2. Apply filters
-3. Click **Export**
-4. Choose format (CSV/JSON)
+Yes. Go to **Transactions**, apply filters, click **Export**, choose CSV/JSON.
 
 ### Is there vendor lock-in?
 
-No. Obul uses the open x402 standard. You can migrate to any x402-compatible service at any time.
+No. Obul uses the open x402 standard. Migrate to any x402-compatible service anytime.
 
 ## Troubleshooting
 
-### "Invalid API key" error
+### "Invalid API key"
 
 **Causes:**
 - Key copied incorrectly
-- Key has been revoked
+- Key revoked
 - Using test key in production (or vice versa)
 
-**Solutions:**
+**Fix:**
 1. Verify key in dashboard
 2. Generate new key if needed
-3. Check key prefix (`obul_live_` vs `obul_test_`)
+3. Check prefix (`obul_live_` vs `obul_test_`)
 
-### "Payment required" error
+### "Payment required"
 
 **Causes:**
-- Wallet not connected
-- Insufficient balance
-- Wrong network
+- Account balance low
+- Payment method not set up
 
-**Solutions:**
-1. Connect wallet in dashboard
-2. Add funds to wallet
-3. Ensure wallet is on correct network
+**Fix:**
+1. Check balance in dashboard
+2. Add funds in **Billing**
 
-### "Rate limit exceeded" error
+### "Rate limit exceeded"
 
 **Causes:**
 - Too many requests
 - Burst limit hit
 
-**Solutions:**
+**Fix:**
 1. Implement exponential backoff
-2. Upgrade to Pro plan for higher limits
+2. Upgrade to Pro plan
 3. Contact support for custom limits
 
-### Transactions stuck as "pending"
+### Transactions stuck "pending"
 
 **Causes:**
 - Network congestion
 - Low gas price
 
-**Solutions:**
+**Fix:**
 1. Wait (most resolve within 10 minutes)
-2. Check [BaseScan](https://basescan.org) for network status
+2. Check [BaseScan](https://basescan.org) for status
 3. Contact support if stuck > 1 hour
 
 ### Webhook not receiving events
 
 **Checklist:**
-- [ ] URL is accessible from internet
-- [ ] SSL certificate is valid
-- [ ] Endpoint returns 200 status
+- [ ] URL accessible from internet
+- [ ] SSL certificate valid
+- [ ] Endpoint returns 200
 - [ ] Firewall allows Obul IPs
 
-**Test your webhook:**
+**Test:**
 ```bash
 curl -X POST https://your-webhook-url \
   -H "Content-Type: application/json" \
@@ -197,15 +158,15 @@ curl -X POST https://your-webhook-url \
 
 ### Support Channels
 
-| Channel | Response Time | Best For |
-|---------|---------------|----------|
+| Channel | Response | Best For |
+|---------|----------|----------|
 | Email | < 24 hours | Complex issues |
 | Discord | < 1 hour | Quick questions |
-| Status Page | Real-time | Outage info |
+| Status Page | Real-time | Outages |
 
 ### Email Support
 
-**support@obul.ai**
+**[support@obul.ai](mailto:support@obul.ai)**
 
 Include:
 - API key (last 4 chars only)
@@ -213,34 +174,24 @@ Include:
 - Timestamp
 - Request ID (if available)
 
-### Discord Community
+### Discord
 
-Join [discord.gg/obul](https://discord.gg/obul) for:
-- Community support
-- Feature announcements
-- Developer discussions
-
-### Status Page
-
-Check [status.obul.ai](https://status.obul.ai) for:
-- Service status
-- Incident history
-- Maintenance schedules
+[join discord.gg/obul](https://discord.gg/obul) for community support, announcements, and dev discussions.
 
 ## Account Management
 
 ### How do I delete my account?
 
-1. Ensure all balances are settled
+1. Ensure all balances settled
 2. Go to **Settings** → **Account**
 3. Click **Delete Account**
-4. Confirm deletion
+4. Confirm
 
-**Note:** This action is irreversible.
+**Note:** Irreversible.
 
 ### Can I have multiple accounts?
 
-Yes, but each account needs a unique email. Consider using team features instead.
+Yes, but each needs a unique email. Consider using team features instead.
 
 ### How do I change my email?
 
@@ -250,7 +201,6 @@ Yes, but each account needs a unique email. Consider using team features instead
 
 ## Still Have Questions?
 
-Contact us:
-- 📧 support@obul.ai
+- 📧 [support@obul.ai](mailto:support@obul.ai)
 - 💬 [Discord](https://discord.gg/obul)
 - 🐦 [@obulai](https://twitter.com/obulai)
