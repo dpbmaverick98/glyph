@@ -88,22 +88,225 @@
     background-size: 40px 40px;
   }
   
-  /* Code block styling */
+  /* ===== ENHANCED CODE BLOCK STYLING ===== */
+  
+  /* Main code block container */
   .code-block {
-    @apply rounded-lg bg-[#0d1117] border border-[#30363d] overflow-hidden;
+    @apply rounded-xl bg-[#0d1117] border border-[#30363d] overflow-hidden shadow-lg;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
   }
   
-  .code-block pre {
-    @apply p-4 overflow-x-auto text-sm leading-relaxed;
+  /* Code block header with window dots */
+  .code-block-header {
+    @apply flex items-center justify-between px-4 py-3 bg-[#161b22] border-b border-[#30363d];
   }
   
-  .code-block code {
-    @apply font-mono text-[#e6edf3];
+  /* Window control dots (macOS style) */
+  .code-block-dots {
+    @apply flex items-center gap-2;
   }
   
-  /* Inline code */
+  .code-block-dots span {
+    @apply w-3 h-3 rounded-full;
+  }
+  
+  .code-block-dots span:nth-child(1) {
+    @apply bg-[#ff5f56];
+  }
+  
+  .code-block-dots span:nth-child(2) {
+    @apply bg-[#ffbd2e];
+  }
+  
+  .code-block-dots span:nth-child(3) {
+    @apply bg-[#27c93f];
+  }
+  
+  /* Language label */
+  .code-block-lang {
+    @apply text-xs font-mono text-[#8b949e] uppercase tracking-wider;
+  }
+  
+  /* Copy button */
+  .copy-btn {
+    @apply flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#8b949e] 
+           bg-[#21262d] hover:bg-[#30363d] hover:text-[#d4b86a] 
+           rounded-md transition-all duration-200 border border-[#30363d];
+  }
+  
+  .copy-btn:hover {
+    @apply border-[#d4b86a]/30;
+  }
+  
+  /* Code block content area */
+  .code-block-pre {
+    @apply p-5 overflow-x-auto text-[13px] leading-6;
+    background: linear-gradient(180deg, #0d1117 0%, #0a0c10 100%);
+  }
+  
+  .code-block-pre code {
+    @apply font-mono;
+    font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', Monaco, Consolas, monospace;
+  }
+  
+  /* Inline code styling */
   code:not(.code-block code) {
-    @apply px-1.5 py-0.5 rounded bg-secondary text-sm font-mono text-foreground/90;
+    @apply px-1.5 py-0.5 rounded-md bg-[#21262d] text-sm font-mono text-[#d4b86a] 
+           border border-[#30363d]/50;
+    font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', Monaco, Consolas, monospace;
+  }
+  
+  /* ===== PRISM SYNTAX HIGHLIGHTING THEME (GitHub Dark) ===== */
+  
+  /* Base token colors */
+  .token.comment,
+  .token.prolog,
+  .token.doctype,
+  .token.cdata {
+    color: #8b949e;
+    font-style: italic;
+  }
+  
+  .token.punctuation {
+    color: #c9d1d9;
+  }
+  
+  .token.namespace {
+    opacity: 0.7;
+  }
+  
+  .token.property,
+  .token.tag,
+  .token.boolean,
+  .token.number,
+  .token.constant,
+  .token.symbol,
+  .token.deleted {
+    color: #79c0ff;
+  }
+  
+  .token.selector,
+  .token.attr-name,
+  .token.string,
+  .token.char,
+  .token.builtin,
+  .token.inserted {
+    color: #a5d6ff;
+  }
+  
+  .token.operator,
+  .token.entity,
+  .token.url,
+  .language-css .token.string,
+  .style .token.string {
+    color: #d2a8ff;
+  }
+  
+  .token.atrule,
+  .token.attr-value,
+  .token.keyword {
+    color: #ff7b72;
+  }
+  
+  .token.function,
+  .token.class-name {
+    color: #d2a8ff;
+  }
+  
+  .token.regex,
+  .token.important,
+  .token.variable {
+    color: #ffa657;
+  }
+  
+  /* Language-specific enhancements */
+  
+  /* JSON */
+  .language-json .token.property {
+    color: #7ee787;
+  }
+  
+  .language-json .token.string {
+    color: #a5d6ff;
+  }
+  
+  .language-json .token.number {
+    color: #79c0ff;
+  }
+  
+  /* Bash/Shell */
+  .language-bash .token.function,
+  .language-shell .token.function {
+    color: #d4b86a;
+  }
+  
+  .language-bash .token.builtin,
+  .language-shell .token.builtin {
+    color: #ff7b72;
+  }
+  
+  /* Python */
+  .language-python .token.keyword {
+    color: #ff7b72;
+  }
+  
+  .language-python .token.function {
+    color: #d2a8ff;
+  }
+  
+  .language-python .token.string {
+    color: #a5d6ff;
+  }
+  
+  /* Go */
+  .language-go .token.keyword {
+    color: #ff7b72;
+  }
+  
+  .language-go .token.function {
+    color: #d2a8ff;
+  }
+  
+  /* JavaScript/TypeScript */
+  .language-javascript .token.keyword,
+  .language-typescript .token.keyword {
+    color: #ff7b72;
+  }
+  
+  .language-javascript .token.function,
+  .language-typescript .token.function {
+    color: #d2a8ff;
+  }
+  
+  .language-javascript .token.string,
+  .language-typescript .token.string {
+    color: #a5d6ff;
+  }
+  
+  .language-javascript .token.number,
+  .language-typescript .token.number {
+    color: #79c0ff;
+  }
+  
+  /* HTTP */
+  .language-http .token.request-line {
+    color: #d4b86a;
+  }
+  
+  .language-http .token.header-name {
+    color: #7ee787;
+  }
+  
+  /* Line numbers (optional) */
+  .line-numbers {
+    @apply pl-12;
+    counter-reset: line;
+  }
+  
+  .line-numbers .line::before {
+    counter-increment: line;
+    content: counter(line);
+    @apply absolute left-0 w-8 text-right text-[#484f58] select-none;
   }
   
   /* Strong/bold text */

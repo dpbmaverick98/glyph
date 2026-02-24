@@ -1,5 +1,14 @@
 import { useState, useEffect, useMemo } from 'react';
 import { marked } from 'marked';
+import Prism from 'prismjs';
+import 'prismjs/components/prism-bash';
+import 'prismjs/components/prism-javascript';
+import 'prismjs/components/prism-typescript';
+import 'prismjs/components/prism-python';
+import 'prismjs/components/prism-go';
+import 'prismjs/components/prism-json';
+import 'prismjs/components/prism-yaml';
+import 'prismjs/components/prism-http';
 import { 
   Menu, 
   Search, 
@@ -102,20 +111,54 @@ function renderTokens(tokens: any[]): string {
   }).join('');
 }
 
-// Custom code block rendering
+// Custom code block rendering with syntax highlighting
 (renderer as any).code = ({ text, lang }: { text: string; lang?: string }) => {
   const language = lang || 'text';
-  const escapedCode = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const languageMap: Record<string, string> = {
+    'bash': 'bash',
+    'sh': 'bash',
+    'shell': 'bash',
+    'js': 'javascript',
+    'javascript': 'javascript',
+    'ts': 'typescript',
+    'typescript': 'typescript',
+    'py': 'python',
+    'python': 'python',
+    'go': 'go',
+    'json': 'json',
+    'yaml': 'yaml',
+    'yml': 'yaml',
+    'http': 'http',
+  };
+  
+  const prismLang = languageMap[language] || 'text';
+  let highlightedCode: string;
+  
+  try {
+    if (prismLang !== 'text' && Prism.languages[prismLang]) {
+      highlightedCode = Prism.highlight(text, Prism.languages[prismLang], prismLang);
+    } else {
+      highlightedCode = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+  } catch {
+    highlightedCode = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+  
   return `
     <div class="code-block my-4">
-      <div class="flex items-center justify-between px-4 py-2 bg-[#161b22] border-b border-[#30363d]">
-        <span class="text-xs text-[#8b949e] font-mono">${language}</span>
-        <button class="copy-btn text-xs text-[#8b949e] hover:text-[#d4b86a] transition-colors flex items-center gap-1" data-code="${encodeURIComponent(text)}">
+      <div class="code-block-header">
+        <div class="code-block-dots">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <span class="code-block-lang">${language}</span>
+        <button class="copy-btn" data-code="${encodeURIComponent(text)}">
           <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
           Copy
         </button>
       </div>
-      <pre><code class="language-${language}">${escapedCode}</code></pre>
+      <pre class="code-block-pre"><code class="language-${prismLang}">${highlightedCode}</code></pre>
     </div>
   `;
 };
