@@ -1,0 +1,198 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Obul Dark Theme */
+    --background: 0 0% 4%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 6%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 6%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 45 50% 55%;
+    --primary-foreground: 0 0% 4%;
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
+    --accent: 45 50% 55%;
+    --accent-foreground: 0 0% 4%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: 45 50% 55%;
+    --radius: 0.5rem;
+    
+    /* Obul Custom Colors */
+    --obul-gold: 45 50% 55%;
+    --obul-gold-light: 45 60% 65%;
+    --obul-gold-dark: 45 40% 45%;
+    --obul-grid: 0 0% 15%;
+    --obul-success: 142 76% 45%;
+    
+    /* Sidebar */
+    --sidebar-background: 0 0% 6%;
+    --sidebar-foreground: 0 0% 80%;
+    --sidebar-primary: 45 50% 55%;
+    --sidebar-primary-foreground: 0 0% 4%;
+    --sidebar-accent: 0 0% 12%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 0 0% 15%;
+    --sidebar-ring: 45 50% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--background));
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground));
+  }
+}
+
+@layer components {
+  /* Grid background pattern */
+  .grid-pattern {
+    background-image: 
+      linear-gradient(to right, hsl(var(--obul-grid) / 0.3) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--obul-grid) / 0.3) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  
+  /* Code block styling */
+  .code-block {
+    @apply rounded-lg bg-[#0d1117] border border-[#30363d] overflow-hidden;
+  }
+  
+  .code-block pre {
+    @apply p-4 overflow-x-auto text-sm leading-relaxed;
+  }
+  
+  .code-block code {
+    @apply font-mono text-[#e6edf3];
+  }
+  
+  /* Inline code */
+  code:not(.code-block code) {
+    @apply px-1.5 py-0.5 rounded bg-secondary text-sm font-mono text-foreground/90;
+  }
+  
+  /* Strong/bold text */
+  .prose strong {
+    @apply font-semibold text-foreground;
+  }
+  
+  /* Gold accent text */
+  .text-gold {
+    @apply text-[#d4b86a];
+  }
+  
+  /* Glow effect for logo */
+  .glow-gold {
+    text-shadow: 0 0 20px hsl(45 50% 55% / 0.5),
+                 0 0 40px hsl(45 50% 55% / 0.3),
+                 0 0 60px hsl(45 50% 55% / 0.2);
+  }
+  
+  /* Status badges */
+  .badge-coming-soon {
+    @apply px-2 py-0.5 text-xs rounded-full bg-[#d4b86a]/10 text-[#d4b86a] border border-[#d4b86a]/30;
+  }
+  
+  /* Table styling */
+  .docs-table {
+    @apply w-full border-collapse;
+  }
+  
+  .docs-table th {
+    @apply px-4 py-3 text-left text-sm font-semibold text-foreground/80 bg-secondary border-b border-border;
+  }
+  
+  .docs-table td {
+    @apply px-4 py-3 text-sm text-foreground/70 border-b border-border;
+  }
+  
+  .docs-table tr:hover td {
+    @apply bg-secondary/50;
+  }
+  
+  /* Link styling */
+  .docs-link {
+    @apply text-[#d4b86a] hover:text-[#e5c97b] transition-colors underline underline-offset-4;
+  }
+  
+  /* Heading anchors */
+  .heading-anchor {
+    @apply ml-2 opacity-0 group-hover:opacity-100 text-muted-foreground hover:text-[#d4b86a] transition-opacity;
+  }
+  
+  /* Callout boxes */
+  .callout {
+    @apply p-4 rounded-lg border-l-4;
+  }
+  
+  .callout-info {
+    @apply bg-blue-500/10 border-blue-500 text-blue-200;
+  }
+  
+  .callout-warning {
+    @apply bg-amber-500/10 border-amber-500 text-amber-200;
+  }
+  
+  .callout-success {
+    @apply bg-green-500/10 border-green-500 text-green-200;
+  }
+  
+  /* LLM link in footer */
+  .llm-link {
+    @apply text-xs text-muted-foreground hover:text-[#d4b86a] transition-colors;
+  }
+}
+
+@layer utilities {
+  /* Typography scale */
+  .text-display {
+    @apply text-4xl font-bold tracking-tight;
+  }
+  
+  .text-title {
+    @apply text-2xl font-semibold tracking-tight;
+  }
+  
+  .text-body {
+    @apply text-base leading-7;
+  }
+  
+  .text-small {
+    @apply text-sm leading-5;
+  }
+}

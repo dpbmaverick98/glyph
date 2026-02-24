@@ -1,0 +1,111 @@
+{
+  "name": "Obul Documentation",
+  "description": "One API key. Infinite agents.",
+  "logo": "/obul-logo.svg",
+  "favicon": "/favicon.ico",
+  "baseUrl": "https://docs.obul.ai",
+  "llmsTxt": "/llms.txt",
+  "llmsFullTxt": "/llms-full.txt",
+  "sidebar": [
+    {
+      "group": "Core Concepts",
+      "items": [
+        {
+          "label": "What is Obul?",
+          "slug": "core/what-is-obul",
+          "file": "core/what-is-obul.md"
+        },
+        {
+          "label": "The Wallet Problem",
+          "slug": "core/the-wallet-problem",
+          "file": "core/the-wallet-problem.md"
+        },
+        {
+          "label": "What is x402?",
+          "slug": "core/x402-primer",
+          "file": "core/x402-primer.md"
+        },
+        {
+          "label": "Obul vs x402",
+          "slug": "core/obul-vs-x402",
+          "file": "core/obul-vs-x402.md"
+        }
+      ]
+    },
+    {
+      "group": "Getting Started",
+      "items": [
+        {
+          "label": "Quickstart",
+          "slug": "getting-started/quickstart",
+          "file": "getting-started/quickstart.md"
+        },
+        {
+          "label": "Dashboard Guide",
+          "slug": "getting-started/dashboard",
+          "file": "getting-started/dashboard.md"
+        }
+      ]
+    },
+    {
+      "group": "Technical Reference",
+      "items": [
+        {
+          "label": "API Reference",
+          "slug": "reference/api",
+          "file": "reference/api.md"
+        }
+      ]
+    },
+    {
+      "group": "Products",
+      "items": [
+        {
+          "label": "Obul CLI",
+          "slug": "products/obul-cli",
+          "file": "products/obul-cli.md",
+          "badge": "Coming Soon"
+        },
+        {
+          "label": "Obul UI Login",
+          "slug": "products/obul-ui",
+          "file": "products/obul-ui.md",
+          "badge": "Coming Soon"
+        },
+        {
+          "label": "Obul x402 Gateway",
+          "slug": "products/obul-gateway",
+          "file": "products/obul-gateway.md",
+          "badge": "Coming Soon"
+        }
+      ]
+    },
+    {
+      "group": "Support",
+      "items": [
+        {
+          "label": "FAQ",
+          "slug": "faq",
+          "file": "faq.md"
+        }
+      ]
+    }
+  ],
+  "nav": {
+    "links": [
+      {
+        "label": "Dashboard",
+        "href": "https://my.obul.ai"
+      },
+      {
+        "label": "Proxy",
+        "href": "https://proxy.obul.ai"
+      }
+    ],
+    "social": {
+      "discord": "https://discord.gg/obul",
+      "twitter": "https://twitter.com/obulai",
+      "github": "https://github.com/obulai"
+    }
+  }
+}
