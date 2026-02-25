@@ -261,6 +261,31 @@ function renderTokens(tokens: any[]): string {
 
 marked.use({ renderer });
 
+// Parse :::tip blocks to HTML
+function parseTipBlocks(markdown: string): string {
+  const tipBlockRegex = /:::(\w+)\s*([\s\S]*?):::/g;
+  return markdown.replace(tipBlockRegex, (_match, type, content) => {
+    const tipTypes: Record<string, { icon: string; class: string }> = {
+      tip: { icon: '💡', class: 'bg-green-500/10 border-green-500/30' },
+      warning: { icon: '⚠️', class: 'bg-yellow-500/10 border-yellow-500/30' },
+      danger: { icon: '🚨', class: 'bg-red-500/10 border-red-500/30' },
+      info: { icon: 'ℹ️', class: 'bg-blue-500/10 border-blue-500/30' },
+    };
+    const { icon, class: bgClass } = tipTypes[type] || tipTypes.tip;
+    
+    // Process inner content for markdown
+    const innerContent = marked.parseInline(content.trim());
+    
+    return `<div class="callout ${bgClass} rounded-lg p-4 my-4 border-l-4">
+      <div class="flex items-center gap-2 font-semibold text-foreground mb-2">
+        <span>${icon}</span>
+        <span class="capitalize">${type}</span>
+      </div>
+      <div class="text-foreground/80">${innerContent}</div>
+    </div>`;
+  });
+}
+
 // Load all docs content
 function loadDocs(): Record<string, DocContent> {
   const docs: Record<string, DocContent> = {};
@@ -272,7 +297,7 @@ function loadDocs(): Record<string, DocContent> {
     docs[relativePath] = {
       title: data.title || 'Untitled',
       description: data.description || '',
-      content: marked.parse(body) as string,
+      content: marked.parse(parseTipBlocks(body)) as string,
       sidebar_position: data.sidebar_position ? parseInt(data.sidebar_position) : undefined,
       status: data.status,
     };
