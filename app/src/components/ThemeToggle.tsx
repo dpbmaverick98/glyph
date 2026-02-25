@@ -2,7 +2,7 @@ import { Sun, Moon, Monitor } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
 
 export function ThemeToggle() {
-  const { theme, setTheme, resolvedTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
 
   return (
     <div className="flex items-center gap-1 p-1 rounded-lg bg-secondary border border-border">

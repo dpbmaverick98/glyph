@@ -21,10 +21,8 @@ import {
 } from 'lucide-react';
 import { SearchModal, SearchTrigger } from './components/Search';
 import { Hero } from './components/Hero';
-import { ThemeProvider, useTheme } from './components/ThemeProvider';
+import { ThemeProvider } from './components/ThemeProvider';
 import { ThemeToggle } from './components/ThemeToggle';
-import { GeistSans } from 'geist/font/sans';
-import { GeistMono } from 'geist/font/mono';
 import './App.css';
 
 // Types

@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { Check } from 'lucide-react';
 
 interface StepProps {
@@ -39,10 +39,9 @@ export function Step({ number, title, children, isActive, isCompleted }: StepPro
 
 interface StepsProps {
   children: ReactNode;
-  currentStep?: number;
 }
 
-export function Steps({ children, currentStep = 1 }: StepsProps) {
+export function Steps({ children }: StepsProps) {
   return (
     <div className="my-6">
       {children}

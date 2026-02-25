@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { ArrowRight, Zap, Shield, Globe } from 'lucide-react';
 
 interface HeroProps {
