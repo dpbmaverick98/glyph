@@ -3,7 +3,7 @@ export { Accordion, AccordionGroup } from './Accordion';
 export { Card, CardGroup } from './Card';
 export { Tabs, TabGroup, TabPanel } from './Tabs';
 export { SearchModal, SearchTrigger } from './Search';
-export { Hero } from './Hero';
+export { LandingLayout } from './LandingLayout';
 export { ThemeProvider, useTheme } from './ThemeProvider';
 export { ThemeToggle } from './ThemeToggle';
 export { Breadcrumbs } from './Breadcrumbs';

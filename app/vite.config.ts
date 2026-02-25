@@ -1,3 +1,4 @@
+import mdx from '@mdx-js/rollup'
 import path from "path"
 import react from "@vitejs/plugin-react"
 import { defineConfig } from "vite"
@@ -130,6 +131,7 @@ function generateLlmFiles() {
 export default defineConfig({
   base: './',
   plugins: [
+    { enforce: 'pre', ...mdx() },
     react(),
     generateLlmFiles()
   ],

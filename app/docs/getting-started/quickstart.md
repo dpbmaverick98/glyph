@@ -1,146 +1,81 @@
 ---
 title: Quickstart
-description: Get started with Glyph in minutes.
+description: Get your Glyph documentation site running in under 5 minutes
+sidebar_position: 2
 ---
 
 # Quickstart
 
-Get your Glyph documentation site running in under 5 minutes.
+Get your documentation site running in under 5 minutes.
 
-## Installation
-
-### Using npm
+## One-Command Setup
 
 ```bash
-npm create glyph-docs@latest my-docs
+npx create glyph-docs@latest my-docs
 cd my-docs
-npm install
 npm run dev
 ```
 
-### Using yarn
+That's it! Your docs are now running at `http://localhost:5173`.
 
-```bash
-yarn create glyph-docs my-docs
-cd my-docs
-yarn
-yarn dev
-```
+## What just happened?
 
-### Using pnpm
-
-```bash
-pnpm create glyph-docs my-docs
-cd my-docs
-pnpm install
-pnpm dev
-```
+1. **Created project** - A new Glyph site with example content
+2. **Installed dependencies** - React, Vite, Tailwind, and more
+3. **Started dev server** - Hot reload enabled for instant updates
 
 ## Project Structure
 
 ```
 my-docs/
-├── docs/                 # Your markdown content
-│   ├── docs.json        # Navigation configuration
-│   ├── index.md         # Homepage content
+├── docs/                  # Your documentation content
+│   ├── docs.json         # Navigation configuration
+│   ├── getting-started/  # Getting started docs
 │   └── ...
-├── app/                 # Glyph framework (don't modify)
+├── src/                  # Source code
+│   ├── components/       # React components
+│   └── ...
 └── package.json
 ```
 
-## Adding Content
+## Next Steps
 
-### Create a Page
+### Add Your Content
 
-```bash
-echo "# My First Page\n\nHello from Glyph!" > docs/hello.md
-```
+1. Create `.md` files in the `docs/` folder
+2. Add them to `docs.json` navigation
+3. See them live instantly
 
-### Add to Navigation
+### Try Different Themes
 
-Edit `docs/docs.json`:
+Glyph comes with 7 built-in themes. Open the theme switcher in the header to try them all.
 
-```json
-{
-  "sidebar": [
-    {
-      "group": "Getting Started",
-      "items": [
-        {
-          "label": "Hello World",
-          "slug": "hello",
-          "file": "hello.md"
-        }
-      ]
-    }
-  ]
-}
-```
-
-### Frontmatter
-
-Add metadata to your pages:
-
-```markdown
----
-title: My Page Title
-description: A brief description
-status: beta
----
-
-# Content starts here
-```
-
-## Customization
-
-### Change Colors
-
-Edit `app/src/index.css`:
-
-```css
-:root {
-  --primary: 210 80% 50%;  /* Your brand color */
-}
-```
-
-### Update Logo
-
-Replace `app/public/logo.png` with your logo.
-
-### Site Config
-
-Edit `docs/docs.json`:
-
-```json
-{
-  "name": "Your Project",
-  "description": "Your description",
-  "logo": "/logo.png",
-  "favicon": "/favicon.ico"
-}
-```
-
-## Deployment
-
-### Build
+### Deploy
 
 ```bash
 npm run build
 ```
 
-Output goes to `dist/` folder.
+Upload the `dist/` folder to any static host (Vercel, Netlify, GitHub Pages, etc.)
 
-### Deploy Anywhere
+## One-Click Deploy
 
-Glyph generates static files. Deploy to:
-- [Vercel](https://vercel.com)
-- [Netlify](https://netlify.com)
-- [GitHub Pages](https://pages.github.com)
-- Any static host
+<CardGroup cols={3}>
+  <Card title="Vercel" icon="globe" href="https://vercel.com/new">
+    Deploy to Vercel
+  </Card>
+  
+  <Card title="Netlify" icon="globe" href="https://app.netlify.com/start">
+    Deploy to Netlify
+  </Card>
+  
+  <Card title="Cloudflare" icon="globe" href="https://dash.cloudflare.com">
+    Deploy to Cloudflare Pages
+  </Card>
+</CardGroup>
 
-## Next Steps
+## Need Help?
 
-- Learn about [Components](/components)
-- Customize your [Theme](/theming)
-- Add [Search](/search)
-- Configure [Navigation](/navigation)
+- [Installation Guide](/getting-started/installation) - Detailed setup options
+- [Your First Page](/getting-started/first-page) - Creating content
+- [Deployment](/getting-started/deployment) - Going to production

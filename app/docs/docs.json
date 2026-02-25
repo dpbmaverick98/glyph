@@ -1,6 +1,6 @@
 {
   "name": "Glyph",
-  "description": "A lightweight documentation framework inspired by Mintlify",
+  "description": "A documentation framework with personality",
   "logo": "/glyph-logo.svg",
   "favicon": "/favicon.ico",
   "baseUrl": "https://glyph-docs.vercel.app",
@@ -8,80 +8,192 @@
   "llmsFullTxt": "/llms-full.txt",
   "sidebar": [
     {
-      "group": "Core Concepts",
-      "items": [
-        {
-          "label": "What is Glyph?",
-          "slug": "core/what-is-glyph",
-          "file": "core/what-is-glyph.md"
-        },
-        {
-          "label": "Markdown Guide",
-          "slug": "core/markdown-guide",
-          "file": "core/x402-primer.md"
-        },
-        {
-          "label": "Glyph vs Others",
-          "slug": "core/glyph-vs-others",
-          "file": "core/glyph-vs-x402.md"
-        }
-      ]
-    },
-    {
       "group": "Getting Started",
       "items": [
+        {
+          "label": "Introduction",
+          "slug": "getting-started/introduction",
+          "file": "getting-started/introduction.md"
+        },
         {
           "label": "Quickstart",
           "slug": "getting-started/quickstart",
           "file": "getting-started/quickstart.md"
         },
         {
-          "label": "Configuration",
-          "slug": "getting-started/dashboard",
-          "file": "getting-started/dashboard.md"
+          "label": "Installation",
+          "slug": "getting-started/installation",
+          "file": "getting-started/installation.md"
+        },
+        {
+          "label": "Your First Page",
+          "slug": "getting-started/first-page",
+          "file": "getting-started/first-page.md"
+        },
+        {
+          "label": "Deployment",
+          "slug": "getting-started/deployment",
+          "file": "getting-started/deployment.md"
         }
       ]
     },
     {
-      "group": "Technical Reference",
+      "group": "Core Concepts",
       "items": [
         {
-          "label": "API Reference",
-          "slug": "reference/api",
-          "file": "reference/api.md"
+          "label": "How Glyph Works",
+          "slug": "core/how-it-works",
+          "file": "core/how-it-works.md"
+        },
+        {
+          "label": "Markdown & MDX",
+          "slug": "core/markdown-mdx",
+          "file": "core/markdown-mdx.md"
+        },
+        {
+          "label": "Configuration",
+          "slug": "core/configuration",
+          "file": "core/configuration.md"
+        },
+        {
+          "label": "Theming",
+          "slug": "core/theming",
+          "file": "core/theming.md"
         }
       ]
     },
     {
-      "group": "Features",
+      "group": "Components",
       "items": [
+        {
+          "label": "Overview",
+          "slug": "components/overview",
+          "file": "components/overview.md"
+        },
+        {
+          "label": "Callout",
+          "slug": "components/callout",
+          "file": "components/callout.md"
+        },
+        {
+          "label": "Card & CardGroup",
+          "slug": "components/card",
+          "file": "components/card.md"
+        },
+        {
+          "label": "Accordion",
+          "slug": "components/accordion",
+          "file": "components/accordion.md"
+        },
+        {
+          "label": "Tabs",
+          "slug": "components/tabs",
+          "file": "components/tabs.md"
+        },
+        {
+          "label": "Code Blocks",
+          "slug": "components/code-blocks",
+          "file": "components/code-blocks.md"
+        },
+        {
+          "label": "Tables",
+          "slug": "components/tables",
+          "file": "components/tables.md"
+        },
+        {
+          "label": "Custom Components",
+          "slug": "components/custom",
+          "file": "components/custom.md"
+        }
+      ]
+    },
+    {
+      "group": "Customization",
+      "items": [
+        {
+          "label": "Themes",
+          "slug": "customization/themes",
+          "file": "customization/themes.md"
+        },
+        {
+          "label": "Custom CSS",
+          "slug": "customization/custom-css",
+          "file": "customization/custom-css.md"
+        },
+        {
+          "label": "Custom Fonts",
+          "slug": "customization/custom-fonts",
+          "file": "customization/custom-fonts.md"
+        },
+        {
+          "label": "Custom Components",
+          "slug": "customization/custom-components",
+          "file": "customization/custom-components.md"
+        }
+      ]
+    },
+    {
+      "group": "Integrations",
+      "items": [
+        {
+          "label": "Search",
+          "slug": "integrations/search",
+          "file": "integrations/search.md"
+        },
+        {
+          "label": "Analytics",
+          "slug": "integrations/analytics",
+          "file": "integrations/analytics.md"
+        },
+        {
+          "label": "Custom Domains",
+          "slug": "integrations/custom-domains",
+          "file": "integrations/custom-domains.md"
+        }
+      ]
+    },
+    {
+      "group": "Examples",
+      "items": [
+        {
+          "label": "Showcase",
+          "slug": "examples/showcase",
+          "file": "examples/showcase.md"
+        },
+        {
+          "label": "API Documentation",
+          "slug": "examples/api-docs",
+          "file": "examples/api-docs.md"
+        },
+        {
+          "label": "Knowledge Base",
+          "slug": "examples/knowledge-base",
+          "file": "examples/knowledge-base.md"
+        },
+        {
+          "label": "Blog",
+          "slug": "examples/blog",
+          "file": "examples/blog.md"
+        }
+      ]
+    },
+    {
+      "group": "Reference",
+      "items": [
+        {
+          "label": "Configuration API",
+          "slug": "reference/configuration",
+          "file": "reference/configuration.md"
+        },
         {
           "label": "CLI",
-          "slug": "products/glyph-cli",
-          "file": "products/glyph-cli.md",
-          "badge": "Coming Soon"
+          "slug": "reference/cli",
+          "file": "reference/cli.md"
         },
         {
-          "label": "UI Components",
-          "slug": "products/glyph-ui",
-          "file": "products/glyph-ui.md",
-          "badge": "Coming Soon"
-        },
-        {
-          "label": "Deploy",
-          "slug": "products/glyph-gateway",
-          "file": "products/glyph-gateway.md",
-          "badge": "Coming Soon"
-        }
-      ]
-    },
-    {
-      "group": "Support",
-      "items": [
-        {
-          "label": "FAQ",
-          "slug": "faq",
-          "file": "faq.md"
+          "label": "Troubleshooting",
+          "slug": "reference/troubleshooting",
+          "file": "reference/troubleshooting.md"
         }
       ]
     }

@@ -22,7 +22,7 @@ export interface Theme {
     pageLoad: 'fade' | 'slide' | 'scale' | 'none';
     scrollReveal: boolean;
     hoverScale: boolean;
-    cursorEffect?: 'none' | 'glow' | 'trail';
+    cursorEffect?: 'none' | 'glow' | 'trail' | 'blink';
   };
 }
 
@@ -30,7 +30,7 @@ export const themes: Theme[] = [
   {
     id: 'minimal',
     name: 'Minimal',
-    description: 'Clean, modern, Apple-inspired design',
+    description: 'Clean, modern, Apple-inspired',
     preview: '/themes/minimal-preview.png',
     colors: {
       primary: '#007AFF',
@@ -83,7 +83,7 @@ export const themes: Theme[] = [
   {
     id: 'glass',
     name: 'Glass',
-    description: 'Glassmorphism with blur effects',
+    description: 'Glassmorphism with blur',
     preview: '/themes/glass-preview.png',
     colors: {
       primary: '#a855f7',
@@ -109,7 +109,7 @@ export const themes: Theme[] = [
   {
     id: 'brutalist',
     name: 'Brutalist',
-    description: 'Bold, raw, Swiss design inspired',
+    description: 'Bold, raw, Swiss design',
     preview: '/themes/brutalist-preview.png',
     colors: {
       primary: '#ff0000',
@@ -136,7 +136,7 @@ export const themes: Theme[] = [
   {
     id: 'cyber',
     name: 'Cyber',
-    description: 'Dark, neon, cyberpunk aesthetic',
+    description: 'Dark, neon, cyberpunk',
     preview: '/themes/cyber-preview.png',
     colors: {
       primary: '#00f0ff',
@@ -155,6 +155,87 @@ export const themes: Theme[] = [
     radius: '0.5rem',
     animations: {
       pageLoad: 'fade',
+      scrollReveal: true,
+      hoverScale: true,
+      cursorEffect: 'trail',
+    },
+  },
+  {
+    id: 'terminal',
+    name: 'Terminal',
+    description: 'Command-line hacker vibe',
+    preview: '/themes/terminal-preview.png',
+    colors: {
+      primary: '#00ff41',
+      background: '#0c0c0c',
+      foreground: '#cccccc',
+      card: '#161616',
+      border: '#333333',
+      muted: '#666666',
+      accent: '#ff5f56',
+    },
+    fonts: {
+      sans: 'JetBrains Mono, monospace',
+      mono: 'JetBrains Mono, monospace',
+      display: 'JetBrains Mono, monospace',
+    },
+    radius: '0.25rem',
+    animations: {
+      pageLoad: 'none',
+      scrollReveal: false,
+      hoverScale: false,
+      cursorEffect: 'blink',
+    },
+  },
+  {
+    id: 'halloween',
+    name: 'Halloween',
+    description: 'Spooky orange & purple',
+    preview: '/themes/halloween-preview.png',
+    colors: {
+      primary: '#ff6600',
+      background: '#1a0a2e',
+      foreground: '#e8d5f2',
+      card: '#2d1b4e',
+      border: '#ff660033',
+      muted: '#8b7aa0',
+      accent: '#9d00ff',
+    },
+    fonts: {
+      sans: 'Inter, system-ui, sans-serif',
+      mono: 'JetBrains Mono, monospace',
+      display: 'Creepster, cursive',
+    },
+    radius: '0.75rem',
+    animations: {
+      pageLoad: 'fade',
+      scrollReveal: true,
+      hoverScale: true,
+      cursorEffect: 'glow',
+    },
+  },
+  {
+    id: 'synthwave',
+    name: 'Synthwave',
+    description: 'Sunset gradients, retro future',
+    preview: '/themes/synthwave-preview.png',
+    colors: {
+      primary: '#ff00ff',
+      background: '#0a0a1a',
+      foreground: '#ffffff',
+      card: '#1a1a3e',
+      border: '#ff00ff33',
+      muted: '#8b8bb0',
+      accent: '#00ffff',
+    },
+    fonts: {
+      sans: 'Inter, system-ui, sans-serif',
+      mono: 'JetBrains Mono, monospace',
+      display: 'Orbitron, sans-serif',
+    },
+    radius: '0.5rem',
+    animations: {
+      pageLoad: 'slide',
       scrollReveal: true,
       hoverScale: true,
       cursorEffect: 'trail',
