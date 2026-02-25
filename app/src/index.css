@@ -2,6 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Geist Font - Load from Vercel's CDN */
+@import url('https://assets.vercel.com/font/geist-sans/GeistSans-Variable.woff2') format('woff2');
+@import url('https://assets.vercel.com/font/geist-mono/GeistMono-Variable.woff2') format('woff2');
+
+@font-face {
+  font-family: 'Geist Sans';
+  src: url('https://assets.vercel.com/font/geist-sans/GeistSans-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('https://assets.vercel.com/font/geist-mono/GeistMono-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: normal;
+}
+
 @layer base {
   :root {
     /* Light Mode (Default) */
@@ -33,10 +53,10 @@
     --obul-grid: 0 0% 90%;
     --obul-success: 142 76% 45%;
     
-    /* Typography */
-    --font-sans: 'Geist', system-ui, -apple-system, sans-serif;
-    --font-mono: 'Geist Mono', 'JetBrains Mono', monospace;
-    --font-pixel: 'Geist Pixel Square', monospace;
+    /* Typography - Geist Fonts */
+    --font-sans: 'Geist Sans', system-ui, -apple-system, sans-serif;
+    --font-mono: 'Geist Mono', 'SF Mono', Monaco, Consolas, monospace;
+    --font-pixel: 'Geist Mono', monospace;
     
     /* Sidebar */
     --sidebar-background: 0 0% 98%;
@@ -86,19 +106,29 @@
     transition: background-color 0.3s ease, color 0.3s ease;
   }
   
-  /* Typography */
+  /* Typography - Geist Sans with tight tracking */
   body, p, li, td, th {
     font-family: var(--font-sans);
+    font-feature-settings: "ss01" 1, "ss02" 1, "cv01" 1;
   }
   
   code, pre, kbd, .font-mono {
     font-family: var(--font-mono);
+    font-feature-settings: "ss01" 1, "ss02" 1;
   }
   
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-sans);
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
     font-weight: 600;
+    font-feature-settings: "ss01" 1, "ss02" 1;
+  }
+  
+  /* Pixel font style for special display text */
+  .font-pixel {
+    font-family: var(--font-mono);
+    letter-spacing: 0;
+    font-feature-settings: "ss01" 1;
   }
   
   /* Scrollbar */
