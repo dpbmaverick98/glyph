@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 import type { Theme } from './registry';
 import { themes, defaultTheme } from './registry';
+import { useCursorGlow, useCursorTrail, useBlinkCursor, useScanlines, useGridBackground, useFogEffect } from './animations';
 
 interface ThemeContextType {
   theme: Theme;
@@ -9,6 +10,20 @@ interface ThemeContextType {
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+
+function ThemeEffects({ theme }: { theme: Theme }) {
+  // Cursor effects
+  useCursorGlow(theme.animations.cursorEffect === 'glow');
+  useCursorTrail(theme.animations.cursorEffect === 'trail');
+  useBlinkCursor(theme.animations.cursorEffect === 'blink');
+  
+  // Background effects
+  useScanlines(theme.id === 'pixel');
+  useGridBackground(theme.id === 'cyber' || theme.id === 'synthwave');
+  useFogEffect(theme.id === 'halloween');
+  
+  return null;
+}
 
 export function ThemePresetProvider({ children }: { children: ReactNode }) {
   const [theme, setThemeState] = useState<Theme>(defaultTheme);
@@ -70,6 +85,7 @@ export function ThemePresetProvider({ children }: { children: ReactNode }) {
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme, availableThemes: themes }}>
+      <ThemeEffects theme={theme} />
       {children}
     </ThemeContext.Provider>
   );
