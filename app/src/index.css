@@ -4,49 +4,70 @@
 
 @layer base {
   :root {
-    /* Mintlify-inspired Design Tokens */
+    /* Light Mode (Default) */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 9%;
+    --primary: 45 50% 55%;
+    --primary-foreground: 0 0% 4%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 45 50% 55%;
+    --accent-foreground: 0 0% 4%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 45 50% 55%;
+    --radius: 0.75rem;
+    
+    /* Obul Colors */
+    --obul-gold: 45 50% 55%;
+    --obul-gold-light: 45 60% 65%;
+    --obul-gold-dark: 45 40% 45%;
+    --obul-grid: 0 0% 90%;
+    --obul-success: 142 76% 45%;
+    
+    /* Typography */
+    --font-sans: 'Geist', system-ui, -apple-system, sans-serif;
+    --font-mono: 'Geist Mono', 'JetBrains Mono', monospace;
+    --font-pixel: 'Geist Pixel Square', monospace;
+    
+    /* Sidebar */
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 0 0% 30%;
+    --sidebar-primary: 45 50% 55%;
+    --sidebar-primary-foreground: 0 0% 4%;
+    --sidebar-accent: 0 0% 96%;
+    --sidebar-accent-foreground: 0 0% 9%;
+    --sidebar-border: 0 0% 90%;
+    --sidebar-ring: 45 50% 55%;
+  }
+
+  .dark {
+    /* Dark Mode */
     --background: 0 0% 4%;
     --foreground: 0 0% 98%;
     --card: 0 0% 6%;
     --card-foreground: 0 0% 98%;
     --popover: 0 0% 6%;
     --popover-foreground: 0 0% 98%;
-    --primary: 45 50% 55%;
-    --primary-foreground: 0 0% 4%;
     --secondary: 0 0% 12%;
     --secondary-foreground: 0 0% 98%;
     --muted: 0 0% 15%;
     --muted-foreground: 0 0% 60%;
-    --accent: 45 50% 55%;
-    --accent-foreground: 0 0% 4%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
     --border: 0 0% 18%;
     --input: 0 0% 18%;
-    --ring: 45 50% 55%;
-    --radius: 0.75rem;
-    
-    /* Obul Custom Colors */
-    --obul-gold: 45 50% 55%;
-    --obul-gold-light: 45 60% 65%;
-    --obul-gold-dark: 45 40% 45%;
     --obul-grid: 0 0% 15%;
-    --obul-success: 142 76% 45%;
-    
-    /* Typography - Geist fonts will be applied via CSS classes */
-    --font-sans: 'Geist', system-ui, -apple-system, sans-serif;
-    --font-mono: 'Geist Mono', 'JetBrains Mono', monospace;
-    --font-pixel: 'Geist Pixel Square', monospace;
-    
-    /* Sidebar */
     --sidebar-background: 0 0% 6%;
     --sidebar-foreground: 0 0% 80%;
-    --sidebar-primary: 45 50% 55%;
-    --sidebar-primary-foreground: 0 0% 4%;
     --sidebar-accent: 0 0% 12%;
-    --sidebar-accent-foreground: 0 0% 98%;
     --sidebar-border: 0 0% 15%;
-    --sidebar-ring: 45 50% 55%;
   }
 }
 
@@ -62,26 +83,25 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
   
-  /* Geist Sans for body text */
+  /* Typography */
   body, p, li, td, th {
     font-family: var(--font-sans);
   }
   
-  /* Geist Mono for code */
   code, pre, kbd, .font-mono {
     font-family: var(--font-mono);
   }
   
-  /* Headings use Geist Sans with tight tracking */
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-sans);
     letter-spacing: -0.02em;
     font-weight: 600;
   }
   
-  /* Custom scrollbar - Mintlify style */
+  /* Scrollbar */
   ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
@@ -102,18 +122,21 @@
 }
 
 @layer components {
-  /* Grid background - subtle dot pattern like Mintlify */
+  /* Grid pattern */
   .grid-pattern {
     background-image: 
       radial-gradient(circle at 1px 1px, hsl(var(--obul-grid) / 0.15) 1px, transparent 0);
     background-size: 24px 24px;
   }
   
-  /* ===== CODE BLOCKS - Mintlify Style ===== */
-  
+  /* Code blocks */
   .code-block {
     @apply rounded-xl bg-[#0d1117] border border-[#30363d] overflow-hidden;
     box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3), 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+  }
+  
+  .dark .code-block {
+    @apply bg-[#0d1117] border-[#30363d];
   }
   
   .code-block-header {
@@ -160,77 +183,53 @@
     font-family: var(--font-mono);
   }
   
-  /* ===== PRISM SYNTAX HIGHLIGHTING ===== */
-  
-  .token.comment,
-  .token.prolog,
-  .token.doctype,
-  .token.cdata {
+  /* Prism highlighting */
+  .token.comment, .token.prolog, .token.doctype, .token.cdata {
     color: #6e7681;
     font-style: italic;
   }
   
   .token.punctuation { color: #c9d1d9; }
-  .token.property,
-  .token.tag,
-  .token.boolean,
-  .token.number,
-  .token.constant,
-  .token.symbol { color: #79c0ff; }
+  .token.property, .token.tag, .token.boolean, .token.number, .token.constant, .token.symbol { color: #79c0ff; }
+  .token.selector, .token.attr-name, .token.string, .token.char, .token.builtin { color: #a5d6ff; }
+  .token.operator, .token.entity, .token.url { color: #d2a8ff; }
+  .token.atrule, .token.attr-value, .token.keyword { color: #ff7b72; }
+  .token.function, .token.class-name { color: #d2a8ff; }
   
-  .token.selector,
-  .token.attr-name,
-  .token.string,
-  .token.char,
-  .token.builtin { color: #a5d6ff; }
-  
-  .token.operator,
-  .token.entity,
-  .token.url { color: #d2a8ff; }
-  
-  .token.atrule,
-  .token.attr-value,
-  .token.keyword { color: #ff7b72; }
-  
-  .token.function,
-  .token.class-name { color: #d2a8ff; }
-  
-  /* ===== MINTLIFY-STYLE COMPONENTS ===== */
-  
-  /* Cards - for feature grids, etc. */
+  /* Cards */
   .docs-card {
     @apply rounded-xl border border-border bg-card p-6 transition-all duration-200;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   }
   
   .docs-card:hover {
     @apply border-border/80;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     transform: translateY(-2px);
   }
   
-  /* Callouts - Mintlify style with icons */
+  /* Callouts */
   .callout {
     @apply rounded-lg border-l-4 p-4 my-6;
   }
   
   .callout-info {
-    @apply bg-blue-500/10 border-blue-500/50 text-blue-100;
+    @apply bg-blue-500/10 border-blue-500/50 text-blue-900 dark:text-blue-100;
   }
   
   .callout-warning {
-    @apply bg-amber-500/10 border-amber-500/50 text-amber-100;
+    @apply bg-amber-500/10 border-amber-500/50 text-amber-900 dark:text-amber-100;
   }
   
   .callout-success {
-    @apply bg-green-500/10 border-green-500/50 text-green-100;
+    @apply bg-green-500/10 border-green-500/50 text-green-900 dark:text-green-100;
   }
   
   .callout-error {
-    @apply bg-red-500/10 border-red-500/50 text-red-100;
+    @apply bg-red-500/10 border-red-500/50 text-red-900 dark:text-red-100;
   }
   
-  /* Tables - clean Mintlify style */
+  /* Tables */
   .docs-table {
     @apply w-full border-collapse text-sm;
   }
@@ -247,9 +246,9 @@
     @apply bg-secondary/30;
   }
   
-  /* Links - subtle underline on hover */
+  /* Links */
   .docs-link {
-    @apply text-[#d4b86a] hover:text-[#e5c97b] transition-colors;
+    @apply text-primary hover:text-primary/80 transition-colors;
     text-decoration: none;
     border-bottom: 1px solid transparent;
   }
@@ -260,26 +259,20 @@
   
   /* Heading anchors */
   .heading-anchor {
-    @apply ml-2 opacity-0 group-hover:opacity-100 text-muted-foreground hover:text-[#d4b86a] transition-opacity;
+    @apply ml-2 opacity-0 group-hover:opacity-100 text-muted-foreground hover:text-primary transition-opacity;
   }
   
-  /* Status badges */
+  /* Badges */
   .badge-coming-soon {
-    @apply px-2 py-0.5 text-[11px] font-medium rounded-full bg-[#d4b86a]/10 text-[#d4b86a] border border-[#d4b86a]/30;
+    @apply px-2 py-0.5 text-[11px] font-medium rounded-full bg-primary/10 text-primary border border-primary/30;
   }
   
-  /* LLM link */
-  .llm-link {
-    @apply text-xs text-muted-foreground hover:text-[#d4b86a] transition-colors;
-  }
-  
-  /* Images - Mintlify style with rounded corners and shadow */
+  /* Images */
   .prose img {
     @apply rounded-lg border border-border w-full;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   }
   
-  /* Figures */
   figure {
     @apply my-6;
   }
@@ -288,20 +281,41 @@
     @apply text-center text-sm text-muted-foreground mt-3;
   }
   
-  /* Gold accent */
-  .text-gold {
-    @apply text-[#d4b86a];
-  }
-  
-  /* Glow effect for logo */
-  .glow-gold {
-    text-shadow: 0 0 20px hsl(45 50% 55% / 0.5),
-                 0 0 40px hsl(45 50% 55% / 0.3);
-  }
-  
-  /* Pixel font for special headers */
+  /* Pixel font */
   .font-pixel {
     font-family: var(--font-pixel);
+  }
+  
+  /* Animations */
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Loading skeleton */
+  .skeleton {
+    @apply animate-pulse bg-secondary rounded;
+  }
+  
+  /* Mobile optimizations */
+  @media (max-width: 768px) {
+    .code-block-pre {
+      @apply p-3;
+    }
+    
+    .docs-card {
+      @apply p-4;
+    }
   }
 }
 

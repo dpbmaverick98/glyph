@@ -21,6 +21,8 @@ import {
 } from 'lucide-react';
 import { SearchModal, SearchTrigger } from './components/Search';
 import { Hero } from './components/Hero';
+import { ThemeProvider, useTheme } from './components/ThemeProvider';
+import { ThemeToggle } from './components/ThemeToggle';
 import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
 import './App.css';
@@ -324,7 +326,7 @@ function Sidebar({
       <aside className={`
         fixed lg:sticky top-0 left-0 z-50
         w-72 h-screen
-        bg-[#0a0a0a] border-r border-border
+        bg-background border-r border-border
         flex flex-col
         transition-transform duration-300
         ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
@@ -332,7 +334,7 @@ function Sidebar({
         {/* Logo */}
         <div className="p-4 border-b border-border">
           <a href="/" className="flex items-center gap-3">
-            <span className="text-2xl font-bold text-white glow-gold tracking-wider">OBUL</span>
+            <span className="text-2xl font-bold text-foreground glow-gold tracking-wider">OBUL</span>
           </a>
           <p className="text-xs text-muted-foreground mt-1">Documentation</p>
         </div>
@@ -439,7 +441,7 @@ function Header({
   config: DocsConfig;
 }) {
   return (
-    <header className="sticky top-0 z-30 bg-[#0a0a0a]/95 backdrop-blur border-b border-border">
+    <header className="sticky top-0 z-30 bg-background/95 backdrop-blur border-b border-border">
       <div className="flex items-center justify-between h-14 px-4 lg:px-6">
         {/* Left: Menu button + Logo (mobile) */}
         <div className="flex items-center gap-4">
@@ -450,7 +452,7 @@ function Header({
             <Menu className="w-5 h-5" />
           </button>
           
-          <span className="lg:hidden text-lg font-bold text-white tracking-wider">OBUL</span>
+          <span className="lg:hidden text-lg font-bold text-foreground tracking-wider">OBUL</span>
         </div>
         
         {/* Center: Search */}
@@ -458,15 +460,17 @@ function Header({
           <SearchTrigger onClick={onOpenSearch} />
         </div>
         
-        {/* Right: Nav links */}
+        {/* Right: Nav links + Theme Toggle */}
         <div className="flex items-center gap-4">
+          <ThemeToggle />
+          
           {config.nav.links.map((link, index) => (
             <a
               key={index}
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:flex items-center gap-1 text-sm text-foreground/70 hover:text-obul-gold transition-colors"
+              className="hidden sm:flex items-center gap-1 text-sm text-foreground/70 hover:text-primary transition-colors"
             >
               {link.label}
               <ExternalLink className="w-3 h-3" />
@@ -580,7 +584,7 @@ function App() {
   }, [currentDoc?.content]);
   
   return (
-    <div className="min-h-screen bg-[#0a0a0a] grid-pattern">
+    <div className="min-h-screen bg-background grid-pattern">
       <div className="flex">
         {/* Sidebar */}
         <Sidebar
@@ -683,4 +687,13 @@ function App() {
   );
 }
 
-export default App;
+// Wrap App with ThemeProvider
+function AppWithTheme() {
+  return (
+    <ThemeProvider>
+      <App />
+    </ThemeProvider>
+  );
+}
+
+export default AppWithTheme;
