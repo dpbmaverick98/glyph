@@ -1,9 +1,9 @@
 {
-  "name": "Glyph Documentation",
-  "description": "One API key. Infinite agents.",
+  "name": "Glyph",
+  "description": "A lightweight documentation framework inspired by Mintlify",
   "logo": "/glyph-logo.svg",
   "favicon": "/favicon.ico",
-  "baseUrl": "https://docs.glyph.ai",
+  "baseUrl": "https://glyph-docs.vercel.app",
   "llmsTxt": "/llms.txt",
   "llmsFullTxt": "/llms-full.txt",
   "sidebar": [
@@ -16,13 +16,13 @@
           "file": "core/what-is-glyph.md"
         },
         {
-          "label": "What is x402?",
-          "slug": "core/x402-primer",
+          "label": "Markdown Guide",
+          "slug": "core/markdown-guide",
           "file": "core/x402-primer.md"
         },
         {
-          "label": "Glyph vs x402",
-          "slug": "core/glyph-vs-x402",
+          "label": "Glyph vs Others",
+          "slug": "core/glyph-vs-others",
           "file": "core/glyph-vs-x402.md"
         }
       ]
@@ -36,7 +36,7 @@
           "file": "getting-started/quickstart.md"
         },
         {
-          "label": "Dashboard Guide",
+          "label": "Configuration",
           "slug": "getting-started/dashboard",
           "file": "getting-started/dashboard.md"
         }
@@ -53,22 +53,22 @@
       ]
     },
     {
-      "group": "Products",
+      "group": "Features",
       "items": [
         {
-          "label": "Glyph CLI",
+          "label": "CLI",
           "slug": "products/glyph-cli",
           "file": "products/glyph-cli.md",
           "badge": "Coming Soon"
         },
         {
-          "label": "Glyph UI Login",
+          "label": "UI Components",
           "slug": "products/glyph-ui",
           "file": "products/glyph-ui.md",
           "badge": "Coming Soon"
         },
         {
-          "label": "Glyph x402 Gateway",
+          "label": "Deploy",
           "slug": "products/glyph-gateway",
           "file": "products/glyph-gateway.md",
           "badge": "Coming Soon"
@@ -89,18 +89,14 @@
   "nav": {
     "links": [
       {
-        "label": "Dashboard",
-        "href": "https://my.glyph.ai"
-      },
-      {
-        "label": "Proxy",
-        "href": "https://proxy.glyph.ai"
+        "label": "GitHub",
+        "href": "https://github.com/dpbmaverick98/glyph"
       }
     ],
     "social": {
       "discord": "https://discord.gg/glyph",
       "twitter": "https://twitter.com/glyphai",
-      "github": "https://github.com/glyphai"
+      "github": "https://github.com/dpbmaverick98/glyph"
     }
   }
 }
