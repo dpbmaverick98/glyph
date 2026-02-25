@@ -1,7 +1,6 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { 
   Menu, 
-  ChevronRight, 
   ExternalLink, 
   Github, 
   Twitter, 
@@ -17,7 +16,7 @@ import { DocNavigation } from './components/DocNavigation';
 import { Breadcrumbs } from './components/Breadcrumbs';
 import { loadDocs, findDocFileBySlug, getDocNavigation } from './hooks/useDocs';
 import { configureMarked } from './lib/marked';
-import type { DocsConfig, DocContent, DocItem, SidebarGroup } from './types';
+import type { DocsConfig } from './types';
 import docsConfig from '../docs/docs.json';
 import './App.css';
 
