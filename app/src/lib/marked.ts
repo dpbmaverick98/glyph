@@ -62,7 +62,7 @@ export function createRenderer(): Renderer {
         4: 'text-lg font-medium mt-4 mb-2',
       };
       return `
-        <h${depth} id="${slug}" class="group ${sizes[depth] || ''} text-foreground">
+        <h${depth} id="${slug}" class="group ${sizes[depth] || ''} text-foreground" style="scroll-margin-top: 80px;">
           ${text}
           <a href="#${slug}" class="heading-anchor">#</a>
         </h${depth}>
