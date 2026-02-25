@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "@types/prismjs": "^1.26.6",
-    "geist": "^1.7.0",
     "lucide-react": "^0.562.0",
     "marked": "^17.0.3",
     "mermaid": "^11.12.3",

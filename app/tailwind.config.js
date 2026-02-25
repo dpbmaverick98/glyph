@@ -48,8 +48,8 @@ module.exports = {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
-        // Obul custom colors
-        obul: {
+        // Glyph custom colors
+        glyph: {
           gold: "#d4b86a",
           "gold-light": "#e5c97b",
           "gold-dark": "#b8a050",

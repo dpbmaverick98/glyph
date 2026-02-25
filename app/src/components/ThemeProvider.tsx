@@ -71,7 +71,11 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   // Prevent flash by not rendering until mounted
   if (!mounted) {
-    return <div style={{ visibility: 'hidden' }}>{children}</div>;
+    return (
+      <ThemeContext.Provider value={{ theme: 'system', setTheme: () => {}, resolvedTheme: 'dark' }}>
+        <div style={{ visibility: 'hidden' }}>{children}</div>
+      </ThemeContext.Provider>
+    );
   }
 
   return (

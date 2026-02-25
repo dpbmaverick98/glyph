@@ -1,34 +1,6 @@
-/* Geist Font - Load from Vercel's CDN */
-@import url('https://assets.vercel.com/font/geist-sans/GeistSans-Variable.woff2') format('woff2');
-@import url('https://assets.vercel.com/font/geist-mono/GeistMono-Variable.woff2') format('woff2');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@font-face {
-  font-family: 'Geist Sans';
-  src: url('https://assets.vercel.com/font/geist-sans/GeistSans-Variable.woff2') format('woff2');
-  font-weight: 100 900;
-  font-display: swap;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Geist Mono';
-  src: url('https://assets.vercel.com/font/geist-mono/GeistMono-Variable.woff2') format('woff2');
-  font-weight: 100 900;
-  font-display: swap;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Geist Pixel';
-  src: url('https://assets.vercel.com/font/geist-pixel/GeistPixel-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-display: swap;
-  font-style: normal;
-}
 
 @layer base {
   :root {
@@ -61,10 +33,10 @@
     --glyph-grid: 0 0% 90%;
     --glyph-success: 142 76% 45%;
     
-    /* Typography - Geist Fonts */
-    --font-sans: 'Geist Sans', system-ui, -apple-system, sans-serif;
-    --font-mono: 'Geist Mono', 'SF Mono', Monaco, Consolas, monospace;
-    --font-pixel: 'Geist Pixel', 'Geist Mono', monospace;
+    /* Typography - Inter for sans, JetBrains Mono for mono */
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', 'SF Mono', Monaco, Consolas, monospace;
+    --font-pixel: 'JetBrains Mono', monospace;
     
     /* Sidebar */
     --sidebar-background: 0 0% 98%;
