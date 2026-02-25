@@ -1,10 +1,10 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 /* Geist Font - Load from Vercel's CDN */
 @import url('https://assets.vercel.com/font/geist-sans/GeistSans-Variable.woff2') format('woff2');
 @import url('https://assets.vercel.com/font/geist-mono/GeistMono-Variable.woff2') format('woff2');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @font-face {
   font-family: 'Geist Sans';

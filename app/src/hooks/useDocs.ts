@@ -3,7 +3,7 @@ import { parseFrontmatter, parseTipBlocks } from '../lib/markdown';
 import { marked } from 'marked';
 
 // Import all markdown files
-const docFiles = import.meta.glob('../docs/**/*.md', { as: 'raw', eager: true });
+const docFiles = import.meta.glob('../docs/**/*.md', { query: '?raw', import: 'default', eager: true });
 
 export function loadDocs(_config: DocsConfig): Record<string, DocContent> {
   const docs: Record<string, DocContent> = {};
