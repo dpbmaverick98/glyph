@@ -44,7 +44,7 @@ obul_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ### Using curl
 
 ```bash
-curl -H "Authorization: Bearer obul_live_xxx" \
+curl -H "X-Obul-Key: obul_live_xxx" \
   https://proxy.obul.ai/https/api.example.com/v1/endpoint
 ```
 
@@ -55,7 +55,7 @@ import requests
 
 url = "https://proxy.obul.ai/https/api.example.com/v1/endpoint"
 headers = {
-    "Authorization": "Bearer obul_live_xxx"
+    "X-Obul-Key": "obul_live_xxx"
 }
 
 response = requests.get(url, headers=headers)
@@ -69,7 +69,7 @@ const fetch = require('node-fetch');
 
 const url = 'https://proxy.obul.ai/https/api.example.com/v1/endpoint';
 const headers = {
-  'Authorization': 'Bearer obul_live_xxx'
+  'X-Obul-Key': 'obul_live_xxx'
 };
 
 fetch(url, { headers })
@@ -104,11 +104,11 @@ Building multiple agents? Create a key for each:
 
 ```bash
 # Agent 1: Data analysis
-curl -H "Authorization: Bearer obul_live_agent1_xxx" \
+curl -H "X-Obul-Key: obul_live_agent1_xxx" \
   https://proxy.obul.ai/https/data-api.com/v1/query
 
 # Agent 2: Compute tasks  
-curl -H "Authorization: Bearer obul_live_agent2_xxx" \
+curl -H "X-Obul-Key: obul_live_agent2_xxx" \
   https://proxy.obul.ai/https/compute-api.com/v1/run
 ```
 

@@ -8,7 +8,7 @@ sidebar_position: 1
 
 **One API key. The entire x402 economy. Zero wallets.**
 
-Obul is a proxy layer that lets you call any x402-enabled service with nothing more than a Bearer token. We handle the payment proofs, gas management, and protocol negotiation automatically.
+Obul is a proxy layer that lets you call any x402-enabled service with nothing more than an API key. We handle the payment proofs, gas management, and protocol negotiation automatically.
 
 ## The Problem We Solve
 
@@ -27,7 +27,7 @@ Three weeks later, your agent is still not shipped. Another one for the graveyar
 ## Our Solution
 
 ```bash
-curl -H "Authorization: Bearer $OBUL_API_KEY" \
+curl -H "X-Obul-Key: $OBUL_API_KEY" \
   https://proxy.obul.ai/https/api.target-service.com/v1/analyze
 ```
 

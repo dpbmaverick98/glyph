@@ -82,7 +82,7 @@ Yes. Enable in **Settings** → **Security** → **Two-Factor Authentication**.
 ### How do I call an x402 service?
 
 ```bash
-curl -H "Authorization: Bearer $OBUL_API_KEY" \
+curl -H "X-Obul-Key: $OBUL_API_KEY" \
   https://proxy.obul.ai/https/api.target-service.com/v1/endpoint
 ```
 
@@ -136,7 +136,7 @@ No. x402 is an open standard. You can:
 - Manage your own wallet
 - Switch to another x402 facilitator
 
-Your code changes minimally (just the Authorization header).
+Your code changes minimally (just the `X-Obul-Key` header).
 
 ## Troubleshooting
 
