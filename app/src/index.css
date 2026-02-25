@@ -2,9 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import Inter font (Geist alternative for now) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 @layer base {
   :root {
-    /* Obul Dark Theme */
+    /* Mintlify-inspired Design Tokens */
     --background: 0 0% 4%;
     --foreground: 0 0% 98%;
     --card: 0 0% 6%;
@@ -24,7 +27,7 @@
     --border: 0 0% 18%;
     --input: 0 0% 18%;
     --ring: 45 50% 55%;
-    --radius: 0.5rem;
+    --radius: 0.75rem;
     
     /* Obul Custom Colors */
     --obul-gold: 45 50% 55%;
@@ -32,6 +35,10 @@
     --obul-gold-dark: 45 40% 45%;
     --obul-grid: 0 0% 15%;
     --obul-success: 142 76% 45%;
+    
+    /* Typography */
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', Monaco, Consolas, monospace;
     
     /* Sidebar */
     --sidebar-background: 0 0% 6%;
@@ -52,26 +59,38 @@
   
   html {
     scroll-behavior: smooth;
+    font-family: var(--font-sans);
   }
   
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
+    font-family: var(--font-sans);
   }
   
-  /* Custom scrollbar */
+  /* Improved typography */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-sans);
+    letter-spacing: -0.02em;
+  }
+  
+  code, pre {
+    font-family: var(--font-mono);
+  }
+  
+  /* Custom scrollbar - Mintlify style */
   ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
   }
   
   ::-webkit-scrollbar-track {
-    background: hsl(var(--background));
+    background: transparent;
   }
   
   ::-webkit-scrollbar-thumb {
     background: hsl(var(--border));
-    border-radius: 4px;
+    border-radius: 3px;
   }
   
   ::-webkit-scrollbar-thumb:hover {
@@ -80,277 +99,159 @@
 }
 
 @layer components {
-  /* Grid background pattern */
+  /* Grid background pattern - subtle like Mintlify */
   .grid-pattern {
     background-image: 
-      linear-gradient(to right, hsl(var(--obul-grid) / 0.3) 1px, transparent 1px),
-      linear-gradient(to bottom, hsl(var(--obul-grid) / 0.3) 1px, transparent 1px);
-    background-size: 40px 40px;
+      radial-gradient(circle at 1px 1px, hsl(var(--obul-grid) / 0.15) 1px, transparent 0);
+    background-size: 24px 24px;
   }
   
-  /* ===== ENHANCED CODE BLOCK STYLING ===== */
+  /* ===== CODE BLOCKS ===== */
   
-  /* Main code block container */
   .code-block {
-    @apply rounded-xl bg-[#0d1117] border border-[#30363d] overflow-hidden shadow-lg;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+    @apply rounded-xl bg-[#0d1117] border border-[#30363d] overflow-hidden;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3), 0 4px 6px -1px rgba(0, 0, 0, 0.2);
   }
   
-  /* Code block header with window dots */
   .code-block-header {
-    @apply flex items-center justify-between px-4 py-3 bg-[#161b22] border-b border-[#30363d];
+    @apply flex items-center justify-between px-4 py-2.5 bg-[#161b22] border-b border-[#30363d];
   }
   
-  /* Window control dots (macOS style) */
   .code-block-dots {
-    @apply flex items-center gap-2;
+    @apply flex items-center gap-1.5;
   }
   
   .code-block-dots span {
-    @apply w-3 h-3 rounded-full;
+    @apply w-2.5 h-2.5 rounded-full;
   }
   
-  .code-block-dots span:nth-child(1) {
-    @apply bg-[#ff5f56];
-  }
+  .code-block-dots span:nth-child(1) { @apply bg-[#ff5f56]; }
+  .code-block-dots span:nth-child(2) { @apply bg-[#ffbd2e]; }
+  .code-block-dots span:nth-child(3) { @apply bg-[#27c93f]; }
   
-  .code-block-dots span:nth-child(2) {
-    @apply bg-[#ffbd2e];
-  }
-  
-  .code-block-dots span:nth-child(3) {
-    @apply bg-[#27c93f];
-  }
-  
-  /* Language label */
   .code-block-lang {
-    @apply text-xs font-mono text-[#8b949e] uppercase tracking-wider;
+    @apply text-[11px] font-medium text-[#8b949e] uppercase tracking-wider;
+    font-family: var(--font-mono);
   }
   
-  /* Copy button */
   .copy-btn {
-    @apply flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#8b949e] 
-           bg-[#21262d] hover:bg-[#30363d] hover:text-[#d4b86a] 
-           rounded-md transition-all duration-200 border border-[#30363d];
+    @apply flex items-center gap-1.5 px-2 py-1 text-[11px] font-medium text-[#8b949e] 
+           hover:text-foreground transition-colors rounded;
   }
   
-  .copy-btn:hover {
-    @apply border-[#d4b86a]/30;
-  }
-  
-  /* Code block content area */
   .code-block-pre {
-    @apply p-5 overflow-x-auto text-[13px] leading-6;
-    background: linear-gradient(180deg, #0d1117 0%, #0a0c10 100%);
+    @apply p-4 overflow-x-auto text-[13px] leading-5;
+    background: #0d1117;
   }
   
   .code-block-pre code {
-    @apply font-mono;
-    font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', Monaco, Consolas, monospace;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.6;
   }
   
-  /* Inline code styling */
+  /* Inline code */
   code:not(.code-block code) {
-    @apply px-1.5 py-0.5 rounded-md bg-[#21262d] text-sm font-mono text-[#d4b86a] 
-           border border-[#30363d]/50;
-    font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', Monaco, Consolas, monospace;
+    @apply px-1.5 py-0.5 rounded-md bg-secondary/80 text-[13px] text-foreground/90 
+           border border-border/50;
+    font-family: var(--font-mono);
   }
   
-  /* ===== PRISM SYNTAX HIGHLIGHTING THEME (GitHub Dark) ===== */
+  /* ===== PRISM SYNTAX HIGHLIGHTING ===== */
   
-  /* Base token colors */
   .token.comment,
   .token.prolog,
   .token.doctype,
   .token.cdata {
-    color: #8b949e;
+    color: #6e7681;
     font-style: italic;
   }
   
-  .token.punctuation {
-    color: #c9d1d9;
-  }
-  
-  .token.namespace {
-    opacity: 0.7;
-  }
-  
+  .token.punctuation { color: #c9d1d9; }
   .token.property,
   .token.tag,
   .token.boolean,
   .token.number,
   .token.constant,
-  .token.symbol,
-  .token.deleted {
-    color: #79c0ff;
-  }
+  .token.symbol { color: #79c0ff; }
   
   .token.selector,
   .token.attr-name,
   .token.string,
   .token.char,
-  .token.builtin,
-  .token.inserted {
-    color: #a5d6ff;
-  }
+  .token.builtin { color: #a5d6ff; }
   
   .token.operator,
   .token.entity,
-  .token.url,
-  .language-css .token.string,
-  .style .token.string {
-    color: #d2a8ff;
-  }
+  .token.url { color: #d2a8ff; }
   
   .token.atrule,
   .token.attr-value,
-  .token.keyword {
-    color: #ff7b72;
-  }
+  .token.keyword { color: #ff7b72; }
   
   .token.function,
-  .token.class-name {
-    color: #d2a8ff;
+  .token.class-name { color: #d2a8ff; }
+  
+  /* ===== MINTLIFY-STYLE COMPONENTS ===== */
+  
+  /* Cards */
+  .docs-card {
+    @apply rounded-xl border border-border bg-card p-6 transition-all duration-200;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   }
   
-  .token.regex,
-  .token.important,
-  .token.variable {
-    color: #ffa657;
+  .docs-card:hover {
+    @apply border-border/80;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   }
   
-  /* Language-specific enhancements */
-  
-  /* JSON */
-  .language-json .token.property {
-    color: #7ee787;
+  /* Callouts */
+  .callout {
+    @apply rounded-lg border-l-4 p-4 my-6;
   }
   
-  .language-json .token.string {
-    color: #a5d6ff;
+  .callout-info {
+    @apply bg-blue-500/10 border-blue-500/50 text-blue-100;
   }
   
-  .language-json .token.number {
-    color: #79c0ff;
+  .callout-warning {
+    @apply bg-amber-500/10 border-amber-500/50 text-amber-100;
   }
   
-  /* Bash/Shell */
-  .language-bash .token.function,
-  .language-shell .token.function {
-    color: #d4b86a;
+  .callout-success {
+    @apply bg-green-500/10 border-green-500/50 text-green-100;
   }
   
-  .language-bash .token.builtin,
-  .language-shell .token.builtin {
-    color: #ff7b72;
+  .callout-error {
+    @apply bg-red-500/10 border-red-500/50 text-red-100;
   }
   
-  /* Python */
-  .language-python .token.keyword {
-    color: #ff7b72;
-  }
-  
-  .language-python .token.function {
-    color: #d2a8ff;
-  }
-  
-  .language-python .token.string {
-    color: #a5d6ff;
-  }
-  
-  /* Go */
-  .language-go .token.keyword {
-    color: #ff7b72;
-  }
-  
-  .language-go .token.function {
-    color: #d2a8ff;
-  }
-  
-  /* JavaScript/TypeScript */
-  .language-javascript .token.keyword,
-  .language-typescript .token.keyword {
-    color: #ff7b72;
-  }
-  
-  .language-javascript .token.function,
-  .language-typescript .token.function {
-    color: #d2a8ff;
-  }
-  
-  .language-javascript .token.string,
-  .language-typescript .token.string {
-    color: #a5d6ff;
-  }
-  
-  .language-javascript .token.number,
-  .language-typescript .token.number {
-    color: #79c0ff;
-  }
-  
-  /* HTTP */
-  .language-http .token.request-line {
-    color: #d4b86a;
-  }
-  
-  .language-http .token.header-name {
-    color: #7ee787;
-  }
-  
-  /* Line numbers (optional) */
-  .line-numbers {
-    @apply pl-12;
-    counter-reset: line;
-  }
-  
-  .line-numbers .line::before {
-    counter-increment: line;
-    content: counter(line);
-    @apply absolute left-0 w-8 text-right text-[#484f58] select-none;
-  }
-  
-  /* Strong/bold text */
-  .prose strong {
-    @apply font-semibold text-foreground;
-  }
-  
-  /* Gold accent text */
-  .text-gold {
-    @apply text-[#d4b86a];
-  }
-  
-  /* Glow effect for logo */
-  .glow-gold {
-    text-shadow: 0 0 20px hsl(45 50% 55% / 0.5),
-                 0 0 40px hsl(45 50% 55% / 0.3),
-                 0 0 60px hsl(45 50% 55% / 0.2);
-  }
-  
-  /* Status badges */
-  .badge-coming-soon {
-    @apply px-2 py-0.5 text-xs rounded-full bg-[#d4b86a]/10 text-[#d4b86a] border border-[#d4b86a]/30;
-  }
-  
-  /* Table styling */
+  /* Tables - Mintlify style */
   .docs-table {
-    @apply w-full border-collapse;
+    @apply w-full border-collapse text-sm;
   }
   
   .docs-table th {
-    @apply px-4 py-3 text-left text-sm font-semibold text-foreground/80 bg-secondary border-b border-border;
+    @apply px-4 py-3 text-left font-semibold text-foreground/80 bg-secondary/50 border-b border-border;
   }
   
   .docs-table td {
-    @apply px-4 py-3 text-sm text-foreground/70 border-b border-border;
+    @apply px-4 py-3 text-foreground/70 border-b border-border;
   }
   
   .docs-table tr:hover td {
-    @apply bg-secondary/50;
+    @apply bg-secondary/30;
   }
   
-  /* Link styling */
+  /* Links */
   .docs-link {
-    @apply text-[#d4b86a] hover:text-[#e5c97b] transition-colors underline underline-offset-4;
+    @apply text-[#d4b86a] hover:text-[#e5c97b] transition-colors;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+  
+  .docs-link:hover {
+    border-bottom-color: currentColor;
   }
   
   /* Heading anchors */
@@ -358,31 +259,44 @@
     @apply ml-2 opacity-0 group-hover:opacity-100 text-muted-foreground hover:text-[#d4b86a] transition-opacity;
   }
   
-  /* Callout boxes */
-  .callout {
-    @apply p-4 rounded-lg border-l-4;
+  /* Status badges */
+  .badge-coming-soon {
+    @apply px-2 py-0.5 text-[11px] font-medium rounded-full bg-[#d4b86a]/10 text-[#d4b86a] border border-[#d4b86a]/30;
   }
   
-  .callout-info {
-    @apply bg-blue-500/10 border-blue-500 text-blue-200;
-  }
-  
-  .callout-warning {
-    @apply bg-amber-500/10 border-amber-500 text-amber-200;
-  }
-  
-  .callout-success {
-    @apply bg-green-500/10 border-green-500 text-green-200;
-  }
-  
-  /* LLM link in footer */
+  /* LLM link */
   .llm-link {
     @apply text-xs text-muted-foreground hover:text-[#d4b86a] transition-colors;
+  }
+  
+  /* Images - Mintlify style */
+  .prose img {
+    @apply rounded-lg border border-border w-full;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Figures */
+  figure {
+    @apply my-6;
+  }
+  
+  figcaption {
+    @apply text-center text-sm text-muted-foreground mt-3;
+  }
+  
+  /* Gold accent */
+  .text-gold {
+    @apply text-[#d4b86a];
+  }
+  
+  /* Glow effect */
+  .glow-gold {
+    text-shadow: 0 0 20px hsl(45 50% 55% / 0.5),
+                 0 0 40px hsl(45 50% 55% / 0.3);
   }
 }
 
 @layer utilities {
-  /* Typography scale */
   .text-display {
     @apply text-4xl font-bold tracking-tight;
   }

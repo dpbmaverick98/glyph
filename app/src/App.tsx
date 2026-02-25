@@ -243,9 +243,15 @@ function renderTokens(tokens: any[]): string {
   return `<em class="italic">${text}</em>`;
 };
 
-// Custom text rendering
-(renderer as any).text = ({ text }: { text: string }) => {
-  return text;
+// Custom image rendering
+(renderer as any).image = ({ href, title, text }: { href: string; title?: string; text: string }) => {
+  const titleAttr = title ? ` title="${title}"` : '';
+  return `
+    <figure class="my-6">
+      <img src="${href}" alt="${text}"${titleAttr} class="rounded-lg border border-border w-full" loading="lazy" />
+      ${text ? `<figcaption class="text-center text-sm text-muted-foreground mt-2">${text}</figcaption>` : ''}
+    </figure>
+  `;
 };
 
 marked.use({ renderer });
