@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { ArrowRight, Zap, Shield, Globe } from 'lucide-react';
+import { ArrowRight, Zap, Book, Code, Sparkles } from 'lucide-react';
 
 interface HeroProps {
   onNavigate: (slug: string) => void;
@@ -54,23 +54,22 @@ export function Hero({ onNavigate }: HeroProps) {
       <div className="relative z-10 px-4 py-16 lg:py-24 max-w-5xl mx-auto">
         <div className="flex justify-center mb-6">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-xs font-medium text-primary">
-            <Zap className="w-3.5 h-3.5" />
-            Now in Public Beta
+            <Sparkles className="w-3.5 h-3.5" />
+            Beautiful Documentation Made Simple
           </div>
         </div>
-        
         <h1 className="text-center text-4xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight mb-6">
-          One API key.
+          Documentation that
           <br />
-          <span className="text-primary">The entire x402 economy.</span>
+          <span className="text-primary">just works.</span>
         </h1>
         
         <p className="text-center text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-4">
-          Access 70M+ agent-to-agent payments with zero wallet management.
+          A lightweight documentation framework inspired by Mintlify.
         </p>
         
         <p className="text-center text-sm text-muted-foreground/70 max-w-xl mx-auto mb-10">
-          No private keys. No gas monitoring. No bridging. Just HTTP requests.
+          Write in Markdown. Get a beautiful site. No complexity.
         </p>
         
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
@@ -83,12 +82,12 @@ export function Hero({ onNavigate }: HeroProps) {
             <ArrowRight className="w-4 h-4" />
           </a>
           <a
-            href="https://my.glyph.ai"
+            href="https://github.com/dpbmaverick98/glyph"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 border border-border rounded-lg font-medium text-foreground hover:bg-secondary transition-colors"
           >
-            Go to Dashboard
+            View on GitHub
           </a>
         </div>
         
@@ -96,24 +95,24 @@ export function Hero({ onNavigate }: HeroProps) {
           <HeroCard
             icon={<Zap className="w-5 h-5 text-primary" />}
             title="Quickstart"
-            description="Deploy your first payable API call in minutes with our step-by-step guide."
+            description="Get your documentation site running in under 5 minutes."
             slug="getting-started/quickstart"
             onNavigate={onNavigate}
           />
           
           <HeroCard
-            icon={<Shield className="w-5 h-5 text-primary" />}
-            title="API Reference"
-            description="Complete reference for the Glyph Proxy API and x402 integration."
-            slug="reference/api"
+            icon={<Book className="w-5 h-5 text-primary" />}
+            title="Documentation"
+            description="Learn about features, configuration, and best practices."
+            slug="core/what-is-glyph"
             onNavigate={onNavigate}
           />
           
           <HeroCard
-            icon={<Globe className="w-5 h-5 text-primary" />}
-            title="What is x402?"
-            description="Learn about the HTTP 402 protocol powering the agent economy."
-            slug="core/x402-primer"
+            icon={<Code className="w-5 h-5 text-primary" />}
+            title="API Reference"
+            description="Complete configuration and component API documentation."
+            slug="reference/api"
             onNavigate={onNavigate}
           />
         </div>

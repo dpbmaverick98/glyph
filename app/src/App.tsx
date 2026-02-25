@@ -33,6 +33,9 @@ function App() {
   const config = docsConfig as DocsConfig;
   const docs = useMemo(() => loadDocs(config), [config]);
   
+  // Check for landing page
+  const landingDoc = docs['landing.md'];
+  
   const currentDocFile = currentSlug ? findDocFileBySlug(currentSlug, config) : null;
   const currentDoc = currentDocFile ? docs[currentDocFile] : null;
   
@@ -118,7 +121,16 @@ function App() {
           <main className="flex">
             <div className="flex-1 min-w-0">
               {!currentSlug ? (
-                <Hero onNavigate={handleNavigate} />
+                landingDoc ? (
+                  <article className="max-w-4xl mx-auto px-6 py-10 animate-fade-in">
+                    <div 
+                      className="prose prose-lg max-w-none"
+                      dangerouslySetInnerHTML={{ __html: landingDoc.content }}
+                    />
+                  </article>
+                ) : (
+                  <Hero onNavigate={handleNavigate} />
+                )
               ) : currentDoc ? (
                 <article className="max-w-3xl mx-auto px-6 py-10 animate-fade-in">
                   <Breadcrumbs items={breadcrumbItems} onNavigate={handleNavigate} />
