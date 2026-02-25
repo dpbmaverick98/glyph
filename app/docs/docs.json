@@ -13,27 +13,27 @@
         {
           "label": "Introduction",
           "slug": "getting-started/introduction",
-          "file": "getting-started/introduction.md"
+          "file": "00-getting-started/00-introduction.md"
         },
         {
           "label": "Quickstart",
           "slug": "getting-started/quickstart",
-          "file": "getting-started/quickstart.md"
+          "file": "00-getting-started/01-quickstart.md"
         },
         {
           "label": "Installation",
           "slug": "getting-started/installation",
-          "file": "getting-started/installation.md"
+          "file": "00-getting-started/02-installation.md"
         },
         {
           "label": "Your First Page",
           "slug": "getting-started/first-page",
-          "file": "getting-started/first-page.md"
+          "file": "00-getting-started/03-first-page.md"
         },
         {
           "label": "Deployment",
           "slug": "getting-started/deployment",
-          "file": "getting-started/deployment.md"
+          "file": "00-getting-started/04-deployment.md"
         }
       ]
     },
@@ -43,22 +43,22 @@
         {
           "label": "How Glyph Works",
           "slug": "core/how-it-works",
-          "file": "core/how-it-works.md"
+          "file": "01-core-concepts/00-how-it-works.md"
         },
         {
           "label": "Markdown & MDX",
           "slug": "core/markdown-mdx",
-          "file": "core/markdown-mdx.md"
+          "file": "01-core-concepts/01-markdown-mdx.md"
         },
         {
           "label": "Configuration",
           "slug": "core/configuration",
-          "file": "core/configuration.md"
+          "file": "01-core-concepts/02-configuration.md"
         },
         {
           "label": "Theming",
           "slug": "core/theming",
-          "file": "core/theming.md"
+          "file": "01-core-concepts/03-theming.md"
         }
       ]
     },
@@ -68,42 +68,42 @@
         {
           "label": "Overview",
           "slug": "components/overview",
-          "file": "components/overview.md"
+          "file": "02-components/00-overview.md"
         },
         {
           "label": "Callout",
           "slug": "components/callout",
-          "file": "components/callout.md"
+          "file": "02-components/01-callout.md"
         },
         {
           "label": "Card & CardGroup",
           "slug": "components/card",
-          "file": "components/card.md"
+          "file": "02-components/02-card.md"
         },
         {
           "label": "Accordion",
           "slug": "components/accordion",
-          "file": "components/accordion.md"
+          "file": "02-components/03-accordion.md"
         },
         {
           "label": "Tabs",
           "slug": "components/tabs",
-          "file": "components/tabs.md"
+          "file": "02-components/04-tabs.md"
         },
         {
           "label": "Code Blocks",
           "slug": "components/code-blocks",
-          "file": "components/code-blocks.md"
+          "file": "02-components/05-code-blocks.md"
         },
         {
           "label": "Tables",
           "slug": "components/tables",
-          "file": "components/tables.md"
+          "file": "02-components/06-tables.md"
         },
         {
           "label": "Custom Components",
           "slug": "components/custom",
-          "file": "components/custom.md"
+          "file": "02-components/07-custom.md"
         }
       ]
     },
@@ -113,22 +113,22 @@
         {
           "label": "Themes",
           "slug": "customization/themes",
-          "file": "customization/themes.md"
+          "file": "03-customization/00-themes.md"
         },
         {
           "label": "Custom CSS",
           "slug": "customization/custom-css",
-          "file": "customization/custom-css.md"
+          "file": "03-customization/01-custom-css.md"
         },
         {
           "label": "Custom Fonts",
-          "slug": "customization/custom-fonts",
-          "file": "customization/custom-fonts.md"
+          "slug": "customization/fonts",
+          "file": "03-customization/02-fonts.md"
         },
         {
           "label": "Custom Components",
-          "slug": "customization/custom-components",
-          "file": "customization/custom-components.md"
+          "slug": "customization/components",
+          "file": "03-customization/03-components.md"
         }
       ]
     },
@@ -138,17 +138,17 @@
         {
           "label": "Search",
           "slug": "integrations/search",
-          "file": "integrations/search.md"
+          "file": "04-integrations/00-search.md"
         },
         {
           "label": "Analytics",
           "slug": "integrations/analytics",
-          "file": "integrations/analytics.md"
+          "file": "04-integrations/01-analytics.md"
         },
         {
           "label": "Custom Domains",
           "slug": "integrations/custom-domains",
-          "file": "integrations/custom-domains.md"
+          "file": "04-integrations/02-custom-domains.md"
         }
       ]
     },
@@ -158,22 +158,27 @@
         {
           "label": "Showcase",
           "slug": "examples/showcase",
-          "file": "examples/showcase.md"
+          "file": "05-examples/00-showcase.md"
         },
         {
           "label": "API Documentation",
           "slug": "examples/api-docs",
-          "file": "examples/api-docs.md"
+          "file": "05-examples/01-api-docs.md"
         },
         {
           "label": "Knowledge Base",
           "slug": "examples/knowledge-base",
-          "file": "examples/knowledge-base.md"
+          "file": "05-examples/02-knowledge-base.md"
         },
         {
           "label": "Blog",
           "slug": "examples/blog",
-          "file": "examples/blog.md"
+          "file": "05-examples/03-blog.md"
+        },
+        {
+          "label": "Landing Page",
+          "slug": "examples/landing-page",
+          "file": "05-examples/04-landing-page.md"
         }
       ]
     },
@@ -182,18 +187,18 @@
       "items": [
         {
           "label": "Configuration API",
-          "slug": "reference/configuration",
-          "file": "reference/configuration.md"
+          "slug": "reference/configuration-api",
+          "file": "06-reference/00-configuration-api.md"
         },
         {
-          "label": "CLI",
+          "label": "CLI Reference",
           "slug": "reference/cli",
-          "file": "reference/cli.md"
+          "file": "06-reference/01-cli.md"
         },
         {
           "label": "Troubleshooting",
           "slug": "reference/troubleshooting",
-          "file": "reference/troubleshooting.md"
+          "file": "06-reference/02-troubleshooting.md"
         }
       ]
     }
