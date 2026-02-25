@@ -45,16 +45,18 @@ export function SearchModal({ isOpen, onClose, onNavigate }: SearchModalProps) {
     if (!isOpen) return;
 
     const loadPagefind = async () => {
-      if (!window.pagefind) {
+      let pagefind = window.pagefind;
+      if (!pagefind) {
         try {
-          // Dynamically import Pagefind
-          const pagefind = await import('/pagefind/pagefind.js');
+          // @ts-expect-error - pagefind is loaded dynamically from build output
+          pagefind = await import('/pagefind/pagefind.js');
           window.pagefind = pagefind;
-          await window.pagefind.init?.();
         } catch (err) {
           setError('Search not available in development. Run npm run build first.');
+          return;
         }
       }
+      await pagefind!.init?.();
     };
 
     loadPagefind();
