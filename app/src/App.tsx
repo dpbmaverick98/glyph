@@ -20,6 +20,7 @@ import {
   Bot,
 } from 'lucide-react';
 import { SearchModal, SearchTrigger } from './components/Search';
+import { Hero } from './components/Hero';
 import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
 import './App.css';
@@ -601,7 +602,9 @@ function App() {
           <main className="flex">
             {/* Content area */}
             <div className="flex-1 min-w-0">
-              {currentDoc ? (
+              {!currentSlug ? (
+                <Hero onNavigate={handleNavigate} />
+              ) : currentDoc ? (
                 <article className="max-w-3xl mx-auto px-6 py-10 animate-fade-in">
                   {/* Status badge */}
                   {currentDoc.status && (
