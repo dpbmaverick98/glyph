@@ -20,6 +20,8 @@ import {
   Bot,
 } from 'lucide-react';
 import { SearchModal, SearchTrigger } from './components/Search';
+import { GeistSans } from 'geist/font/sans';
+import { GeistMono } from 'geist/font/mono';
 import './App.css';
 
 // Types

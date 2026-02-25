@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import Inter font (Geist alternative for now) */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
 @layer base {
   :root {
     /* Mintlify-inspired Design Tokens */
@@ -36,9 +33,10 @@
     --obul-grid: 0 0% 15%;
     --obul-success: 142 76% 45%;
     
-    /* Typography */
-    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-    --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', Monaco, Consolas, monospace;
+    /* Typography - Geist fonts will be applied via CSS classes */
+    --font-sans: 'Geist', system-ui, -apple-system, sans-serif;
+    --font-mono: 'Geist Mono', 'JetBrains Mono', monospace;
+    --font-pixel: 'Geist Pixel Square', monospace;
     
     /* Sidebar */
     --sidebar-background: 0 0% 6%;
@@ -59,23 +57,28 @@
   
   html {
     scroll-behavior: smooth;
-    font-family: var(--font-sans);
   }
   
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  
+  /* Geist Sans for body text */
+  body, p, li, td, th {
     font-family: var(--font-sans);
   }
   
-  /* Improved typography */
+  /* Geist Mono for code */
+  code, pre, kbd, .font-mono {
+    font-family: var(--font-mono);
+  }
+  
+  /* Headings use Geist Sans with tight tracking */
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-sans);
     letter-spacing: -0.02em;
-  }
-  
-  code, pre {
-    font-family: var(--font-mono);
+    font-weight: 600;
   }
   
   /* Custom scrollbar - Mintlify style */
@@ -99,14 +102,14 @@
 }
 
 @layer components {
-  /* Grid background pattern - subtle like Mintlify */
+  /* Grid background - subtle dot pattern like Mintlify */
   .grid-pattern {
     background-image: 
       radial-gradient(circle at 1px 1px, hsl(var(--obul-grid) / 0.15) 1px, transparent 0);
     background-size: 24px 24px;
   }
   
-  /* ===== CODE BLOCKS ===== */
+  /* ===== CODE BLOCKS - Mintlify Style ===== */
   
   .code-block {
     @apply rounded-xl bg-[#0d1117] border border-[#30363d] overflow-hidden;
@@ -140,7 +143,7 @@
   }
   
   .code-block-pre {
-    @apply p-4 overflow-x-auto text-[13px] leading-5;
+    @apply p-4 overflow-x-auto;
     background: #0d1117;
   }
   
@@ -194,7 +197,7 @@
   
   /* ===== MINTLIFY-STYLE COMPONENTS ===== */
   
-  /* Cards */
+  /* Cards - for feature grids, etc. */
   .docs-card {
     @apply rounded-xl border border-border bg-card p-6 transition-all duration-200;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
@@ -203,9 +206,10 @@
   .docs-card:hover {
     @apply border-border/80;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
   }
   
-  /* Callouts */
+  /* Callouts - Mintlify style with icons */
   .callout {
     @apply rounded-lg border-l-4 p-4 my-6;
   }
@@ -226,7 +230,7 @@
     @apply bg-red-500/10 border-red-500/50 text-red-100;
   }
   
-  /* Tables - Mintlify style */
+  /* Tables - clean Mintlify style */
   .docs-table {
     @apply w-full border-collapse text-sm;
   }
@@ -243,7 +247,7 @@
     @apply bg-secondary/30;
   }
   
-  /* Links */
+  /* Links - subtle underline on hover */
   .docs-link {
     @apply text-[#d4b86a] hover:text-[#e5c97b] transition-colors;
     text-decoration: none;
@@ -269,7 +273,7 @@
     @apply text-xs text-muted-foreground hover:text-[#d4b86a] transition-colors;
   }
   
-  /* Images - Mintlify style */
+  /* Images - Mintlify style with rounded corners and shadow */
   .prose img {
     @apply rounded-lg border border-border w-full;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
@@ -289,10 +293,15 @@
     @apply text-[#d4b86a];
   }
   
-  /* Glow effect */
+  /* Glow effect for logo */
   .glow-gold {
     text-shadow: 0 0 20px hsl(45 50% 55% / 0.5),
                  0 0 40px hsl(45 50% 55% / 0.3);
+  }
+  
+  /* Pixel font for special headers */
+  .font-pixel {
+    font-family: var(--font-pixel);
   }
 }
 
