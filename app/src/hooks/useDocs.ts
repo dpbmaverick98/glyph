@@ -1,11 +1,11 @@
-import type { DocItem, SidebarGroup, DocsConfig, DocContent } from '../types';
+import type { DocItem, DocsConfig, DocContent } from '../types';
 import { parseFrontmatter, parseTipBlocks } from '../lib/markdown';
 import { marked } from 'marked';
 
 // Import all markdown files
 const docFiles = import.meta.glob('../docs/**/*.md', { as: 'raw', eager: true });
 
-export function loadDocs(config: DocsConfig): Record<string, DocContent> {
+export function loadDocs(_config: DocsConfig): Record<string, DocContent> {
   const docs: Record<string, DocContent> = {};
   
   Object.entries(docFiles).forEach(([path, content]) => {

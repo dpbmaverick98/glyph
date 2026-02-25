@@ -1,47 +1,9 @@
 import { marked } from 'marked';
 import type { Renderer, Tokens } from 'marked';
 
-// Dynamic Prism loader
-let Prism: typeof import('prismjs') | null = null;
-const loadedLanguages = new Set<string>();
-
-async function loadPrism() {
-  if (!Prism) {
-    Prism = await import('prismjs');
-  }
-  return Prism;
-}
-
-async function loadLanguage(lang: string) {
-  if (!Prism || loadedLanguages.has(lang)) return;
-  
-  const languageMap: Record<string, string> = {
-    'bash': 'bash',
-    'sh': 'bash',
-    'shell': 'bash',
-    'javascript': 'javascript',
-    'js': 'javascript',
-    'typescript': 'typescript',
-    'ts': 'typescript',
-    'python': 'python',
-    'py': 'python',
-    'go': 'go',
-    'json': 'json',
-    'yaml': 'yaml',
-    'yml': 'yaml',
-    'http': 'http',
-  };
-  
-  const prismLang = languageMap[lang];
-  if (!prismLang) return;
-  
-  try {
-    await import(`prismjs/components/prism-${prismLang}`);
-    loadedLanguages.add(lang);
-  } catch {
-    // Language not available
-  }
-}
+// Dynamic Prism loader - kept for future use
+// let Prism: typeof import('prismjs') | null = null;
+// const loadedLanguages = new Set<string>();
 
 // Token renderer helper
 function renderTokens(tokens: Tokens.Generic[]): string {
