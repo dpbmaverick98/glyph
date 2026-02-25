@@ -1,13 +1,13 @@
 ---
 name: docs-ordering
-description: Guide for organizing and ordering documentation in Obul Docs. Use when users need help structuring their docs, adding new pages to navigation, or reordering sidebar items.
+description: Guide for organizing and ordering documentation in Glyph Docs. Use when users need help structuring their docs, adding new pages to navigation, or reordering sidebar items.
 ---
 
 # Documentation Ordering Guide
 
 ## Overview
 
-Obul Docs uses a JSON-based configuration system (`docs/docs.json`) to define the sidebar navigation structure. This guide explains how to properly organize and order your documentation.
+Glyph Docs uses a JSON-based configuration system (`docs/docs.json`) to define the sidebar navigation structure. This guide explains how to properly organize and order your documentation.
 
 ## Configuration File Structure
 

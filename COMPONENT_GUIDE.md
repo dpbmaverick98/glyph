@@ -1,6 +1,6 @@
-# Obul Docs Framework - Component Guide
+# Glyph Docs Framework - Component Guide
 
-This guide covers all the components and features available in the Obul documentation framework.
+This guide covers all the components and features available in the Glyph documentation framework.
 
 ## Table of Contents
 
@@ -210,7 +210,7 @@ function Example() {
       >
         <TabPanel isActive={activeTab === 0}>
           ```bash
-curl -H "X-Obul-Key: xxx" https://api.obul.ai
+curl -H "X-Glyph-Key: xxx" https://api.glyph.ai
           ```
         </TabPanel>
         
@@ -282,7 +282,7 @@ Available variables:
 - `--background` - Page background
 - `--foreground` - Text color
 - `--card` - Card backgrounds
-- `--primary` - Primary accent (Obul gold)
+- `--primary` - Primary accent (Glyph gold)
 - `--secondary` - Secondary backgrounds
 - `--muted` - Muted backgrounds
 - `--border` - Border colors
@@ -299,7 +299,7 @@ Standard markdown works plus these enhancements:
 
 ```markdown
 ```bash title="Example"
-curl -H "X-Obul-Key: xxx" https://api.obul.ai
+curl -H "X-Glyph-Key: xxx" https://api.glyph.ai
 ```
 ```
 

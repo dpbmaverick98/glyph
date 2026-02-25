@@ -1,6 +1,6 @@
 ---
 name: add-components
-description: Guide for adding new custom components to Obul Docs. Use when users want to extend the documentation with custom React components, interactive elements, or special visual components.
+description: Guide for adding new custom components to Glyph Docs. Use when users want to extend the documentation with custom React components, interactive elements, or special visual components.
 ---
 
 # Adding Custom Components

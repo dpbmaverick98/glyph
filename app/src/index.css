@@ -54,12 +54,12 @@
     --ring: 45 50% 55%;
     --radius: 0.75rem;
     
-    /* Obul Colors */
-    --obul-gold: 45 50% 55%;
-    --obul-gold-light: 45 60% 65%;
-    --obul-gold-dark: 45 40% 45%;
-    --obul-grid: 0 0% 90%;
-    --obul-success: 142 76% 45%;
+    /* Glyph Colors */
+    --glyph-gold: 45 50% 55%;
+    --glyph-gold-light: 45 60% 65%;
+    --glyph-gold-dark: 45 40% 45%;
+    --glyph-grid: 0 0% 90%;
+    --glyph-success: 142 76% 45%;
     
     /* Typography - Geist Fonts */
     --font-sans: 'Geist Sans', system-ui, -apple-system, sans-serif;
@@ -91,7 +91,7 @@
     --muted-foreground: 0 0% 60%;
     --border: 0 0% 18%;
     --input: 0 0% 18%;
-    --obul-grid: 0 0% 15%;
+    --glyph-grid: 0 0% 15%;
     --sidebar-background: 0 0% 6%;
     --sidebar-foreground: 0 0% 80%;
     --sidebar-accent: 0 0% 12%;
@@ -164,7 +164,7 @@
   /* Grid pattern */
   .grid-pattern {
     background-image: 
-      radial-gradient(circle at 1px 1px, hsl(var(--obul-grid) / 0.15) 1px, transparent 0);
+      radial-gradient(circle at 1px 1px, hsl(var(--glyph-grid) / 0.15) 1px, transparent 0);
     background-size: 24px 24px;
   }
   

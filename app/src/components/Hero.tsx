@@ -83,7 +83,7 @@ export function Hero({ onNavigate }: HeroProps) {
             <ArrowRight className="w-4 h-4" />
           </a>
           <a
-            href="https://my.obul.ai"
+            href="https://my.glyph.ai"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 border border-border rounded-lg font-medium text-foreground hover:bg-secondary transition-colors"
@@ -104,7 +104,7 @@ export function Hero({ onNavigate }: HeroProps) {
           <HeroCard
             icon={<Shield className="w-5 h-5 text-primary" />}
             title="API Reference"
-            description="Complete reference for the Obul Proxy API and x402 integration."
+            description="Complete reference for the Glyph Proxy API and x402 integration."
             slug="reference/api"
             onNavigate={onNavigate}
           />

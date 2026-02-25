@@ -165,7 +165,7 @@ function Sidebar({ config, currentSlug, onNavigate, isOpen, onClose }: {
       <aside className={`fixed lg:sticky top-0 left-0 z-50 w-72 h-screen bg-background border-r border-border flex flex-col transition-transform duration-300 ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
         <div className="p-4 border-b border-border">
           <a href="/" className="flex items-center gap-3">
-            <span className="text-2xl font-bold text-foreground tracking-wider">OBUL</span>
+            <span className="text-2xl font-bold text-foreground tracking-wider">GLYPH</span>
           </a>
           <p className="text-xs text-muted-foreground mt-1">Documentation</p>
         </div>
@@ -217,7 +217,7 @@ function Header({ onMenuToggle, onOpenSearch, config }: { onMenuToggle: () => vo
       <div className="flex items-center justify-between h-14 px-4 lg:px-6">
         <div className="flex items-center gap-4">
           <button onClick={onMenuToggle} className="lg:hidden p-2 -ml-2 text-foreground/70 hover:text-foreground"><Menu className="w-5 h-5" /></button>
-          <span className="lg:hidden text-lg font-bold text-foreground tracking-wider">OBUL</span>
+          <span className="lg:hidden text-lg font-bold text-foreground tracking-wider">GLYPH</span>
         </div>
         <div className="flex-1 max-w-md mx-4 hidden md:block">
           <SearchTrigger onClick={onOpenSearch} />

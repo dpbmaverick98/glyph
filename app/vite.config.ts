@@ -12,7 +12,7 @@ async function generateHtmlForDoc(title: string, content: string): Promise<strin
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${escapeHtml(title)} - Obul Docs</title>
+  <title>${escapeHtml(title)} - Glyph Docs</title>
   <meta name="description" content="${escapeHtml(title)}">
 </head>
 <body data-pagefind-body>
@@ -95,7 +95,7 @@ function generateLlmFiles() {
         
         // Generate llms-full.txt
         let llmsFullTxt = `# ${config.name} - Full Knowledge Base\n\n`
-        llmsFullTxt += `This document contains the complete Obul documentation for LLM consumption.\n\n`
+        llmsFullTxt += `This document contains the complete Glyph documentation for LLM consumption.\n\n`
         llmsFullTxt += `---\n\n`
         
         for (const group of config.sidebar) {

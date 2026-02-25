@@ -1,6 +1,6 @@
 ---
 title: What is x402?
-description: The HTTP 402 Payment Required protocol — why developers love it and how Obul completes the picture
+description: The HTTP 402 Payment Required protocol — why developers love it and how Glyph completes the picture
 sidebar_position: 2
 ---
 
@@ -32,7 +32,7 @@ Content-Type: application/json
 
 {
   "x402-version": 1,
-  "x402-facilitator": "obul",
+  "x402-facilitator": "glyph",
   "x402-payment": {
     "scheme": "exact",
     "required-amount": "1000000",
@@ -70,7 +70,7 @@ Your API returns a 402. The client pays. The request goes through.
 
 **Use infrastructure like you use electricity — pay for what you consume.**
 
-## The Current Gap (And How Obul Solves It)
+## The Current Gap (And How Glyph Solves It)
 
 x402 is great, but there's a catch: **you still need to manage crypto.**
 
@@ -79,19 +79,19 @@ x402 is great, but there's a catch: **you still need to manage crypto.**
 - Monitor gas prices
 - Handle private keys
 
-This is where Obul comes in.
+This is where Glyph comes in.
 
-### Obul Solves the Crypto Leg
+### Glyph Solves the Crypto Leg
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│  Without Obul                    With Obul              │
+│  Without Glyph                    With Glyph              │
 │                                                         │
 │  Your App                        Your App               │
 │     │                               │                   │
 │     ▼                               ▼                   │
 │  ┌─────────┐                   ┌─────────┐             │
-│  │ Wallet  │─── x402 ───▶      │  Obul   │─── x402 ──▶│
+│  │ Wallet  │─── x402 ───▶      │  Glyph   │─── x402 ──▶│
 │  │ Manager │   (complex)       │  Proxy  │   (simple) │
 │  └─────────┘                   └─────────┘             │
 │     ▲                               ▲                   │
@@ -102,19 +102,19 @@ This is where Obul comes in.
 └─────────────────────────────────────────────────────────┘
 ```
 
-**Obul is the bridge:**
+**Glyph is the bridge:**
 - You pay us with a credit card (fiat)
 - We handle the crypto/x402 part
 - You get simple HTTP requests
 
 ## The Full Picture (Coming Soon)
 
-Today, Obul solves the **consumer side** — making it easy to call x402 APIs without managing crypto.
+Today, Glyph solves the **consumer side** — making it easy to call x402 APIs without managing crypto.
 
-Soon, **Obul Gateway** will solve the **provider side** too:
+Soon, **Glyph Gateway** will solve the **provider side** too:
 
 ```
-Your API ──▶ Obul Gateway ──▶ x402 payments
+Your API ──▶ Glyph Gateway ──▶ x402 payments
                 │
                 └── No setup, no KYC, just deploy
 ```
@@ -173,7 +173,7 @@ No redirects. No OAuth. Just HTTP with payment.
 
 | Component | Description |
 |-----------|-------------|
-| **Facilitator** | Service that processes payments (Obul, Coinbase, etc.) |
+| **Facilitator** | Service that processes payments (Glyph, Coinbase, etc.) |
 | **Scheme** | Payment model: `exact`, `stream`, `subscription` |
 | **Network** | Blockchain for settlement (Base, Ethereum, etc.) |
 | **Token** | ERC-20 token or native asset for payment |
@@ -191,5 +191,5 @@ x402 is evolving:
 
 ## Learn More
 
-- [Obul vs x402](./obul-vs-x402) — When to use Obul vs building direct
+- [Glyph vs x402](./glyph-vs-x402) — When to use Glyph vs building direct
 - [Quickstart](../getting-started/quickstart) — Make your first x402 call

@@ -1,249 +1,107 @@
 ---
 title: FAQ
-description: Common questions about Obul, pricing, security, and troubleshooting
-sidebar_position: 1
+description: Frequently asked questions about Glyph.
 ---
 
-# Frequently Asked Questions
+# FAQ
 
 ## General
 
-### What is Obul?
+### What is Glyph?
 
-Obul is a proxy layer that lets you access the x402 agent economy with nothing more than an API key. We handle payment proofs, gas management, and protocol negotiation automatically.
+Glyph is a lightweight documentation framework built with React and Vite. It helps you create beautiful documentation sites from Markdown files.
 
-### What is x402?
+### Is Glyph free?
 
-x402 is the HTTP 402 Payment Required standard. It's how agents pay for API calls in a machine-to-machine economy. 70M+ transactions have already happened on x402.
+Yes! Glyph is open source and free to use. The optional dashboard has a free tier.
 
-### Do I need to know about crypto or wallets?
+### Can I self-host Glyph?
 
-No. You get an API key, add a credit card, and make HTTP requests. Obul handles all the x402 complexity.
+Absolutely. Glyph generates static files that can be hosted anywhere.
 
-## Pricing
+## Technical
 
-### How much does Obul cost?
+### What technologies does Glyph use?
 
-**1% of transaction volume.** No monthly fees, no setup costs.
+- **React** for UI
+- **Vite** for building
+- **Marked** for Markdown parsing
+- **Pagefind** for search
+- **Tailwind CSS** for styling
+- **Geist** fonts for typography
 
-| Volume | Monthly Cost |
-|--------|--------------|
-| $1,000 | $10 |
-| $10,000 | $100 |
-| $100,000 | $1,000 |
+### Does Glyph support MDX?
 
-### What am I actually paying for?
+Yes! You can embed React components in your Markdown files.
 
-When you call an x402 service through Obul, you pay:
-1. The service's fee (e.g., $0.02 for a compute call)
-2. 1% to Obul (e.g., $0.0002)
-3. Network gas fees (usually pennies)
+### Can I customize the theme?
 
-### Do I need to hold crypto?
+Yes. Glyph uses CSS variables for easy theming. Edit `app/src/index.css` to customize colors, fonts, and more.
 
-No. You add USD to your account with a credit card. We handle converting to the required tokens behind the scenes.
+### How does search work?
 
-### What networks are supported?
+Glyph uses [Pagefind](https://pagefind.app), a static search library. It indexes your content at build time and works entirely in the browser—no server needed.
 
-| Network | Status |
-|---------|--------|
-| Base | ✅ Live |
-| Base Sepolia | ✅ Live (testnet) |
-| Ethereum | 🚧 Q2 2025 |
-| Polygon | 🚧 Q2 2025 |
+## Usage
 
-## Security
+### How do I add a new page?
 
-### Is Obul secure?
+1. Create a `.md` file in `docs/`
+2. Add it to `docs/docs.json`
+3. Done!
 
-Yes. Security measures include:
+### Can I use custom components?
 
-- **Scoped API keys** — Each key has limited permissions
-- **Spend limits** — Cap daily/monthly spending per key
-- **Instant revocation** — Kill compromised keys immediately
-- **Encrypted at rest** — All data encrypted
-- **Audit logging** — Every action logged
+Yes. Create React components in `app/src/components/` and use them in your MDX files.
 
-### What if my API key is leaked?
-
-1. Go to **API Keys** in your dashboard
-2. Find the compromised key
-3. Click **Revoke**
-4. The key stops working immediately
-
-If you had spend limits set, your exposure is capped.
-
-### Can I require 2FA?
-
-Yes. Enable in **Settings** → **Security** → **Two-Factor Authentication**.
-
-## Using Obul
-
-### How do I call an x402 service?
+### How do I deploy?
 
 ```bash
-curl -H "X-Obul-Key: $OBUL_API_KEY" \
-  https://proxy.obul.ai/https/api.target-service.com/v1/endpoint
+npm run build
 ```
 
-Obul discovers the x402 requirements, attaches the payment proof, and forwards your request.
+Then upload the `dist/` folder to any static host.
 
-### What services can I access?
+### Does Glyph support versioning?
 
-Any service that supports x402. This includes:
-- Compute APIs
-- Data feeds
-- Search services
-- Reasoning engines
-- Storage
-
-The ecosystem is growing daily.
-
-### Can I set spending limits?
-
-Yes. Per-key limits for:
-- Daily spend
-- Monthly spend
-- Per-request cost
-
-When a limit is hit, requests stop.
-
-### What happens if I run out of balance?
-
-Requests return a "insufficient balance" error. Set up auto-reload in **Billing** to avoid this.
-
-## Migration
-
-### Can I migrate from another provider?
-
-Yes. If you're currently managing your own x402 wallet:
-
-1. Create Obul account
-2. Generate API keys
-3. Replace your wallet-based calls with Obul proxy calls
-4. Gradual cutover
-
-**Time:** Usually 1-2 days depending on complexity.
-
-### Can I export my data?
-
-Yes. Go to **Transactions**, apply filters, click **Export**, choose CSV/JSON.
-
-### Is there vendor lock-in?
-
-No. x402 is an open standard. You can:
-- Use Obul
-- Manage your own wallet
-- Switch to another x402 facilitator
-
-Your code changes minimally (just the `X-Obul-Key` header).
+Yes. You can version your docs by:
+- Using Git branches
+- Deploying to versioned paths
+- Using the dashboard's versioning feature
 
 ## Troubleshooting
 
-### "Invalid API key"
+### Build fails
 
-**Causes:**
-- Key copied incorrectly
-- Key revoked
-- Using test key in production (or vice versa)
+Check that:
+- All Markdown files have valid frontmatter
+- `docs.json` syntax is valid
+- Node.js version is 18+
 
-**Fix:**
-1. Verify key in dashboard
-2. Generate new key if needed
-3. Check prefix (`obul_live_` vs `obul_test_`)
+### Search not working
 
-### "Insufficient balance"
+Make sure:
+- You've built the site (`npm run build`)
+- Pagefind indexed your content
+- `data-pagefind-body` attribute is present
 
-**Causes:**
-- Account needs funds
-- Auto-reload failed
+### Styles not updating
 
-**Fix:**
-1. Go to **Billing** → **Add Funds**
-2. Check payment method is valid
-
-### "Rate limit exceeded"
-
-**Causes:**
-- Too many requests
-- Key's rate limit hit
-
-**Fix:**
-1. Check key settings
-2. Implement exponential backoff
-3. Contact support for higher limits
-
-### "Spend limit reached"
-
-**Causes:**
-- Daily or monthly cap hit
-
-**Fix:**
-1. Wait for limit reset
-2. Or increase limit in key settings
-
-### Webhook not receiving events
-
-**Checklist:**
-- [ ] URL accessible from internet
-- [ ] SSL certificate valid
-- [ ] Endpoint returns 200
-- [ ] Firewall allows Obul IPs
-
-**Test:**
+Try:
 ```bash
-curl -X POST https://your-webhook-url \
-  -H "Content-Type: application/json" \
-  -d '{"test": true}'
+rm -rf node_modules/.vite
+cd app && npm run dev
 ```
 
-## Getting Help
+## Contributing
 
-### Support Channels
+### How can I contribute?
 
-| Channel | Response | Best For |
-|---------|----------|----------|
-| Email | < 24 hours | Complex issues |
-| Discord | < 1 hour | Quick questions |
-| Status Page | Real-time | Outages |
+- Report bugs on GitHub
+- Submit feature requests
+- Contribute code
+- Improve documentation
 
-### Email Support
+### Is there a community?
 
-**[support@obul.ai](mailto:support@obul.ai)**
-
-Include:
-- API key (last 4 chars only)
-- Error message
-- Timestamp
-- Request ID (if available)
-
-### Discord
-
-[join discord.gg/obul](https://discord.gg/obul) for community support, announcements, and dev discussions.
-
-## Account Management
-
-### How do I delete my account?
-
-1. Ensure all balances settled
-2. Go to **Settings** → **Account**
-3. Click **Delete Account**
-4. Confirm
-
-**Note:** Irreversible.
-
-### Can I have multiple accounts?
-
-Yes, but each needs a unique email. Consider using team features instead.
-
-### How do I change my email?
-
-1. Go to **Settings** → **Profile**
-2. Click **Change Email**
-3. Verify new email
-
-## Still Have Questions?
-
-- 📧 [support@obul.ai](mailto:support@obul.ai)
-- 💬 [Discord](https://discord.gg/obul)
-- 🐦 [@obulai](https://twitter.com/obulai)
+Join us on [Discord](https://discord.gg/glyph)!

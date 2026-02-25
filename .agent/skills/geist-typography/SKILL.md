@@ -1,13 +1,13 @@
 ---
 name: geist-typography
-description: Guide for using Geist fonts (Sans, Mono, Pixel) playfully in Obul Docs. Use when users want to create visually interesting typography, special headers, or branded text elements.
+description: Guide for using Geist fonts (Sans, Mono, Pixel) playfully in Glyph Docs. Use when users want to create visually interesting typography, special headers, or branded text elements.
 ---
 
 # Geist Typography Playbook
 
 ## Available Fonts
 
-Obul Docs includes three Geist font variants:
+Glyph Docs includes three Geist font variants:
 
 | Font | CSS Variable | Usage |
 |------|--------------|-------|
@@ -55,7 +55,7 @@ Create visual hierarchy with font mixing:
 ```html
 <h1>
   <span class="font-sans">Build with</span>
-  <span class="font-pixel text-primary">OBUL</span>
+  <span class="font-pixel text-primary">GLYPH</span>
 </h1>
 ```
 
@@ -65,7 +65,7 @@ Code blocks automatically use Geist Mono with terminal-style header:
 
 ````markdown
 ```bash
-npm install obul
+npm install glyph
 ```
 ````
 
@@ -172,7 +172,7 @@ In your docs, these patterns auto-apply fonts:
 ```html
 <div class="text-center py-20">
   <h1 class="text-6xl font-bold tracking-tight mb-4">
-    <span class="font-pixel text-primary">OBUL</span>
+    <span class="font-pixel text-primary">GLYPH</span>
     <span class="font-sans">Docs</span>
   </h1>
   <p class="text-xl text-muted-foreground">
@@ -188,6 +188,6 @@ In your docs, these patterns auto-apply fonts:
   <div class="font-mono text-primary text-sm mb-2">01</div>
   <h3 class="text-title mb-2">Quick Setup</h3>
   <p class="text-body">Get started in minutes with our CLI</p>
-  <code class="font-mono text-small bg-secondary px-2 py-1 rounded">npx create-obul-docs</code>
+  <code class="font-mono text-small bg-secondary px-2 py-1 rounded">npx create-glyph-docs</code>
 </div>
 ```

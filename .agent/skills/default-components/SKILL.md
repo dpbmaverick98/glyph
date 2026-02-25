@@ -58,7 +58,7 @@ console.log(greeting);
 
 ````markdown
 ```bash
-npm install obul
+npm install glyph
 ```
 ````
 

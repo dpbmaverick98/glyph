@@ -1,9 +1,9 @@
 {
-  "name": "Obul Documentation",
+  "name": "Glyph Documentation",
   "description": "One API key. Infinite agents.",
-  "logo": "/obul-logo.svg",
+  "logo": "/glyph-logo.svg",
   "favicon": "/favicon.ico",
-  "baseUrl": "https://docs.obul.ai",
+  "baseUrl": "https://docs.glyph.ai",
   "llmsTxt": "/llms.txt",
   "llmsFullTxt": "/llms-full.txt",
   "sidebar": [
@@ -11,9 +11,9 @@
       "group": "Core Concepts",
       "items": [
         {
-          "label": "What is Obul?",
-          "slug": "core/what-is-obul",
-          "file": "core/what-is-obul.md"
+          "label": "What is Glyph?",
+          "slug": "core/what-is-glyph",
+          "file": "core/what-is-glyph.md"
         },
         {
           "label": "What is x402?",
@@ -21,9 +21,9 @@
           "file": "core/x402-primer.md"
         },
         {
-          "label": "Obul vs x402",
-          "slug": "core/obul-vs-x402",
-          "file": "core/obul-vs-x402.md"
+          "label": "Glyph vs x402",
+          "slug": "core/glyph-vs-x402",
+          "file": "core/glyph-vs-x402.md"
         }
       ]
     },
@@ -56,21 +56,21 @@
       "group": "Products",
       "items": [
         {
-          "label": "Obul CLI",
-          "slug": "products/obul-cli",
-          "file": "products/obul-cli.md",
+          "label": "Glyph CLI",
+          "slug": "products/glyph-cli",
+          "file": "products/glyph-cli.md",
           "badge": "Coming Soon"
         },
         {
-          "label": "Obul UI Login",
-          "slug": "products/obul-ui",
-          "file": "products/obul-ui.md",
+          "label": "Glyph UI Login",
+          "slug": "products/glyph-ui",
+          "file": "products/glyph-ui.md",
           "badge": "Coming Soon"
         },
         {
-          "label": "Obul x402 Gateway",
-          "slug": "products/obul-gateway",
-          "file": "products/obul-gateway.md",
+          "label": "Glyph x402 Gateway",
+          "slug": "products/glyph-gateway",
+          "file": "products/glyph-gateway.md",
           "badge": "Coming Soon"
         }
       ]
@@ -90,17 +90,17 @@
     "links": [
       {
         "label": "Dashboard",
-        "href": "https://my.obul.ai"
+        "href": "https://my.glyph.ai"
       },
       {
         "label": "Proxy",
-        "href": "https://proxy.obul.ai"
+        "href": "https://proxy.glyph.ai"
       }
     ],
     "social": {
-      "discord": "https://discord.gg/obul",
-      "twitter": "https://twitter.com/obulai",
-      "github": "https://github.com/obulai"
+      "discord": "https://discord.gg/glyph",
+      "twitter": "https://twitter.com/glyphai",
+      "github": "https://github.com/glyphai"
     }
   }
 }

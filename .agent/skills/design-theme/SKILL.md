@@ -1,6 +1,6 @@
 ---
 name: design-theme
-description: Guide for customizing the design theme in Obul Docs. Use when users want to change colors, update the color scheme, or modify the visual appearance of their documentation.
+description: Guide for customizing the design theme in Glyph Docs. Use when users want to change colors, update the color scheme, or modify the visual appearance of their documentation.
 ---
 
 # Design Theme Customization Guide
@@ -12,7 +12,7 @@ Edit `app/src/index.css` and update the primary color:
 ```css
 :root {
   --primary: 210 80% 50%;        /* Change hue (first number) for new color */
-  --obul-gold: 210 80% 50%;      /* Match primary */
+  --glyph-gold: 210 80% 50%;      /* Match primary */
   --ring: 210 80% 50%;           /* Match primary */
 }
 ```
@@ -33,7 +33,7 @@ Common hue values:
   --primary-foreground: 0 0% 100%;
   --background: 0 0% 100%;
   --foreground: 0 0% 9%;
-  --obul-gold: 200 80% 50%;
+  --glyph-gold: 200 80% 50%;
   --ring: 200 80% 50%;
 }
 
