@@ -52,7 +52,7 @@ export function parseTipBlocks(markdown: string): string {
     };
     const { icon, class: bgClass } = tipTypes[type] || tipTypes.tip;
     
-    const innerContent = marked.parseInline(content.trim());
+    const innerContent = marked.parseInline(content.trim(), { async: false });
     
     return `<div class="callout ${bgClass} rounded-lg p-4 my-4 border-l-4">
       <div class="flex items-center gap-2 font-semibold text-foreground mb-2">

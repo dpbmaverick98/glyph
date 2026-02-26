@@ -2,20 +2,23 @@ import type { DocItem, DocsConfig, DocContent } from '../types';
 import { parseFrontmatter, parseTipBlocks } from '../lib/markdown';
 import { marked } from 'marked';
 
-// Import all markdown files
+// Import all markdown files with ?raw to get raw content
 const docFiles = import.meta.glob('/docs/**/*.md', { query: '?raw', import: 'default', eager: true });
 
 export function loadDocs(_config: DocsConfig): Record<string, DocContent> {
   const docs: Record<string, DocContent> = {};
   
   Object.entries(docFiles).forEach(([path, content]) => {
+    const fileContent = content as string;
     const relativePath = path.replace('/docs/', '');
-    const { data, content: body } = parseFrontmatter(content as string);
+    const { data, content: body } = parseFrontmatter(fileContent);
+    
+    const parsedContent = marked.parse(parseTipBlocks(body), { async: false });
     
     docs[relativePath] = {
       title: data.title || 'Untitled',
       description: data.description || '',
-      content: marked.parse(parseTipBlocks(body)) as string,
+      content: parsedContent as string,
       sidebar_position: data.sidebar_position ? parseInt(data.sidebar_position) : undefined,
       status: data.status,
     };

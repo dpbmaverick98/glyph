@@ -131,7 +131,12 @@ function generateLlmFiles() {
 export default defineConfig({
   base: './',
   plugins: [
-    { enforce: 'pre', ...mdx() },
+    // Only process .mdx files with MDX, not .md files (those are handled by useDocs)
+    { enforce: 'pre', ...mdx({ 
+      providerImportSource: '@mdx-js/react',
+      jsxImportSource: 'react',
+      mdExtensions: [],
+    }) },
     react(),
     generateLlmFiles()
   ],
