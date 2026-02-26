@@ -1,14 +1,4 @@
-import { useEffect, useRef } from 'react';
-
-// Cache mermaid instance
-let mermaidPromise: Promise<typeof import('mermaid')> | null = null;
-
-async function getMermaid() {
-  if (!mermaidPromise) {
-    mermaidPromise = import('mermaid');
-  }
-  return mermaidPromise;
-}
+import { useEffect, useRef, useState } from 'react';
 
 interface MermaidProps {
   chart: string;
@@ -16,31 +6,51 @@ interface MermaidProps {
 
 export function Mermaid({ chart }: MermaidProps) {
   const ref = useRef<HTMLDivElement>(null);
-  
+  const [svg, setSvg] = useState<string>('');
+  const [error, setError] = useState<string>('');
+
   useEffect(() => {
-    const renderChart = async () => {
-      if (!ref.current) return;
-      
+    const render = async () => {
       try {
-        const mermaid = await getMermaid();
+        const mermaid = await import('mermaid');
         mermaid.default.initialize({
           startOnLoad: false,
-          theme: 'dark',
+          theme: 'default',
           securityLevel: 'strict',
         });
         
-        const id = 'mermaid-' + Math.random().toString(36).substr(2, 9);
+        const id = `mermaid-${Math.random().toString(36).substr(2, 9)}`;
         const { svg } = await mermaid.default.render(id, chart);
-        ref.current.innerHTML = svg;
-      } catch {
-        if (ref.current) {
-          ref.current.innerHTML = '<pre class="text-red-500">Failed to render diagram</pre>';
-        }
+        setSvg(svg);
+        setError('');
+      } catch (err) {
+        setError('Failed to render diagram');
+        console.error('Mermaid error:', err);
       }
     };
-    
-    renderChart();
+
+    render();
   }, [chart]);
-  
-  return <div ref={ref} className="my-6 flex justify-center" />;
+
+  if (error) {
+    return (
+      <div 
+        className="p-4 rounded-lg border my-4"
+        style={{ 
+          background: 'var(--theme-card)',
+          borderColor: 'var(--theme-border)'
+        }}
+      >
+        <p style={{ color: 'var(--theme-muted)' }}>{error}</p>
+      </div>
+    );
+  }
+
+  return (
+    <div 
+      ref={ref}
+      className="flex justify-center my-4"
+      dangerouslySetInnerHTML={{ __html: svg }}
+    />
+  );
 }

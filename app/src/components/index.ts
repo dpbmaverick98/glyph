@@ -14,7 +14,7 @@ export { Tooltip } from './Tooltip';
 export { Badge } from './Badge';
 export { Timeline, TimelineItem } from './Timeline';
 export { FileTree, FileTreeFolder, FileTreeFile } from './FileTree';
-export { TerminalWindow, TerminalPrompt, TerminalOutput } from './TerminalWindow';
+export { TerminalWindow, TerminalCommand } from './TerminalWindow';
 export { ResponseField, ResponseExample } from './ApiReference';
 export { Mermaid } from './Mermaid';
 export { Embed } from './Embed';
