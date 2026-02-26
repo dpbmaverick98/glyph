@@ -62,19 +62,31 @@ function App() {
     }
   }, [config.sidebar, handleNavigate]);
 
+  // Helper to check if slug is a valid doc
+  const isValidDocSlug = (slug: string): boolean => {
+    for (const group of config.sidebar) {
+      for (const item of group.items) {
+        if (item.slug === slug) return true;
+      }
+    }
+    return false;
+  };
+
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.slice(1);
-      if (hash) {
+      // Only treat as doc navigation if it's a valid doc slug (not a heading anchor)
+      if (hash && isValidDocSlug(hash)) {
         setCurrentSlug(hash);
         setShowDocs(true);
-      } else {
+      } else if (!hash) {
         setShowDocs(false);
       }
+      // If hash is not a valid doc (e.g., heading anchor), ignore it
     };
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
-  }, []);
+  }, [config.sidebar]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {

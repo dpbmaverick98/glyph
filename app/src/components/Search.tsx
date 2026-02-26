@@ -98,7 +98,7 @@ export function SearchModal({ isOpen, onClose, onNavigate }: SearchModalProps) {
 
   // Handle result click
   const handleResultClick = (url: string) => {
-    const slug = url.replace(/^\//, '').replace(/\.html$/, '');
+    const slug = url.replace(/^\//, '').replace(/\.html$/, '').replace(/^docs\//, '');
     onNavigate(slug);
     onClose();
     setQuery('');
