@@ -1,0 +1,222 @@
+/* Pixel Theme - Authentic 8-Bit Retro Gaming */
+
+[data-theme="pixel"] {
+  /* Pixel-perfect sizing */
+  --pixel-size: 4px;
+  --pixel-border: 4px solid;
+}
+
+/* Pixelated everything */
+[data-theme="pixel"] * {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+/* Retro game background pattern */
+[data-theme="pixel"] body {
+  background-image: 
+    linear-gradient(45deg, #161b22 25%, transparent 25%),
+    linear-gradient(-45deg, #161b22 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #161b22 75%),
+    linear-gradient(-45deg, transparent 75%, #161b22 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+/* Pixelated font for headers */
+[data-theme="pixel"] h1,
+[data-theme="pixel"] h2,
+[data-theme="pixel"] h3,
+[data-theme="pixel"] .display {
+  font-family: 'Press Start 2P', cursive !important;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  line-height: 1.5;
+  text-shadow: 
+    4px 4px 0px #000,
+    -2px -2px 0px var(--theme-primary);
+  image-rendering: pixelated;
+}
+
+/* 8-bit style buttons */
+[data-theme="pixel"] button,
+[data-theme="pixel"] .btn {
+  background: var(--theme-primary) !important;
+  border: 4px solid #000 !important;
+  box-shadow: 
+    4px 4px 0px #000,
+    inset -4px -4px 0px rgba(0,0,0,0.3),
+    inset 4px 4px 0px rgba(255,255,255,0.3) !important;
+  color: #000 !important;
+  font-family: 'Press Start 2P', cursive !important;
+  font-size: 0.75rem !important;
+  text-transform: uppercase;
+  padding: 12px 20px !important;
+  position: relative;
+  transform: translate(0, 0);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+[data-theme="pixel"] button:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 
+    6px 6px 0px #000,
+    inset -4px -4px 0px rgba(0,0,0,0.3),
+    inset 4px 4px 0px rgba(255,255,255,0.3) !important;
+}
+
+[data-theme="pixel"] button:active {
+  transform: translate(4px, 4px);
+  box-shadow: 
+    0px 0px 0px #000,
+    inset -4px -4px 0px rgba(0,0,0,0.3),
+    inset 4px 4px 0px rgba(255,255,255,0.3) !important;
+}
+
+/* Pixel cards */
+[data-theme="pixel"] .card,
+[data-theme="pixel"] [class*="card"] {
+  background: #161b22 !important;
+  border: 4px solid #000 !important;
+  box-shadow: 
+    6px 6px 0px #000,
+    inset -2px -2px 0px rgba(0,0,0,0.5) !important;
+  position: relative;
+}
+
+/* Corner pixels for that authentic feel */
+[data-theme="pixel"] .card::before,
+[data-theme="pixel"] .card::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--theme-primary);
+}
+
+[data-theme="pixel"] .card::before {
+  top: -4px;
+  left: -4px;
+}
+
+[data-theme="pixel"] .card::after {
+  bottom: -4px;
+  right: -4px;
+}
+
+/* Pixel inputs */
+[data-theme="pixel"] input,
+[data-theme="pixel"] textarea {
+  background: #000 !important;
+  border: 4px solid #333 !important;
+  color: var(--theme-primary) !important;
+  font-family: 'Press Start 2P', cursive !important;
+  font-size: 0.75rem !important;
+  padding: 12px !important;
+  box-shadow: inset 4px 4px 0px rgba(0,0,0,0.5);
+}
+
+[data-theme="pixel"] input:focus,
+[data-theme="pixel"] textarea:focus {
+  border-color: var(--theme-primary) !important;
+  animation: pixelPulse 1s step-end infinite;
+}
+
+@keyframes pixelPulse {
+  0%, 100% { border-color: var(--theme-primary); }
+  50% { border-color: #fff; }
+}
+
+/* Pixel code blocks */
+[data-theme="pixel"] pre,
+[data-theme="pixel"] code {
+  background: #000 !important;
+  border: 4px solid #333 !important;
+  font-family: 'Press Start 2P', monospace !important;
+  font-size: 0.625rem !important;
+  line-height: 1.8 !important;
+  box-shadow: inset 4px 4px 0px rgba(0,0,0,0.5);
+}
+
+/* Scanlines overlay */
+[data-theme="pixel"] body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.1) 2px,
+    rgba(0, 0, 0, 0.1) 4px
+  );
+  pointer-events: none;
+  z-index: 9990;
+}
+
+/* Pixel links */
+[data-theme="pixel"] a {
+  color: var(--theme-primary);
+  text-decoration: none;
+  position: relative;
+  font-weight: bold;
+}
+
+[data-theme="pixel"] a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--theme-primary);
+  transform: scaleX(0);
+  transition: transform 0.2s;
+}
+
+[data-theme="pixel"] a:hover::after {
+  transform: scaleX(1);
+}
+
+/* Pixel scrollbar */
+[data-theme="pixel"] ::-webkit-scrollbar {
+  width: 16px;
+  background: #000;
+}
+
+[data-theme="pixel"] ::-webkit-scrollbar-thumb {
+  background: var(--theme-primary);
+  border: 4px solid #000;
+}
+
+[data-theme="pixel"] ::-webkit-scrollbar-track {
+  border: 4px solid #000;
+}
+
+/* Pixel selection */
+[data-theme="pixel"] ::selection {
+  background: var(--theme-primary);
+  color: #000;
+}
+
+/* Loading animation */
+[data-theme="pixel"] .loading::after {
+  content: '';
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background: var(--theme-primary);
+  animation: pixelLoading 0.5s step-end infinite;
+}
+
+@keyframes pixelLoading {
+  0% { clip-path: inset(0 75% 0 0); }
+  25% { clip-path: inset(0 50% 0 25%); }
+  50% { clip-path: inset(0 25% 0 50%); }
+  75% { clip-path: inset(0 0 0 75%); }
+  100% { clip-path: inset(0 75% 0 0); }
+}

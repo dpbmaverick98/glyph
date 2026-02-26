@@ -19,11 +19,11 @@ export function useThemeStyles(theme: Theme) {
       return;
     }
     
-    // Load theme-specific CSS
+    // Load theme-specific CSS from public folder
     const link = document.createElement('link');
     link.id = linkId;
     link.rel = 'stylesheet';
-    link.href = `/src/themes/${themeId}/theme.css`;
+    link.href = `/themes/${themeId}.css`;
     document.head.appendChild(link);
     
     return () => {
