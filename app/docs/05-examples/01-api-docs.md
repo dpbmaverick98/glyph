@@ -1,12 +1,12 @@
 ---
 title: API Documentation
-description: Example API documentation structure
+description: Example API documentation structure with interactive playground
 sidebar_position: 1
 ---
 
 # API Documentation Example
 
-Complete example of API documentation structure.
+Complete example of API documentation structure using the Playground component for interactive testing.
 
 ## Overview
 
@@ -33,6 +33,54 @@ curl https://api.example.com/v1/users \
 
 - 1000 requests/hour for free plans
 - 10000 requests/hour for paid plans
+```
+
+## Interactive Playground
+
+Use the `Playground` component to let users test your API directly:
+
+```tsx
+import { SafePlayground } from '@/components';
+
+<SafePlayground
+  config={{
+    baseUrl: 'https://api.example.com/v1',
+    defaultApiKey: 'sk_demo_...',
+    endpoints: [
+      {
+        method: 'GET',
+        path: '/users',
+        description: 'List all users',
+        params: {
+          query: [
+            { name: 'limit', type: 'number', default: 10 },
+            { name: 'offset', type: 'number', default: 0 }
+          ]
+        }
+      },
+      {
+        method: 'GET',
+        path: '/users/{id}',
+        description: 'Get a specific user',
+        params: {
+          path: [
+            { name: 'id', type: 'string', required: true }
+          ]
+        }
+      },
+      {
+        method: 'POST',
+        path: '/users',
+        description: 'Create a new user',
+        params: {
+          header: [
+            { name: 'Content-Type', type: 'string', default: 'application/json' }
+          ]
+        }
+      }
+    ]
+  }}
+/>
 ```
 
 ## Endpoints Structure
@@ -243,8 +291,9 @@ Official client libraries:
 
 ## Best Practices
 
-1. **Consistent structure** - Same format for all endpoints
-2. **Code examples** - Multiple languages
-3. **Error documentation** - All possible errors
-4. **Interactive** - Try-it features if possible
+1. **Interactive playground** - Let users test endpoints live
+2. **Consistent structure** - Same format for all endpoints
+3. **Code examples** - Multiple languages
+4. **Error documentation** - All possible errors
 5. **Changelog** - Track API changes
+6. **Authentication guide** - Clear auth instructions

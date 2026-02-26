@@ -6,11 +6,9 @@ sidebar_position: 0
 
 # Components Overview
 
-Glyph provides built-in components to make your documentation more engaging.
+Glyph provides 20+ built-in components to make your documentation more engaging and interactive.
 
-## Available Components
-
-### Layout Components
+## Layout Components
 
 | Component | Purpose |
 |-----------|---------|
@@ -18,15 +16,27 @@ Glyph provides built-in components to make your documentation more engaging.
 | `CardGroup` | Grid of cards |
 | `Accordion` | Collapsible content |
 | `Tabs` | Tabbed content |
+| `Steps` | Numbered instructions |
+| `Timeline` | Vertical timeline |
+| `FileTree` | Directory structure |
 
-### Content Components
+## Content Components
 
 | Component | Purpose |
 |-----------|---------|
 | `Callout` | Tips, warnings, info |
 | `Frame` | Image wrapper with caption |
-| `Steps` | Numbered instructions |
+| `Badge` | Status badges |
+| `Tooltip` | Hover tooltips |
+| `Mermaid` | Diagrams and flowcharts |
+
+## Code Components
+
+| Component | Purpose |
+|-----------|---------|
 | `CodeBlock` | Enhanced code blocks |
+| `TerminalWindow` | Terminal-style output |
+| `Playground` | Interactive API playground |
 
 ## Using Components
 
@@ -49,7 +59,7 @@ This creates a tip callout
 Full React component support:
 
 ```markdown
-import { Callout, Card } from '@/components';
+import { Callout, Card, Playground } from '@/components';
 
 <Callout type="warning">
   Be careful!
@@ -62,6 +72,13 @@ import { Callout, Card } from '@/components';
 >
   View the API docs
 </Card>
+
+<Playground 
+  config={{
+    baseUrl: 'https://api.example.com',
+    endpoints: [...]
+  }} 
+/>
 ```
 
 ## Component Props
@@ -105,5 +122,13 @@ Explore each component in detail:
   
   <Card title="Tabs" icon="folder-tree" href="/components/tabs">
     Tabbed content
+  </Card>
+  
+  <Card title="Steps" icon="list-ordered" href="/components/steps">
+    Numbered instructions
+  </Card>
+  
+  <Card title="Playground" icon="play" href="/components/playground">
+    Interactive API testing
   </Card>
 </CardGroup>

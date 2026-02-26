@@ -104,6 +104,11 @@
           "label": "Custom Components",
           "slug": "components/custom",
           "file": "02-components/07-custom.md"
+        },
+        {
+          "label": "Playground",
+          "slug": "components/playground",
+          "file": "02-components/08-playground.md"
         }
       ]
     },
