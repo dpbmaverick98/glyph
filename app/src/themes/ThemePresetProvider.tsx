@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect, type ReactNode } from '
 import type { Theme } from './registry';
 import { themes, defaultTheme } from './registry';
 import { useCursorGlow, useCursorTrail, useBlinkCursor, useScanlines, useGridBackground, useFogEffect } from './animations';
+import { useThemeStyles } from './useThemeStyles';
 
 interface ThemeContextType {
   theme: Theme;
@@ -12,6 +13,9 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 function ThemeEffects({ theme }: { theme: Theme }) {
+  // Load theme-specific CSS
+  useThemeStyles(theme);
+  
   // Cursor effects
   useCursorGlow(theme.animations.cursorEffect === 'glow');
   useCursorTrail(theme.animations.cursorEffect === 'trail');

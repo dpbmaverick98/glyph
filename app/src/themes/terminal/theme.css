@@ -1,0 +1,189 @@
+/* Terminal Theme - Authentic CRT Terminal Experience */
+
+[data-theme="terminal"] {
+  /* Core terminal aesthetic */
+  --terminal-glow: 0 0 10px var(--theme-primary), 0 0 20px var(--theme-primary);
+  --terminal-scanline: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.3) 2px,
+    rgba(0, 0, 0, 0.3) 4px
+  );
+}
+
+/* CRT Screen Effects */
+[data-theme="terminal"] body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--terminal-scanline);
+  pointer-events: none;
+  z-index: 9990;
+  opacity: 0.4;
+}
+
+/* Subtle screen flicker */
+[data-theme="terminal"] body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 255, 65, 0.02);
+  pointer-events: none;
+  z-index: 9991;
+  animation: terminalFlicker 0.15s infinite;
+}
+
+@keyframes terminalFlicker {
+  0% { opacity: 0.97; }
+  50% { opacity: 1; }
+  100% { opacity: 0.98; }
+}
+
+/* Text glow effect */
+[data-theme="terminal"] h1,
+[data-theme="terminal"] h2,
+[data-theme="terminal"] h3,
+[data-theme="terminal"] .text-primary {
+  text-shadow: var(--terminal-glow);
+}
+
+/* Links look like terminal commands */
+[data-theme="terminal"] a {
+  color: var(--theme-primary);
+  text-decoration: none;
+  border-bottom: 1px dashed var(--theme-primary);
+  transition: all 0.2s;
+}
+
+[data-theme="terminal"] a:hover {
+  background: var(--theme-primary);
+  color: var(--theme-background);
+  border-bottom-style: solid;
+  text-shadow: none;
+}
+
+/* Code blocks look like terminal output */
+[data-theme="terminal"] pre,
+[data-theme="terminal"] code {
+  background: #000 !important;
+  border: 1px solid #333;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="terminal"] pre::before {
+  content: 'user@glyph:~$ cat file.txt';
+  display: block;
+  padding: 8px 12px;
+  background: #1a1a1a;
+  border-bottom: 1px solid #333;
+  color: var(--theme-muted);
+  font-size: 0.75rem;
+  margin: -1rem -1rem 1rem -1rem;
+}
+
+/* Buttons look like terminal commands */
+[data-theme="terminal"] button,
+[data-theme="terminal"] .btn {
+  background: transparent !important;
+  border: 2px solid var(--theme-primary) !important;
+  color: var(--theme-primary) !important;
+  font-family: var(--theme-font-mono) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  position: relative;
+  overflow: hidden;
+}
+
+[data-theme="terminal"] button::before {
+  content: '> ';
+}
+
+[data-theme="terminal"] button:hover {
+  background: var(--theme-primary) !important;
+  color: var(--theme-background) !important;
+  box-shadow: var(--terminal-glow);
+}
+
+/* Cards look like terminal windows */
+[data-theme="terminal"] .card,
+[data-theme="terminal"] [class*="card"] {
+  background: rgba(0, 0, 0, 0.5) !important;
+  border: 1px solid #333;
+  position: relative;
+}
+
+[data-theme="terminal"] .card::before {
+  content: '┌';
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: var(--theme-primary);
+  font-family: monospace;
+}
+
+[data-theme="terminal"] .card::after {
+  content: '┘';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  color: var(--theme-primary);
+  font-family: monospace;
+}
+
+/* Input fields */
+[data-theme="terminal"] input,
+[data-theme="terminal"] textarea {
+  background: #000 !important;
+  border: 1px solid #333;
+  color: var(--theme-primary);
+  font-family: var(--theme-font-mono);
+}
+
+[data-theme="terminal"] input:focus,
+[data-theme="terminal"] textarea:focus {
+  border-color: var(--theme-primary);
+  box-shadow: var(--terminal-glow);
+  outline: none;
+}
+
+/* Cursor blink for inputs */
+[data-theme="terminal"] input:focus::after,
+[data-theme="terminal"] textarea:focus::after {
+  content: '█';
+  animation: blink 1s step-end infinite;
+}
+
+/* Sidebar looks like file tree */
+[data-theme="terminal"] aside,
+[data-theme="terminal"] nav {
+  border-right: 1px solid #333;
+}
+
+[data-theme="terminal"] aside a::before {
+  content: './';
+  opacity: 0.5;
+}
+
+/* Scrollbar */
+[data-theme="terminal"] ::-webkit-scrollbar {
+  width: 12px;
+  background: #000;
+}
+
+[data-theme="terminal"] ::-webkit-scrollbar-thumb {
+  background: var(--theme-primary);
+  border: 2px solid #000;
+}
+
+/* Selection */
+[data-theme="terminal"] ::selection {
+  background: var(--theme-primary);
+  color: #000;
+}
