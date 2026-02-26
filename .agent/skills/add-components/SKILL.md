@@ -1,6 +1,6 @@
 ---
 name: add-components
-description: Guide for adding new custom components to Glyph Docs. Use when users want to extend the documentation with custom React components, interactive elements, or special visual components.
+description: Guide for adding new custom components to Glyph. Use when users want to extend the documentation with custom React components, interactive elements, or special visual components.
 ---
 
 # Adding Custom Components
@@ -27,30 +27,91 @@ interface MyComponentProps {
 
 export function MyComponent({ children, title }: MyComponentProps) {
   return (
-    <div className="rounded-lg border border-border bg-card p-6">
-      {title && <h3 className="text-lg font-semibold mb-4">{title}</h3>}
-      {children}
+    <div 
+      className="rounded-lg border p-6 my-4"
+      style={{ 
+        background: 'var(--theme-card)',
+        borderColor: 'var(--theme-border)'
+      }}
+    >
+      {title && (
+        <h3 
+          className="text-lg font-semibold mb-4"
+          style={{ color: 'var(--theme-foreground)' }}
+        >
+          {title}
+        </h3>
+      )}
+      <div style={{ color: 'var(--theme-muted)' }}>{children}</div>
     </div>
   );
 }
 ```
 
-## Using in Markdown
+## Export Component
 
-Components can be used in MDX files (if configured) or create shortcodes:
+Add to `app/src/components/index.ts`:
 
-1. **Export from components/index.ts**:
 ```ts
 export { MyComponent } from './MyComponent';
 ```
 
-2. **Import in your doc** (if using MDX):
+## Using in MDX
+
 ```mdx
 import { MyComponent } from '@/components';
 
 <MyComponent title="Hello">
   Content here
 </MyComponent>
+```
+
+## Built-in Components Reference
+
+Glyph includes these components you can use or extend:
+
+### Layout
+- `Card`, `CardGroup` - Feature cards and grids
+- `Accordion`, `AccordionGroup` - Collapsible sections
+- `Tabs`, `TabGroup`, `TabPanel` - Tabbed content
+- `Steps`, `Step` - Numbered instructions
+- `Frame` - Screenshot/code frame
+- `Timeline`, `TimelineItem` - Vertical timeline
+- `FileTree`, `FileTreeFolder`, `FileTreeFile` - File tree
+
+### Content
+- `Callout` - Tip/warning/info boxes
+- `Badge` - Status badges
+- `Tooltip` - Hover tooltips
+- `TerminalWindow`, `TerminalCommand` - Terminal blocks
+- `Mermaid` - Diagrams
+
+### Styling with Theme Variables
+
+Use CSS variables for theme-aware styling:
+
+```tsx
+<div style={{ 
+  background: 'var(--theme-card)',
+  color: 'var(--theme-foreground)',
+  borderColor: 'var(--theme-border)'
+}}>
+```
+
+### Using Theme Hook
+
+```tsx
+import { useThemePreset } from '@/themes/ThemePresetProvider';
+
+export function ThemeAwareComponent() {
+  const { theme } = useThemePreset();
+  
+  return (
+    <div style={{ color: theme.colors.primary }}>
+      Theme-aware content
+    </div>
+  );
+}
 ```
 
 ## Component Patterns
@@ -67,10 +128,24 @@ interface IconCardProps {
 
 export function IconCard({ icon: Icon, title, description }: IconCardProps) {
   return (
-    <div className="docs-card">
-      <Icon className="w-8 h-8 text-primary mb-4" />
-      <h3 className="text-title mb-2">{title}</h3>
-      <p className="text-body text-muted-foreground">{description}</p>
+    <div 
+      className="rounded-lg border p-6"
+      style={{ 
+        background: 'var(--theme-card)',
+        borderColor: 'var(--theme-border)'
+      }}
+    >
+      <Icon 
+        className="w-8 h-8 mb-4" 
+        style={{ color: 'var(--theme-primary)' }} 
+      />
+      <h3 
+        className="text-lg font-semibold mb-2"
+        style={{ color: 'var(--theme-foreground)' }}
+      >
+        {title}
+      </h3>
+      <p style={{ color: 'var(--theme-muted)' }}>{description}</p>
     </div>
   );
 }
@@ -86,9 +161,11 @@ export function ToggleExample() {
   return (
     <button 
       onClick={() => setActive(!active)}
-      className={`px-4 py-2 rounded transition-colors ${
-        active ? 'bg-primary text-primary-foreground' : 'bg-secondary'
-      }`}
+      className="px-4 py-2 rounded transition-colors"
+      style={{
+        background: active ? 'var(--theme-primary)' : 'var(--theme-card)',
+        color: active ? 'var(--theme-background)' : 'var(--theme-foreground)'
+      }}
     >
       {active ? 'Active' : 'Inactive'}
     </button>
@@ -96,28 +173,10 @@ export function ToggleExample() {
 }
 ```
 
-## Styling
+## Best Practices
 
-Use Tailwind classes:
-- `bg-card`, `bg-secondary` - Background colors
-- `text-foreground`, `text-muted-foreground` - Text colors
-- `border-border` - Border color
-- `rounded-lg`, `rounded-xl` - Border radius
-- `p-4`, `px-6`, `py-2` - Padding
-
-## Adding to Marked Renderer
-
-For automatic transformation of markdown syntax:
-
-```ts
-// In lib/marked.ts
-const renderer = {
-  html(text: string) {
-    // Transform :::custom syntax
-    if (text.startsWith(':::custom')) {
-      return '<div class="custom-component">';
-    }
-    return false;
-  }
-};
-```
+1. **TypeScript** - Always use TypeScript for props
+2. **Theme-aware** - Use theme variables, not hardcoded colors
+3. **Export properly** - Add to components/index.ts
+4. **Test** - Test in all themes
+5. **Document** - Add JSDoc comments

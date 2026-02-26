@@ -1,13 +1,13 @@
 ---
 name: docs-ordering
-description: Guide for organizing and ordering documentation in Glyph Docs. Use when users need help structuring their docs, adding new pages to navigation, or reordering sidebar items.
+description: Guide for organizing and ordering documentation in Glyph. Use when users need help structuring their docs, adding new pages to navigation, or reordering sidebar items.
 ---
 
 # Documentation Ordering Guide
 
 ## Overview
 
-Glyph Docs uses a JSON-based configuration system (`docs/docs.json`) to define the sidebar navigation structure. This guide explains how to properly organize and order your documentation.
+Glyph uses a JSON-based configuration system (`docs/docs.json`) to define the sidebar navigation structure.
 
 ## Configuration File Structure
 
@@ -17,6 +17,11 @@ The `docs.json` file contains:
 {
   "name": "Your Project Name",
   "description": "Brief description",
+  "logo": "/logo.svg",
+  "favicon": "/favicon.ico",
+  "baseUrl": "https://docs.example.com",
+  "llmsTxt": "/llms.txt",
+  "llmsFullTxt": "/llms-full.txt",
   "nav": {
     "links": [...],
     "social": {...}
@@ -25,7 +30,7 @@ The `docs.json` file contains:
     {
       "group": "Group Name",
       "items": [
-        { "label": "Page Title", "slug": "page-slug", "file": "page.md" }
+        { "label": "Page Title", "slug": "page-slug", "file": "path/to/page.md" }
       ]
     }
   ]
@@ -36,7 +41,7 @@ The `docs.json` file contains:
 
 1. **Create the markdown file** in `docs/` folder:
    ```bash
-   touch docs/my-new-page.md
+   touch docs/getting-started/my-new-page.md
    ```
 
 2. **Add frontmatter** to the markdown file:
@@ -44,7 +49,7 @@ The `docs.json` file contains:
    ---
    title: My New Page
    description: Brief description of this page
-   status: beta  # optional: alpha, beta, coming-soon
+   sidebar_position: 1
    ---
    ```
 
@@ -53,10 +58,32 @@ The `docs.json` file contains:
    {
      "group": "Getting Started",
      "items": [
-       { "label": "My New Page", "slug": "my-new-page", "file": "my-new-page.md" }
+       { 
+         "label": "My New Page", 
+         "slug": "getting-started/my-new-page", 
+         "file": "getting-started/my-new-page.md" 
+       }
      ]
    }
    ```
+
+## Folder Structure
+
+Glyph uses numbered folders for organization:
+
+```
+docs/
+├── 00-getting-started/
+│   ├── 00-introduction.md
+│   ├── 01-quickstart.md
+│   └── 02-installation.md
+├── 01-core-concepts/
+│   ├── 00-how-it-works.md
+│   └── 01-configuration.md
+├── 02-components/
+│   └── 00-overview.md
+└── docs.json
+```
 
 ## Ordering Rules
 
@@ -70,34 +97,43 @@ The `docs.json` file contains:
 2. **Group Related Content**: Use groups to organize by topic
 3. **Keep It Flat**: Avoid deep nesting (max 2-3 levels)
 4. **Use Descriptive Labels**: Clear, concise labels help users navigate
+5. **Numbered Folders**: Use `00-`, `01-` prefixes for easy reordering
 
 ## Example Configuration
 
 ```json
 {
+  "name": "Glyph",
+  "description": "A documentation framework with personality",
+  "logo": "/glyph-logo.svg",
+  "favicon": "/favicon.ico",
+  "baseUrl": "https://glyph-docs.vercel.app",
   "sidebar": [
     {
-      "group": "Introduction",
+      "group": "Getting Started",
       "items": [
-        { "label": "Quick Start", "slug": "quickstart", "file": "quickstart.md" },
-        { "label": "Installation", "slug": "installation", "file": "installation.md" }
+        { "label": "Introduction", "slug": "getting-started/introduction", "file": "00-getting-started/00-introduction.md" },
+        { "label": "Quickstart", "slug": "getting-started/quickstart", "file": "00-getting-started/01-quickstart.md" }
       ]
     },
     {
       "group": "Core Concepts",
       "items": [
-        { "label": "Architecture", "slug": "architecture", "file": "architecture.md" },
-        { "label": "Configuration", "slug": "configuration", "file": "configuration.md" }
-      ]
-    },
-    {
-      "group": "API Reference",
-      "items": [
-        { "label": "Authentication", "slug": "api/authentication", "file": "api/authentication.md" },
-        { "label": "Endpoints", "slug": "api/endpoints", "file": "api/endpoints.md" }
+        { "label": "How It Works", "slug": "core/how-it-works", "file": "01-core-concepts/00-how-it-works.md" },
+        { "label": "Configuration", "slug": "core/configuration", "file": "01-core-concepts/02-configuration.md" }
       ]
     }
-  ]
+  ],
+  "nav": {
+    "links": [
+      { "label": "GitHub", "href": "https://github.com/dpbmaverick98/glyph" }
+    ],
+    "social": {
+      "discord": "https://discord.gg/glyph",
+      "twitter": "https://twitter.com/glyphai",
+      "github": "https://github.com/dpbmaverick98/glyph"
+    }
+  }
 }
 ```
 
@@ -106,7 +142,12 @@ The `docs.json` file contains:
 ### Adding a Badge
 
 ```json
-{ "label": "Beta Feature", "slug": "beta", "file": "beta.md", "badge": "Beta" }
+{ 
+  "label": "CLI", 
+  "slug": "products/glyph-cli", 
+  "file": "products/glyph-cli.md", 
+  "badge": "Coming Soon" 
+}
 ```
 
 ### Nested Documentation
@@ -121,7 +162,11 @@ docs/
 
 Reference with nested slugs:
 ```json
-{ "label": "Authentication", "slug": "api/authentication", "file": "api/authentication.md" }
+{ 
+  "label": "Authentication", 
+  "slug": "api/authentication", 
+  "file": "api/authentication.md" 
+}
 ```
 
 ## Troubleshooting

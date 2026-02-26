@@ -1,251 +1,157 @@
 ---
 name: landing-page
-description: Guide for configuring custom landing pages in Glyph documentation. Use when users want to create a custom homepage, add feature cards, or customize their documentation landing experience.
+description: Guide for creating landing pages in Glyph. Use when users want to create a custom homepage or customize their documentation landing experience.
 ---
 
-# Landing Page Configuration
+# Landing Page Guide
 
 ## Overview
 
-Glyph supports custom landing pages through a special `landing.md` file. This allows you to create a personalized homepage instead of using the default Hero component.
+Glyph has a **standalone landing page** that is completely separate from the documentation. The landing page:
+- Has no sidebar or docs header
+- Shows theme switcher with 8 themes
+- Has its own navigation
+- Links to documentation with "Get Started" button
 
 ## How It Works
 
-1. Create `docs/landing.md`
-2. Write your content in Markdown
-3. Use special components for feature grids
-4. If `landing.md` exists, it renders automatically
-5. If not, Glyph falls back to the built-in Hero
+The landing page is a React component (`LandingLayout.tsx`) that renders when users visit the root URL. Clicking "Documentation" or any doc link switches to the docs layout (with sidebar).
 
-## Basic Landing Page
+## Landing Page Sections
 
-Create `docs/landing.md`:
+### Hero Section
+- Animated headline
+- Theme switcher (8 theme cards)
+- "Get Started" and "View on GitHub" buttons
 
-```markdown
----
-title: My Project
-description: A brief description of my project
----
+### Quickstart Preview
+- Terminal-style code block
+- One-click deploy buttons
+- Feature checklist
 
-# Welcome to My Project
+### Features Grid
+- 6 feature cards with icons
+- Hover animations
 
-This is my custom landing page content.
+### Comparison Table
+- Glyph vs Mintlify vs Docusaurus
 
-## Features
+### CTA Section
+- Final call-to-action
+- Social proof
 
-- **Fast** - Built for speed
-- **Simple** - Easy to use
-- **Beautiful** - Great design
+### Footer
+- Links and copyright
 
-## Get Started
+## Customizing the Landing Page
 
-[Get Started](#getting-started/quickstart)
+### Edit LandingLayout.tsx
+
+The landing page content is in `app/src/components/LandingLayout.tsx`:
+
+```tsx
+// Change headline
+<h1>
+  Documentation that
+  <span style={{ color: 'var(--theme-primary)' }}>looks incredible.</span>
+</h1>
+
+// Change features
+<FeatureCard
+  icon={Palette}
+  title="7 Beautiful Themes"
+  description="From minimal to cyberpunk"
+/>
 ```
 
-## Using Card Components
+### Change Themes
 
-### CardGroup
+Edit `app/src/themes/registry.ts` to add/remove themes.
 
-Display features in a grid:
+### Change Colors
 
-```markdown
-<CardGroup cols={3}>
-  <Card title="Feature 1" icon="zap" href="docs/feature-1">
-    Description of feature 1
-  </Card>
-  
-  <Card title="Feature 2" icon="shield" href="docs/feature-2">
-    Description of feature 2
-  </Card>
-  
-  <Card title="Feature 3" icon="globe" href="docs/feature-3">
-    Description of feature 3
-  </Card>
-</CardGroup>
+The landing page uses theme CSS variables:
+
+```css
+--theme-primary      /* Primary color */
+--theme-background   /* Page background */
+--theme-foreground   /* Text color */
+--theme-card         /* Card background */
+--theme-border       /* Borders */
+--theme-muted        /* Secondary text */
+--theme-accent       /* Success/highlight */
 ```
 
-### Available Icons
+## Theme Switcher
 
-Use any Lucide icon name:
-- `zap` - Lightning bolt
-- `shield` - Security
-- `globe` - Global/web
-- `code` - Code/development
-- `book` - Documentation
-- `star` - Featured
-- `heart` - Favorite
-- `check` - Checkmark
+The landing page includes an interactive theme switcher:
 
-### Card Props
-
-| Prop | Type | Description |
-|------|------|-------------|
-| `title` | string | Card heading |
-| `icon` | string | Lucide icon name |
-| `href` | string | Link destination |
-
-## Layout Patterns
-
-### Two-Column Feature Grid
-
-```markdown
-<CardGroup cols={2}>
-  <Card title="Developer Friendly" icon="code">
-    Write in Markdown, get a beautiful site
-  </Card>
-  
-  <Card title="Fast Performance" icon="zap">
-    Built with Vite for instant loading
-  </Card>
-</CardGroup>
-```
-
-### Three-Column Quick Links
-
-```markdown
-## Quick Links
-
-<CardGroup cols={3}>
-  <Card title="Documentation" icon="book" href="core/intro">
-    Learn how to use Glyph
-  </Card>
-  
-  <Card title="API Reference" icon="code" href="reference/api">
-    Complete API documentation
-  </Card>
-  
-  <Card title="Examples" icon="star" href="examples">
-    See what others built
-  </Card>
-</CardGroup>
-```
-
-### With Callouts
-
-```markdown
-# Welcome
-
-:::tip
-New to Glyph? Check out the [Quickstart Guide](#getting-started/quickstart)
-:::
-
-## Features
-
-<CardGroup cols={3}>
-  ...
-</CardGroup>
-```
-
-## Full Example
-
-```markdown
----
-title: Glyph
-description: A lightweight documentation framework
----
-
-# Build Beautiful Documentation
-
-Glyph helps you create stunning documentation sites with minimal effort.
-
-## Why Glyph?
-
-<CardGroup cols={3}>
-  <Card title="Fast" icon="zap">
-    Instant loading with Vite
-  </Card>
-  
-  <Card title="Beautiful" icon="star">
-    Clean design with Geist fonts
-  </Card>
-  
-  <Card title="Simple" icon="heart">
-    Just write Markdown
-  </Card>
-</CardGroup>
-
-## Get Started
-
-Choose your path:
-
-<CardGroup cols={2}>
-  <Card title="Quickstart" icon="zap" href="getting-started/quickstart">
-    Deploy in 5 minutes
-  </Card>
-  
-  <Card title="Documentation" icon="book" href="core/what-is-glyph">
-    Learn the framework
-  </Card>
-</CardGroup>
-```
-
-## Styling Tips
-
-### Center Content
-
-```markdown
-<div className="text-center">
-
-# Big Centered Title
-
-Your centered content here
-
+```tsx
+<div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-3">
+  {availableThemes.map((t) => (
+    <ThemeCard
+      key={t.id}
+      theme={t}
+      isActive={theme.id === t.id}
+      onClick={() => setTheme(t.id)}
+    />
+  ))}
 </div>
 ```
 
-### Add Spacing
+Users can click any theme to preview it instantly.
 
-```markdown
-# Title
+## Adding Content
 
-<div className="py-8"></div>
+### Feature Cards
 
-## Next Section
+```tsx
+<FeatureCard
+  icon={YourIcon}
+  title="Feature Name"
+  description="Feature description"
+/>
 ```
 
-### Use Emojis
+### Code Preview
 
-```markdown
-# 🚀 Welcome
+```tsx
+<CodePreview />  // Shows npm create command
+```
 
-## ✨ Features
+### Comparison Table
 
-## 🎯 Goals
+Edit the comparison table in LandingLayout.tsx:
+
+```tsx
+{[
+  ['Feature', true, false, false],
+  ['Self-hosted', true, false, true],
+  // ...
+].map(([feature, glyph, mintlify, docusaurus], i) => (
+  // ...
+))}
 ```
 
 ## Best Practices
 
-1. **Keep it concise** - Landing pages should be scannable
-2. **Use cards for navigation** - Help users find what they need
-3. **Include a CTA** - Always have a clear next step
-4. **Match your brand** - Use your colors and tone
-5. **Mobile-friendly** - Cards automatically stack on mobile
+1. **Keep it simple** - Landing page should be scannable
+2. **Highlight themes** - Theme switcher is a key differentiator
+3. **Clear CTA** - "Get Started" should be prominent
+4. **Social proof** - GitHub stars, testimonials
+5. **Mobile-friendly** - Test on all devices
 
 ## Troubleshooting
 
 ### Landing page not showing
+- Check that `LandingLayout.tsx` exists
+- Verify `App.tsx` imports and uses it
+- Check browser console for errors
 
-- Ensure `landing.md` is in the `docs/` folder
-- Check that the file has valid frontmatter
-- Restart the dev server
-
-### Cards not rendering
-
-- Check CardGroup syntax (must be valid JSX)
-- Verify icon names are valid Lucide icons
-- Ensure href paths are correct
+### Theme switcher not working
+- Verify `ThemePresetProvider` wraps the app
+- Check that themes are registered in `registry.ts`
 
 ### Styles not applying
-
-- Use Tailwind classes for custom styling
-- Check that classes are valid
-- Some Markdown syntax may need HTML wrappers
-
-## Fallback Behavior
-
-If you delete `landing.md`, Glyph automatically shows the built-in Hero component with:
-- Project title and description
-- Quick links to key pages
-- Call-to-action buttons
-
-To restore the default Hero, simply remove or rename `landing.md`.
+- Ensure CSS variables are set in `index.css`
+- Check that `data-theme` attribute is on root element
