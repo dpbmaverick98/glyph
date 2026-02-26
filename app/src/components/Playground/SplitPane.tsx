@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 
 interface SplitPaneProps {
   left: ReactNode;
@@ -21,52 +21,62 @@ export function SplitPane({
   const [isDraggingHorizontal, setIsDraggingHorizontal] = useState(false);
   const [isDraggingVertical, setIsDraggingVertical] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const horizontalDragRef = useRef({ startX: 0, startWidth: 0 });
+  const verticalDragRef = useRef({ startY: 0, startHeight: 0 });
 
-  // Horizontal resize (left/right)
+  // Handle horizontal resize with RAF for performance
+  const handleHorizontalMouseDown = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    horizontalDragRef.current = { startX: e.clientX, startWidth: leftWidth };
+    setIsDraggingHorizontal(true);
+  }, [leftWidth]);
+
+  // Handle vertical resize
+  const handleVerticalMouseDown = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    verticalDragRef.current = { startY: e.clientY, startHeight: rightTopHeight };
+    setIsDraggingVertical(true);
+  }, [rightTopHeight]);
+
+  // Unified mouse move handler
   useEffect(() => {
-    if (!isDraggingHorizontal) return;
+    if (!isDraggingHorizontal && !isDraggingVertical) return;
+
+    let rafId: number;
 
     const handleMouseMove = (e: MouseEvent) => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      const newWidth = ((e.clientX - rect.left) / rect.width) * 100;
-      setLeftWidth(Math.max(20, Math.min(60, newWidth)));
+      if (rafId) return; // Throttle to animation frame
+      
+      rafId = requestAnimationFrame(() => {
+        rafId = 0;
+        
+        if (isDraggingHorizontal && containerRef.current) {
+          const rect = containerRef.current.getBoundingClientRect();
+          const deltaX = e.clientX - horizontalDragRef.current.startX;
+          const deltaPercent = (deltaX / rect.width) * 100;
+          const newWidth = Math.max(20, Math.min(60, horizontalDragRef.current.startWidth + deltaPercent));
+          setLeftWidth(newWidth);
+        }
+        
+        if (isDraggingVertical && containerRef.current) {
+          const rect = containerRef.current.getBoundingClientRect();
+          const rightPanelWidth = rect.width * (1 - leftWidth / 100);
+          const rightPanelLeft = rect.left + (rect.width * leftWidth / 100);
+          const relativeX = e.clientX - rightPanelLeft;
+          
+          // Only drag if mouse is in right panel
+          if (relativeX > 0 && relativeX < rightPanelWidth) {
+            const deltaY = e.clientY - verticalDragRef.current.startY;
+            const deltaPercent = (deltaY / rect.height) * 100;
+            const newHeight = Math.max(20, Math.min(80, verticalDragRef.current.startHeight + deltaPercent));
+            setRightTopHeight(newHeight);
+          }
+        }
+      });
     };
 
     const handleMouseUp = () => {
       setIsDraggingHorizontal(false);
-    };
-
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseup', handleMouseUp);
-
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
-    };
-  }, [isDraggingHorizontal]);
-
-  // Vertical resize (top/bottom of right panel)
-  useEffect(() => {
-    if (!isDraggingVertical) return;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      const rightPanelLeft = rect.left + (rect.width * leftWidth / 100);
-      const relativeX = e.clientX - rightPanelLeft;
-      
-      if (relativeX > 0) {
-        const rightRect = {
-          top: rect.top,
-          height: rect.height
-        };
-        const newHeight = ((e.clientY - rightRect.top) / rightRect.height) * 100;
-        setRightTopHeight(Math.max(20, Math.min(80, newHeight)));
-      }
-    };
-
-    const handleMouseUp = () => {
       setIsDraggingVertical(false);
     };
 
@@ -76,18 +86,40 @@ export function SplitPane({
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
+      if (rafId) cancelAnimationFrame(rafId);
     };
-  }, [isDraggingVertical, leftWidth]);
+  }, [isDraggingHorizontal, isDraggingVertical, leftWidth]);
+
+  // Handle keyboard resize
+  const handleHorizontalKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      setLeftWidth((w) => Math.max(20, w - 5));
+    } else if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      setLeftWidth((w) => Math.min(60, w + 5));
+    }
+  }, []);
+
+  const handleVerticalKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setRightTopHeight((h) => Math.max(20, h - 5));
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setRightTopHeight((h) => Math.min(80, h + 5));
+    }
+  }, []);
 
   return (
     <div 
       ref={containerRef}
-      className="flex h-[600px] rounded-lg overflow-hidden border"
+      className="flex min-h-[400px] max-h-[800px] rounded-lg overflow-hidden border"
       style={{ borderColor: 'var(--theme-border)' }}
     >
       {/* Left Panel */}
       <div 
-        className="flex flex-col overflow-auto"
+        className="flex flex-col overflow-auto min-w-[200px]"
         style={{ width: `${leftWidth}%` }}
       >
         {left}
@@ -95,16 +127,21 @@ export function SplitPane({
 
       {/* Horizontal Resizer */}
       <div
-        className="w-1 cursor-col-resize hover:bg-primary/50 transition-colors"
-        style={{ background: 'var(--theme-border)' }}
-        onMouseDown={() => setIsDraggingHorizontal(true)}
+        role="separator"
+        aria-orientation="vertical"
+        aria-label="Resize panels horizontally"
+        tabIndex={0}
+        className="w-2 cursor-col-resize hover:bg-primary/50 focus:bg-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors"
+        style={{ background: isDraggingHorizontal ? 'var(--theme-primary)' : 'var(--theme-border)' }}
+        onMouseDown={handleHorizontalMouseDown}
+        onKeyDown={handleHorizontalKeyDown}
       />
 
       {/* Right Panel */}
-      <div className="flex flex-col flex-1">
+      <div className="flex flex-col flex-1 min-w-[300px]">
         {/* Right Top */}
         <div 
-          className="overflow-auto"
+          className="overflow-auto min-h-[100px]"
           style={{ height: `${rightTopHeight}%` }}
         >
           {rightTop}
@@ -112,15 +149,19 @@ export function SplitPane({
 
         {/* Vertical Resizer */}
         <div
-          className="h-1 cursor-row-resize hover:bg-primary/50 transition-colors"
-          style={{ background: 'var(--theme-border)' }}
-          onMouseDown={() => setIsDraggingVertical(true)}
+          role="separator"
+          aria-orientation="horizontal"
+          aria-label="Resize panels vertically"
+          tabIndex={0}
+          className="h-2 cursor-row-resize hover:bg-primary/50 focus:bg-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors"
+          style={{ background: isDraggingVertical ? 'var(--theme-primary)' : 'var(--theme-border)' }}
+          onMouseDown={handleVerticalMouseDown}
+          onKeyDown={handleVerticalKeyDown}
         />
 
         {/* Right Bottom */}
         <div 
-          className="flex-1 overflow-auto"
-          style={{ height: `${100 - rightTopHeight}%` }}
+          className="flex-1 overflow-auto min-h-[100px]"
         >
           {rightBottom}
         </div>

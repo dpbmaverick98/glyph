@@ -21,8 +21,10 @@ export function PlaygroundResponse({ response, error }: PlaygroundResponseProps)
             background: 'rgba(239, 68, 68, 0.1)',
             border: '1px solid rgba(239, 68, 68, 0.3)'
           }}
+          role="alert"
+          aria-live="polite"
         >
-          <AlertCircle className="w-5 h-5" style={{ color: '#ef4444' }} />
+          <AlertCircle className="w-5 h-5 flex-shrink-0" style={{ color: '#ef4444' }} />
           <span style={{ color: '#ef4444' }}>{error}</span>
         </div>
       </div>
@@ -41,6 +43,7 @@ export function PlaygroundResponse({ response, error }: PlaygroundResponseProps)
   }
 
   const isSuccess = response.status >= 200 && response.status < 300;
+  const hasHeaders = Object.keys(response.headers).length > 0;
 
   return (
     <div className="h-full flex flex-col">
@@ -56,11 +59,16 @@ export function PlaygroundResponse({ response, error }: PlaygroundResponseProps)
               background: isSuccess ? 'rgba(34, 197, 94, 0.2)' : 'rgba(239, 68, 68, 0.2)',
               color: isSuccess ? '#22c55e' : '#ef4444'
             }}
+            aria-label={`Response status: ${response.status} ${response.statusText}`}
           >
             {response.status} {response.statusText}
           </span>
           
-          <div className="flex items-center gap-1 text-sm" style={{ color: 'var(--theme-muted)' }}>
+          <div 
+            className="flex items-center gap-1 text-sm" 
+            style={{ color: 'var(--theme-muted)' }}
+            aria-label={`Response time: ${response.time} milliseconds`}
+          >
             <Clock className="w-4 h-4" />
             {response.time}ms
           </div>
@@ -73,7 +81,9 @@ export function PlaygroundResponse({ response, error }: PlaygroundResponseProps)
           className="p-4 font-mono text-sm"
           style={{ color: 'var(--theme-foreground)' }}
         >
-          {JSON.stringify(response.body, null, 2)}
+          {typeof response.body === 'string' 
+            ? response.body 
+            : JSON.stringify(response.body, null, 2)}
         </pre>
       </div>
 
@@ -82,20 +92,57 @@ export function PlaygroundResponse({ response, error }: PlaygroundResponseProps)
         className="border-t max-h-32 overflow-auto"
         style={{ borderColor: 'var(--theme-border)' }}
       >
-        <table className="w-full text-sm">
-          <tbody>
-            {Object.entries(response.headers).map(([key, value]) => (
-              <tr key={key} style={{ borderBottom: '1px solid var(--theme-border)' }}>
-                <td className="px-4 py-1 font-medium" style={{ color: 'var(--theme-muted)' }}>
-                  {key}
-                </td>
-                <td className="px-4 py-1" style={{ color: 'var(--theme-foreground)' }}>
-                  {value}
-                </td>
+        {hasHeaders ? (
+          <table className="w-full text-sm">
+            <thead>
+              <tr style={{ borderBottom: '1px solid var(--theme-border)' }}>
+                <th 
+                  className="px-4 py-2 text-left font-semibold text-xs uppercase tracking-wider"
+                  style={{ color: 'var(--theme-muted)' }}
+                >
+                  Header
+                </th>
+                <th 
+                  className="px-4 py-2 text-left font-semibold text-xs uppercase tracking-wider"
+                  style={{ color: 'var(--theme-muted)' }}
+                >
+                  Value
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {Object.entries(response.headers).map(([key, value]) => (
+                <tr 
+                  key={key} 
+                  style={{ borderBottom: '1px solid var(--theme-border)' }}
+                  className="hover:bg-opacity-50"
+                >
+                  <td 
+                    className="px-4 py-1 font-medium truncate max-w-[150px]"
+                    style={{ color: 'var(--theme-muted)' }}
+                    title={key}
+                  >
+                    {key}
+                  </td>
+                  <td 
+                    className="px-4 py-1 truncate max-w-[300px]"
+                    style={{ color: 'var(--theme-foreground)' }}
+                    title={value}
+                  >
+                    {value}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <div 
+            className="px-4 py-2 text-sm italic"
+            style={{ color: 'var(--theme-muted)' }}
+          >
+            No response headers
+          </div>
+        )}
       </div>
     </div>
   );

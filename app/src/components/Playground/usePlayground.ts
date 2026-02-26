@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useMemo, useRef } from 'react';
 
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
@@ -48,19 +48,59 @@ export interface PlaygroundState {
   error: string | null;
 }
 
-export function usePlayground(config: PlaygroundConfig) {
-  const [state, setState] = useState<PlaygroundState>({
-    selectedEndpoint: 0,
-    params: {},
-    headers: config.defaultApiKey ? { [config.apiKeyHeader || 'Authorization']: `Bearer ${config.defaultApiKey}` } : {},
-    body: '',
-    selectedLanguage: 'curl',
-    isLoading: false,
-    response: null,
-    error: null,
-  });
+// Escape shell arguments for curl
+function escapeShell(str: string): string {
+  return str.replace(/'/g, "'\"'\"'");
+}
 
-  const currentEndpoint = config.endpoints[state.selectedEndpoint];
+// Escape string for JavaScript template
+function escapeJs(str: string): string {
+  return str.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/\n/g, '\\n');
+}
+
+// Validate config
+function validateConfig(config: PlaygroundConfig): void {
+  if (!config.baseUrl) {
+    throw new Error('Playground config: baseUrl is required');
+  }
+  if (!Array.isArray(config.endpoints) || config.endpoints.length === 0) {
+    throw new Error('Playground config: endpoints must be a non-empty array');
+  }
+  config.endpoints.forEach((ep, i) => {
+    if (!ep.method || !ep.path) {
+      throw new Error(`Playground config: endpoint[${i}] must have method and path`);
+    }
+  });
+}
+
+export function usePlayground(config: PlaygroundConfig) {
+  // Validate config on mount
+  useEffect(() => {
+    validateConfig(config);
+  }, [config]);
+
+  const [selectedEndpoint, setSelectedEndpoint] = useState(0);
+  const [params, setParams] = useState<Record<string, string>>({});
+  const [headers, setHeaders] = useState<Record<string, string>>(
+    config.defaultApiKey ? { [config.apiKeyHeader || 'Authorization']: `Bearer ${config.defaultApiKey}` } : {}
+  );
+  const [body, setBody] = useState('');
+  const [selectedLanguage, setSelectedLanguage] = useState<Language>('curl');
+  const [isLoading, setIsLoading] = useState(false);
+  const [response, setResponse] = useState<PlaygroundState['response']>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const currentEndpoint = config.endpoints[selectedEndpoint];
+  const abortControllerRef = useRef<AbortController | null>(null);
+
+  // Cleanup abort controller on unmount
+  useEffect(() => {
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    };
+  }, []);
 
   // Build URL with path and query params
   const buildUrl = useCallback(() => {
@@ -68,14 +108,14 @@ export function usePlayground(config: PlaygroundConfig) {
     
     // Replace path params
     currentEndpoint.params?.path?.forEach((param) => {
-      const value = state.params[param.name] || param.default || '';
+      const value = params[param.name] || param.default || '';
       url = url.replace(`{${param.name}}`, encodeURIComponent(String(value)));
     });
 
     // Add query params
     const queryParams = new URLSearchParams();
     currentEndpoint.params?.query?.forEach((param) => {
-      const value = state.params[param.name];
+      const value = params[param.name];
       if (value !== undefined && value !== '') {
         queryParams.append(param.name, value);
       }
@@ -87,68 +127,74 @@ export function usePlayground(config: PlaygroundConfig) {
     }
 
     return url;
-  }, [config.baseUrl, currentEndpoint, state.params]);
+  }, [config.baseUrl, currentEndpoint, params]);
 
-  // Generate code for each language
-  const generateCode = useCallback((language: Language): string => {
+  // Generate code for each language - memoized
+  const generatedCode = useMemo(() => {
     const url = buildUrl();
-    const headers = { ...state.headers };
-    const hasBody = ['POST', 'PUT', 'PATCH'].includes(currentEndpoint.method) && state.body;
+    const hasBody = ['POST', 'PUT', 'PATCH'].includes(currentEndpoint.method) && body;
 
-    switch (language) {
-      case 'curl':
-        let curl = `curl -X ${currentEndpoint.method} \\\n  '${url}'`;
+    const generators: Record<Language, () => string> = {
+      curl: () => {
+        let curl = `curl -X ${currentEndpoint.method} \\\n  '${escapeShell(url)}'`;
         
         Object.entries(headers).forEach(([key, value]) => {
-          curl += ` \\\n  -H '${key}: ${value}'`;
+          curl += ` \\\n  -H '${escapeShell(key)}: ${escapeShell(value)}'`;
         });
         
         if (hasBody) {
-          curl += ` \\\n  -d '${state.body}'`;
+          curl += ` \\\n  -d '${escapeShell(body)}'`;
         }
         
         return curl;
+      },
 
-      case 'javascript':
-        let js = `const response = await fetch('${url}', {
+      javascript: () => {
+        let js = `const response = await fetch('${escapeJs(url)}', {
   method: '${currentEndpoint.method}',
   headers: ${JSON.stringify(headers, null, 2)}`;
         
         if (hasBody) {
           js += `,
-  body: JSON.stringify(${state.body})`;
+  body: JSON.stringify(${body})`;
         }
         
         js += `
 });
 
 const data = await response.json();
-console.log(data);`;
+return data;`;
         
         return js;
+      },
 
-      case 'python':
+      python: () => {
         let py = `import requests
 
 response = requests.${currentEndpoint.method.toLowerCase()}(
-    '${url}',
+    '${escapeShell(url)}',
     headers=${JSON.stringify(headers, null, 4).replace(/"/g, "'")}`;
         
         if (hasBody) {
           py += `,
-    json=${state.body}`;
+    json=${body}`;
         }
         
         py += `
 )
 
 data = response.json()
-print(data)`;
+return data`;
         
         return py;
+      },
 
-      case 'go':
-        let go = `package main
+      go: () => {
+        const headerLines = Object.entries(headers)
+          .map(([k, v]) => `    req.Header.Add("${escapeJs(k)}", "${escapeJs(v)}")`)
+          .join('\n');
+        
+        return `package main
 
 import (
     "fmt"
@@ -157,9 +203,9 @@ import (
 )
 
 func main() {
-    req, _ := http.NewRequest("${currentEndpoint.method}", "${url}", nil)
+    req, _ := http.NewRequest("${currentEndpoint.method}", "${escapeJs(url)}", nil)
     
-${Object.entries(headers).map(([k, v]) => `    req.Header.Add("${k}", "${v}")`).join('\n')}
+${headerLines}
     
     client := &http.Client{}
     resp, _ := client.Do(req)
@@ -168,18 +214,21 @@ ${Object.entries(headers).map(([k, v]) => `    req.Header.Add("${k}", "${v}")`).
     body, _ := io.ReadAll(resp.Body)
     fmt.Println(string(body))
 }`;
-        
-        return go;
+      },
 
-      case 'rust':
-        let rust = `use reqwest;
+      rust: () => {
+        const headerLines = Object.entries(headers)
+          .map(([k, v]) => `        .header("${escapeJs(k)}", "${escapeJs(v)}")`)
+          .join('\n');
+        
+        return `use reqwest;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let client = reqwest::Client::new();
     let resp = client
-        .${currentEndpoint.method.toLowerCase()}("${url}")
-${Object.entries(headers).map(([k, v]) => `        .header("${k}", "${v}")`).join('\n')}
+        .${currentEndpoint.method.toLowerCase()}("${escapeJs(url)}")
+${headerLines}
         .send()
         .await?;
     
@@ -188,17 +237,29 @@ ${Object.entries(headers).map(([k, v]) => `        .header("${k}", "${v}")`).joi
     
     Ok(())
 }`;
-        
-        return rust;
+      },
+    };
 
-      default:
-        return '';
-    }
-  }, [buildUrl, currentEndpoint.method, state.headers, state.body]);
+    return generators[selectedLanguage]();
+  }, [buildUrl, currentEndpoint.method, headers, body, selectedLanguage]);
 
-  // Execute request
+  // Execute request with timeout
   const execute = useCallback(async () => {
-    setState((prev) => ({ ...prev, isLoading: true, error: null, response: null }));
+    setIsLoading(true);
+    setError(null);
+    setResponse(null);
+    
+    // Cancel previous request
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+    
+    const abortController = new AbortController();
+    abortControllerRef.current = abortController;
+    
+    const timeoutId = setTimeout(() => {
+      abortController.abort();
+    }, 30000); // 30 second timeout
     
     const startTime = performance.now();
     
@@ -206,77 +267,84 @@ ${Object.entries(headers).map(([k, v]) => `        .header("${k}", "${v}")`).joi
       const url = buildUrl();
       const options: RequestInit = {
         method: currentEndpoint.method,
-        headers: state.headers,
+        headers: headers,
+        signal: abortController.signal,
       };
 
-      if (['POST', 'PUT', 'PATCH'].includes(currentEndpoint.method) && state.body) {
-        options.body = state.body;
+      if (['POST', 'PUT', 'PATCH'].includes(currentEndpoint.method) && body) {
+        options.body = body;
+        // Auto-add Content-Type if not present
+        if (!headers['Content-Type'] && !headers['content-type']) {
+          options.headers = { ...headers, 'Content-Type': 'application/json' };
+        }
       }
 
-      const response = await fetch(url, options);
-      const responseBody = await response.json().catch(() => null);
+      const res = await fetch(url, options);
+      
+      let responseBody: unknown;
+      const contentType = res.headers.get('content-type');
+      if (contentType?.includes('application/json')) {
+        responseBody = await res.json();
+      } else {
+        responseBody = await res.text();
+      }
       
       const responseHeaders: Record<string, string> = {};
-      response.headers.forEach((value, key) => {
+      res.headers.forEach((value, key) => {
         responseHeaders[key] = value;
       });
 
-      setState((prev) => ({
-        ...prev,
-        isLoading: false,
-        response: {
-          status: response.status,
-          statusText: response.statusText,
-          headers: responseHeaders,
-          body: responseBody,
-          time: Math.round(performance.now() - startTime),
-        },
-      }));
+      setResponse({
+        status: res.status,
+        statusText: res.statusText,
+        headers: responseHeaders,
+        body: responseBody,
+        time: Math.round(performance.now() - startTime),
+      });
     } catch (err) {
-      setState((prev) => ({
-        ...prev,
-        isLoading: false,
-        error: err instanceof Error ? err.message : 'Request failed',
-      }));
+      if (err instanceof Error) {
+        if (err.name === 'AbortError') {
+          setError('Request timed out after 30 seconds');
+        } else {
+          setError(err.message);
+        }
+      } else {
+        setError('Request failed');
+      }
+    } finally {
+      clearTimeout(timeoutId);
+      setIsLoading(false);
+      abortControllerRef.current = null;
     }
-  }, [buildUrl, currentEndpoint.method, state.headers, state.body]);
+  }, [buildUrl, currentEndpoint.method, headers, body]);
 
   // Update param value
   const setParam = useCallback((name: string, value: string) => {
-    setState((prev) => ({
-      ...prev,
-      params: { ...prev.params, [name]: value },
-    }));
+    setParams((prev) => ({ ...prev, [name]: value }));
   }, []);
 
   // Update header value
   const setHeader = useCallback((name: string, value: string) => {
-    setState((prev) => ({
-      ...prev,
-      headers: { ...prev.headers, [name]: value },
-    }));
+    setHeaders((prev) => ({ ...prev, [name]: value }));
   }, []);
 
   // Update body
-  const setBody = useCallback((body: string) => {
-    setState((prev) => ({ ...prev, body }));
+  const setBodyValue = useCallback((body: string) => {
+    setBody(body);
   }, []);
 
   // Select endpoint
   const selectEndpoint = useCallback((index: number) => {
-    setState((prev) => ({
-      ...prev,
-      selectedEndpoint: index,
-      params: {},
-      body: '',
-      response: null,
-      error: null,
-    }));
+    setSelectedEndpoint(index);
+    setParams({});
+    setBody('');
+    setResponse(null);
+    setError(null);
   }, []);
 
   // Select language
   const selectLanguage = useCallback((language: Language) => {
-    setState((prev) => ({ ...prev, selectedLanguage: language }));
+    setSelectedLanguage(language);
   }, []);
 
   // Initialize default params
@@ -295,18 +363,27 @@ ${Object.entries(headers).map(([k, v]) => `        .header("${k}", "${v}")`).joi
       }
     });
 
-    setState((prev) => ({ ...prev, params: defaults }));
+    setParams(defaults);
   }, [currentEndpoint]);
 
   return {
-    state,
+    state: {
+      selectedEndpoint,
+      params,
+      headers,
+      body,
+      selectedLanguage,
+      isLoading,
+      response,
+      error,
+    },
     currentEndpoint,
     buildUrl,
-    generateCode,
+    generatedCode,
     execute,
     setParam,
     setHeader,
-    setBody,
+    setBody: setBodyValue,
     selectEndpoint,
     selectLanguage,
   };

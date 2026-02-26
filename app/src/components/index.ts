@@ -19,5 +19,5 @@ export { ResponseField, ResponseExample } from './ApiReference';
 export { Mermaid } from './Mermaid';
 export { Embed } from './Embed';
 export { OGImage } from './OGImage';
-export { Playground } from './Playground';
+export { Playground, SafePlayground } from './Playground';
 export type { PlaygroundConfig, Endpoint, Param, HttpMethod, Language } from './Playground';
