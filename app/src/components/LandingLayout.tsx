@@ -60,8 +60,8 @@ function ThemeCard({ theme, isActive, onClick }: { theme: Theme; isActive: boole
         )}
       </div>
       
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-1.5">
+      <div className="flex items-center justify-between min-w-0">
+        <div className="flex items-center gap-1.5 min-w-0">
           <span style={{ color: theme.colors.primary }}>{getThemeIcon()}</span>
           <span className="text-sm font-medium truncate" style={{ color: theme.colors.foreground }}>
             {theme.name}
