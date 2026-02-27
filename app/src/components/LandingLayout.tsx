@@ -63,7 +63,7 @@ function ThemeCard({ theme, isActive, onClick }: { theme: Theme; isActive: boole
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-1.5">
           <span style={{ color: theme.colors.primary }}>{getThemeIcon()}</span>
-          <span className="text-sm font-medium" style={{ color: theme.colors.foreground }}>
+          <span className="text-sm font-medium truncate" style={{ color: theme.colors.foreground }}>
             {theme.name}
           </span>
         </div>
@@ -271,7 +271,7 @@ export function LandingLayout({ onEnterDocs }: LandingLayoutProps) {
               Try a theme:
             </p>
             
-            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-8 gap-3">
               {availableThemes.map((t) => (
                 <ThemeCard
                   key={t.id}
