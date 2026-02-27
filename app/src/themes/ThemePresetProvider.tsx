@@ -74,6 +74,10 @@ export function ThemePresetProvider({ children }: { children: ReactNode }) {
 
     const root = document.documentElement;
 
+    // Remove light/dark class when theme preset is active
+    // Theme presets are complete color schemes, so the light/dark toggle is redundant
+    root.classList.remove('dark', 'light');
+
     // Theme-specific variables (for landing page components)
     root.style.setProperty('--theme-primary', theme.colors.primary);
     root.style.setProperty('--theme-background', theme.colors.background);
