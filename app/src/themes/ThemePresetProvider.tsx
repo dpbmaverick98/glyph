@@ -53,10 +53,10 @@ export function ThemePresetProvider({ children }: { children: ReactNode }) {
   // Apply theme CSS variables
   useEffect(() => {
     if (!mounted) return;
-    
+
     const root = document.documentElement;
-    
-    // Colors
+
+    // Theme-specific variables (for landing page components)
     root.style.setProperty('--theme-primary', theme.colors.primary);
     root.style.setProperty('--theme-background', theme.colors.background);
     root.style.setProperty('--theme-foreground', theme.colors.foreground);
@@ -64,17 +64,33 @@ export function ThemePresetProvider({ children }: { children: ReactNode }) {
     root.style.setProperty('--theme-border', theme.colors.border);
     root.style.setProperty('--theme-muted', theme.colors.muted);
     root.style.setProperty('--theme-accent', theme.colors.accent);
-    
+
+    // Tailwind CSS variables (for docs components)
+    // These sync theme colors with Tailwind's expected variable names
+    root.style.setProperty('--background', theme.colors.background);
+    root.style.setProperty('--foreground', theme.colors.foreground);
+    root.style.setProperty('--primary', theme.colors.primary);
+    root.style.setProperty('--border', theme.colors.border);
+    root.style.setProperty('--muted', theme.colors.muted);
+    root.style.setProperty('--accent', theme.colors.accent);
+    root.style.setProperty('--card', theme.colors.card);
+
+    // Also set foreground variants that Tailwind uses
+    root.style.setProperty('--primary-foreground', theme.colors.background);
+    root.style.setProperty('--muted-foreground', theme.colors.muted);
+    root.style.setProperty('--accent-foreground', theme.colors.background);
+    root.style.setProperty('--card-foreground', theme.colors.foreground);
+
     // Fonts
     root.style.setProperty('--theme-font-sans', theme.fonts.sans);
     root.style.setProperty('--theme-font-mono', theme.fonts.mono);
     if (theme.fonts.display) {
       root.style.setProperty('--theme-font-display', theme.fonts.display);
     }
-    
+
     // Radius
-    root.style.setProperty('--theme-radius', theme.radius);
-    
+    root.style.setProperty('--radius', theme.radius);
+
     // Theme ID for conditional styles
     root.setAttribute('data-theme', theme.id);
   }, [theme, mounted]);
