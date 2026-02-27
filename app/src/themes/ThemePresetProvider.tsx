@@ -4,6 +4,41 @@ import { themes, defaultTheme } from './registry';
 import { useCursorGlow, useCursorTrail, useBlinkCursor, useScanlines, useGridBackground, useFogEffect } from './animations';
 import { useThemeStyles } from './useThemeStyles';
 
+// Convert hex color to HSL format for Tailwind CSS variables
+// Tailwind expects HSL format: "h 0% 0%" not hex "#ffffff"
+const hexToHsl = (hex: string): string => {
+  if (!hex.startsWith('#') || hex.length < 7) return hex;
+
+  try {
+    // Parse hex color
+    const r = parseInt(hex.slice(1, 3), 16) / 255;
+    const g = parseInt(hex.slice(3, 5), 16) / 255;
+    const b = parseInt(hex.slice(5, 7), 16) / 255;
+
+    const max = Math.max(r, g, b);
+    const min = Math.min(r, g, b);
+    let h = 0;
+    let s = 0;
+    const l = (max + min) / 2;
+
+    if (max !== min) {
+      const d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+
+      switch (max) {
+        case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break;
+        case g: h = ((b - r) / d + 2) / 6; break;
+        case b: h = ((r - g) / d + 4) / 6; break;
+      }
+    }
+
+    // Convert to CSS HSL format (degrees, percentage, percentage)
+    return `${Math.round(h * 360)} ${Math.round(s * 100)}% ${Math.round(l * 100)}%`;
+  } catch {
+    return hex;
+  }
+};
+
 // Calculate if a color is dark using YIQ formula
 const isDarkColor = (color: string): boolean => {
   if (!color.startsWith('#') || color.length < 7) return false;
@@ -89,14 +124,15 @@ export function ThemePresetProvider({ children }: { children: ReactNode }) {
 
     // Tailwind CSS variables (for docs components)
     // These sync theme colors with Tailwind's expected variable names
-    root.style.setProperty('--background', theme.colors.background);
-    root.style.setProperty('--foreground', theme.colors.foreground);
-    root.style.setProperty('--primary', theme.colors.primary);
-    root.style.setProperty('--border', theme.colors.border);
-    root.style.setProperty('--muted', theme.colors.muted);
-    root.style.setProperty('--accent', theme.colors.accent);
-    root.style.setProperty('--card', theme.colors.card);
-    root.style.setProperty('--secondary', theme.colors.secondary);
+    // IMPORTANT: Convert hex to HSL format as Tailwind uses hsl(var(--name))
+    root.style.setProperty('--background', hexToHsl(theme.colors.background));
+    root.style.setProperty('--foreground', hexToHsl(theme.colors.foreground));
+    root.style.setProperty('--primary', hexToHsl(theme.colors.primary));
+    root.style.setProperty('--border', hexToHsl(theme.colors.border));
+    root.style.setProperty('--muted', hexToHsl(theme.colors.muted));
+    root.style.setProperty('--accent', hexToHsl(theme.colors.accent));
+    root.style.setProperty('--card', hexToHsl(theme.colors.card));
+    root.style.setProperty('--secondary', hexToHsl(theme.colors.secondary));
 
     // Also set foreground variants that Tailwind uses (with proper contrast)
     root.style.setProperty('--primary-foreground', getContrastColor(theme.colors.primary));
