@@ -4,6 +4,24 @@ import { themes, defaultTheme } from './registry';
 import { useCursorGlow, useCursorTrail, useBlinkCursor, useScanlines, useGridBackground, useFogEffect } from './animations';
 import { useThemeStyles } from './useThemeStyles';
 
+// Calculate if a color is dark using YIQ formula
+const isDarkColor = (color: string): boolean => {
+  if (!color.startsWith('#') || color.length < 7) return false;
+  try {
+    const r = parseInt(color.slice(1, 3), 16);
+    const g = parseInt(color.slice(3, 5), 16);
+    const b = parseInt(color.slice(5, 7), 16);
+    return (r * 299 + g * 587 + b * 114) / 1000 < 128;
+  } catch {
+    return false;
+  }
+};
+
+// Get contrasting foreground color (black or white)
+const getContrastColor = (bgColor: string): string => {
+  return isDarkColor(bgColor) ? '#ffffff' : '#000000';
+};
+
 interface ThemeContextType {
   theme: Theme;
   setTheme: (themeId: string) => void;
@@ -76,11 +94,12 @@ export function ThemePresetProvider({ children }: { children: ReactNode }) {
     root.style.setProperty('--card', theme.colors.card);
     root.style.setProperty('--secondary', theme.colors.secondary);
 
-    // Also set foreground variants that Tailwind uses
-    root.style.setProperty('--primary-foreground', theme.colors.background);
+    // Also set foreground variants that Tailwind uses (with proper contrast)
+    root.style.setProperty('--primary-foreground', getContrastColor(theme.colors.primary));
     root.style.setProperty('--muted-foreground', theme.colors.muted);
-    root.style.setProperty('--accent-foreground', theme.colors.background);
+    root.style.setProperty('--accent-foreground', getContrastColor(theme.colors.accent));
     root.style.setProperty('--card-foreground', theme.colors.foreground);
+    root.style.setProperty('--secondary-foreground', theme.colors.foreground);
 
     // Fonts
     root.style.setProperty('--theme-font-sans', theme.fonts.sans);
