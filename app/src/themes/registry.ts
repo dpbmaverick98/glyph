@@ -96,7 +96,7 @@ export const themes: Theme[] = [
       border: 'rgba(255, 255, 255, 0.1)',
       muted: '#a1a1aa',
       accent: '#22d3ee',
-      secondary: 'rgba(255, 255, 255, 0.08)',
+      secondary: '#1a1a2e',
     },
     fonts: {
       sans: 'Inter, system-ui, sans-serif',
