@@ -74,6 +74,7 @@ export function ThemePresetProvider({ children }: { children: ReactNode }) {
     root.style.setProperty('--muted', theme.colors.muted);
     root.style.setProperty('--accent', theme.colors.accent);
     root.style.setProperty('--card', theme.colors.card);
+    root.style.setProperty('--secondary', theme.colors.secondary);
 
     // Also set foreground variants that Tailwind uses
     root.style.setProperty('--primary-foreground', theme.colors.background);

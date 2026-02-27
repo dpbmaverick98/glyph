@@ -11,6 +11,7 @@ export interface Theme {
     border: string;
     muted: string;
     accent: string;
+    secondary: string;
   };
   fonts: {
     sans: string;
@@ -40,6 +41,7 @@ export const themes: Theme[] = [
       border: '#e5e5e7',
       muted: '#86868b',
       accent: '#34c759',
+      secondary: '#f5f5f7',
     },
     fonts: {
       sans: 'Inter, system-ui, sans-serif',
@@ -66,6 +68,7 @@ export const themes: Theme[] = [
       border: '#30363d',
       muted: '#8b949e',
       accent: '#ff6b6b',
+      secondary: '#21262d',
     },
     fonts: {
       sans: 'Inter, system-ui, sans-serif',
@@ -93,6 +96,7 @@ export const themes: Theme[] = [
       border: 'rgba(255, 255, 255, 0.1)',
       muted: '#a1a1aa',
       accent: '#22d3ee',
+      secondary: 'rgba(255, 255, 255, 0.08)',
     },
     fonts: {
       sans: 'Inter, system-ui, sans-serif',
@@ -119,6 +123,7 @@ export const themes: Theme[] = [
       border: '#000000',
       muted: '#666666',
       accent: '#ffff00',
+      secondary: '#e0e0e0',
     },
     fonts: {
       sans: 'Inter, system-ui, sans-serif',
@@ -146,6 +151,7 @@ export const themes: Theme[] = [
       border: '#00f0ff33',
       muted: '#6b7280',
       accent: '#ff00ff',
+      secondary: '#1a1a2e',
     },
     fonts: {
       sans: 'Inter, system-ui, sans-serif',
@@ -173,6 +179,7 @@ export const themes: Theme[] = [
       border: '#333333',
       muted: '#666666',
       accent: '#ff5f56',
+      secondary: '#1a1a1a',
     },
     fonts: {
       sans: 'JetBrains Mono, monospace',
@@ -200,6 +207,7 @@ export const themes: Theme[] = [
       border: '#ff660033',
       muted: '#8b7aa0',
       accent: '#9d00ff',
+      secondary: '#3d2a5e',
     },
     fonts: {
       sans: 'Inter, system-ui, sans-serif',
@@ -227,6 +235,7 @@ export const themes: Theme[] = [
       border: '#ff00ff33',
       muted: '#8b8bb0',
       accent: '#00ffff',
+      secondary: '#2a2a4e',
     },
     fonts: {
       sans: 'Inter, system-ui, sans-serif',
